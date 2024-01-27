@@ -1,4 +1,17 @@
-# 🏗 Scaffold-ETH 2
+# Impact Calculator
+
+The problem this project seeks to solve: in RPGF Round 3 there was over 500 projects that badge holders had to sift through. Next round will likely be 3-4x that much. Badge holders should not be expected to have to view thousands of projects. The ballot creation process must be streamlined. 
+
+Goal: The Impact Calculator is designed to streamline the evaluation of projects in the Optimism RetroPGF voting process by quantifying their impact through various metrics. This tool is expected to transition the grantmaking process from individual project evaluation to a more strategic overview, helping to maintain and improve the ROI of grant allocations. The idea for this project is to build a simple prototype to test out the idea.
+https://github.com/ethereum-optimism/ecosystem-contributions/issues/120 (https://github.com/ethereum-optimism/ecosystem-contributions/issues/120)
+
+
+Design: https://www.figma.com/file/OS8DSbKyuiYPqcRTmmhTIM/Impact-Calculator-%F0%9F%8C%B1?type=design&node-id=0-1&mode=design
+
+Static data set: https://github.com/opensource-observer/insights/blob/main/community/datasets/retropgf3_results/csv/RetroPGF3%20Results%20-%20ConsolidatedData.csv
+
+
+# Built with 🏗 Scaffold-ETH 2
 
 <h4 align="center">
   <a href="https://docs.scaffoldeth.io">Documentation</a> |
