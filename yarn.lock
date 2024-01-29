@@ -1886,6 +1886,8 @@ __metadata:
     react-copy-to-clipboard: ^5.1.0
     react-dom: ^18.2.0
     react-hot-toast: ^2.4.0
+    react-icons: ^5.0.1
+    tailwind-scrollbar: ^3.0.4
     tailwindcss: ^3.3.3
     type-fest: ^4.6.0
     typescript: ^5.1.6
@@ -11644,6 +11646,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-icons@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "react-icons@npm:5.0.1"
+  peerDependencies:
+    react: "*"
+  checksum: e5df9c5e3bcdb8d68bd4c5e41650c26d2a3ceda61ded0e2abf7caa0e54c9fb712badcd06f0c240cfc645a5dd15a5dc1eb5dd55f60123d86860f516b1fc456474
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -13144,6 +13155,15 @@ __metadata:
     string-width: ^4.2.3
     strip-ansi: ^6.0.1
   checksum: 08249c7046125d9d0a944a6e96cfe9ec66908d6b8a9db125531be6eb05fa0de047fd5542e9d43b4f987057f00a093b276b8d3e19af162a9c40db2681058fd306
+  languageName: node
+  linkType: hard
+
+"tailwind-scrollbar@npm:^3.0.4":
+  version: 3.0.5
+  resolution: "tailwind-scrollbar@npm:3.0.5"
+  peerDependencies:
+    tailwindcss: 3.x
+  checksum: 5bd7f36c90dce14f789d946fa37969d5951fd0282fdf0bac7ea38d7f252fc5d7acff942e21ccf1eca23cd6d31906dac08ef873530f296b5b75e01118d805cc91
   languageName: node
   linkType: hard
 
