@@ -1872,11 +1872,13 @@ __metadata:
     "@uniswap/v2-sdk": ^3.0.1
     autoprefixer: ^10.4.12
     blo: ^1.0.1
+    csv-parser: ^3.0.0
     daisyui: ^4.4.19
     eslint: ^8.15.0
     eslint-config-next: ^14.0.4
     eslint-config-prettier: ^8.5.0
     eslint-plugin-prettier: ^4.2.1
+    fs: ^0.0.1-security
     next: ^14.0.4
     nprogress: ^0.2.0
     postcss: ^8.4.16
@@ -5457,6 +5459,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"csv-parser@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "csv-parser@npm:3.0.0"
+  dependencies:
+    minimist: ^1.2.0
+  bin:
+    csv-parser: bin/csv-parser
+  checksum: adc9d67d9f185249825570778c24d13004625301655330f6b735a052b9fdfbe1a239a014afb1f89939e0626ee573718f71f9f14164db7c17e4bcb2f38d6a162b
+  languageName: node
+  linkType: hard
+
 "culori@npm:^3":
   version: 3.3.0
   resolution: "culori@npm:3.3.0"
@@ -7509,6 +7522,13 @@ __metadata:
   version: 1.0.0
   resolution: "fs.realpath@npm:1.0.0"
   checksum: 99ddea01a7e75aa276c250a04eedeffe5662bce66c65c07164ad6264f9de18fb21be9433ead460e54cff20e31721c811f4fb5d70591799df5f85dce6d6746fd0
+  languageName: node
+  linkType: hard
+
+"fs@npm:^0.0.1-security":
+  version: 0.0.1-security
+  resolution: "fs@npm:0.0.1-security"
+  checksum: 53c6230e1faae9fa32c1df82c16a84b51b1243d20f3da2b64bd110bb472b73b9185169b703e008356e3cdc92d155088b617d9d39a63b5227a30b3621baad7f5d
   languageName: node
   linkType: hard
 
