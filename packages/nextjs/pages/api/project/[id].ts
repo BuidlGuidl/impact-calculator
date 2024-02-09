@@ -3,7 +3,7 @@ import fs from "fs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import path from "path";
 
-const projectsFilePath = path.join(process.cwd(), "public", "data/RetroPGF3Results.csv");
+const projectsFilePath = path.join(process.cwd(), "public", "data/RPGF3Results.csv");
 
 interface Project {
   Project_ID: string;
