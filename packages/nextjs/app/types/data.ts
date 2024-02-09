@@ -28,6 +28,7 @@ export interface RetroPGF3Results extends ImpactVectors, Metadata {
   "GTP: VC Funding Amount"?: number;
   "GTP: Has Token"?: boolean;
   "GTP: Has VC Funding": number;
+  "OSO: Has Profile": boolean;
 }
 
 export interface ImpactVectors {
@@ -49,7 +50,6 @@ export interface ImpactVectors {
   "OSO: Date First Download": string;
   "OSO: Total Downloads"?: number;
   "OSO: Downloads Last 6 Months"?: number;
-  "OSO: Has Profile": boolean;
 }
 
 export interface Metadata {
