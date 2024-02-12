@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import ImpactVectorCard from "~~/components/impact-vector/ImpactVectorCard";
+import ImpactVectorDisplay from "~~/components/impact-vector/ImpactVectorDisplay";
 import ImpactVectorGraph from "~~/components/impact-vector/ImpactVectorGraph";
 import ImpactVectorTable from "~~/components/impact-vector/ImpactVectorTable";
 import { SearchBar } from "~~/components/impact-vector/SearchBar";
@@ -24,16 +24,7 @@ const Home: NextPage = () => {
           <button className={`py-3 text-customGray rounded-xl text-center w-full`}>List</button>
         </div>
         <SearchBar />
-        <div
-          className="max-h-[700px] overflow-y-auto
-    scrollbar-none "
-        >
-          {/* this is hard coded for now */}
-          <ImpactVectorCard />
-          <ImpactVectorCard />
-          <ImpactVectorCard />
-          <ImpactVectorCard />
-        </div>
+        <ImpactVectorDisplay />
       </div>
     </main>
   );
