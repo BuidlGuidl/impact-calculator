@@ -11,7 +11,7 @@ scrollbar-none "
       {impactVectorJson.map((vector, index) => (
         <ImpactVectorCard
           key={index}
-          name={vector}
+          name={vector.split(":")[1]}
           description=" This impact vector measures the growth and activity levels of users within the optimism ecosystem
              "
           username="chatgpt"
