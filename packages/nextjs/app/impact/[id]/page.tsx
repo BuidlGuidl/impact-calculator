@@ -7,7 +7,8 @@ import { IoMdOpen } from "react-icons/io";
 import { IoCloseOutline } from "react-icons/io5";
 import * as solid from "@heroicons/react/20/solid";
 import { AdjustmentsHorizontalIcon, HeartIcon } from "@heroicons/react/24/outline";
-import ImpactVectorGraph from "~~/components/impact-vector/ImpactVectorGraph";
+
+// import ImpactVectorGraph from "~~/components/impact-vector/ImpactVectorGraph";
 
 const ImpactDetailPage = () => {
   const [openLikedModal, setOpenLikedModal] = React.useState(false);
@@ -104,9 +105,7 @@ const ImpactDetailPage = () => {
         <div className="flex justify-end">
           <IoCloseOutline className="cursor-pointer" size={30} />
         </div>
-        <div className="mt-11 ">
-          <ImpactVectorGraph />
-        </div>
+        <div className="mt-11 ">{/* <ImpactVectorGraph /> */}</div>
         <div className="mt-4 rounded-xl border py-[1.1rem] px-6">
           <div className="flex items-center justify-between">
             <div className=" flex-1 grid place-content-center ">

@@ -64,3 +64,9 @@ export interface Metadata {
   "Category: End User Experience and Adoption": number;
   "Category: OP Stack": number;
 }
+
+export interface DataSet {
+  total: number;
+  data: { [key in keyof ImpactVectors]: number };
+  metadata: Metadata;
+}
