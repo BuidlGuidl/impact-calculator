@@ -1,5 +1,5 @@
-import ImpactTableHeader from "./table components/ImpactTableHeader";
-import ImpactTableRow from "./table components/ImpactTableRow";
+import ImpactTableHeader from "./table-components/ImpactTableHeader";
+import ImpactTableRow from "./table-components/ImpactTableRow";
 
 const ImpactVectorTable = () => {
   return (
@@ -9,7 +9,9 @@ const ImpactVectorTable = () => {
           <ImpactTableHeader />
         </thead>
         <tbody className="divide-y divide-gray-300 ">
-          <ImpactTableRow />.
+          <tr>
+            <ImpactTableRow />
+          </tr>
         </tbody>
       </table>
     </>

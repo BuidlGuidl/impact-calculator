@@ -11,7 +11,7 @@ const ImpactTableRow = () => {
   const isChecked = true;
 
   return (
-    <tr>
+    <>
       <td className="px-2 md:px-4 py-2 sm:py-3 ">
         <div className="flex items-center cursor-pointer w-5 h-5 border   border-[#7F56D9] rounded-lg">
           {isChecked && <BsCheck size={24} className="text-[#7F56D9]" />}
@@ -60,7 +60,7 @@ const ImpactTableRow = () => {
           </div>
         </div>
       </td>
-    </tr>
+    </>
   );
 };
 
