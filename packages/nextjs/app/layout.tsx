@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
   return (
     <html>
-      <body className="m-2">{children}</body>
+      <body>{children}</body>
     </html>
   );
 };
