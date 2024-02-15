@@ -30,10 +30,10 @@ const ImpactVectorCard = ({ name, description, username }: ImpactVectorCardProps
     >
       <h2 className="pl-2  m-0 font-bold">{name.split(":")[1]}</h2>
       <div className="flex items-center">
-        <div className="max-w-[19.18rem] text-base-content-100   ">
+        <div className="w-[70%] text-base-content-100   ">
           <p className="m-0 p-0">{description.length > 100 ? description.slice(0, 100) + "..." : description}</p>
         </div>
-        <div className=" w-full text-center">
+        <div className=" w-[30%] text-center">
           <button
             onClick={e => {
               e.stopPropagation();
