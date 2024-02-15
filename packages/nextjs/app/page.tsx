@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { DataSet } from "./types/data";
+import { debounce } from "lodash";
 import type { NextPage } from "next";
 import ImpactVectorDisplay from "~~/components/impact-vector/ImpactVectorDisplay";
 import ImpactVectorGraph from "~~/components/impact-vector/ImpactVectorGraph";
@@ -14,11 +15,8 @@ const Home: NextPage = () => {
   const [impactData, setImpactData] = useState<DataSet[]>([]);
 
   useEffect(() => {
-    // Initialize selected vectors with two vectorWeights
-    setSelectedVectors([
-      { name: "OSO: Total Stars", weight: 50 },
-      { name: "OSO: Total Onchain Users", weight: 100 },
-    ]);
+    // Initialize selected vector
+    setSelectedVectors([{ name: "OSO: Total Onchain Users", weight: 100 }]);
   }, [setSelectedVectors]);
 
   useEffect(() => {
@@ -30,7 +28,9 @@ const Home: NextPage = () => {
         }
 
         // Check if all selected vectors have valid names and weights
-        const isValidSelection = selectedVectors.every(vector => vector.name.trim() !== "" && !isNaN(vector.weight));
+        const isValidSelection = selectedVectors.every(
+          (vector: { name: string; weight: number }) => vector.name.trim() !== "" && !isNaN(vector.weight),
+        );
 
         if (!isValidSelection) {
           return;
@@ -55,14 +55,15 @@ const Home: NextPage = () => {
       }
     };
 
-    fetchData();
+    const debouncedFetchData = debounce(fetchData, 300);
+    debouncedFetchData();
   }, [selectedVectors]);
 
   return (
     <main className="max-w-[1700px] mx-auto w-full flex flex-col gap-2 b-md:flex-row p-2">
       <div className="w-full min-w-[55%]">
         <h2 className="text-center">Impact Calculator 🌱</h2>
-        <div className="flex w-full h-3/5 pb-2">{impactData.length > 0 && <ImpactVectorGraph data={impactData} />}</div>
+        <div className="flex w-full h-1/2 pb-2">{impactData.length > 0 && <ImpactVectorGraph data={impactData} />}</div>
         {/* still a work in progress */}
         <div className="mt-4">
           <ImpactVectorTable />

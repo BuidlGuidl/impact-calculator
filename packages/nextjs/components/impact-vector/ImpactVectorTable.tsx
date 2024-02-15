@@ -1,5 +1,4 @@
 import ImpactTableHeader from "./table-components/ImpactTableHeader";
-import { debounce } from "lodash";
 import { BsCheck } from "react-icons/bs";
 import { FiTrash2 } from "react-icons/fi";
 import { useGlobalState } from "~~/services/store/store";
@@ -7,15 +6,16 @@ import { useGlobalState } from "~~/services/store/store";
 const ImpactVectorTable = () => {
   const { selectedVectors, setSelectedVectors } = useGlobalState();
 
-  const debouncedSetSelectedVectors = debounce((index: number, newValue: number) => {
+  const handleRangeChange = (index: number, newValue: number) => {
     const updatedSelectedVectors = selectedVectors.map((vector, i) =>
       i === index ? { ...vector, weight: newValue } : vector,
     );
     setSelectedVectors(updatedSelectedVectors);
-  }, 300);
+  };
 
-  const handleRangeChange = (index: number, newValue: number) => {
-    debouncedSetSelectedVectors(index, newValue);
+  const handleRemoveVector = (vectorName: string) => {
+    const updatedSelectedVectors = selectedVectors.filter(vector => vector.name !== vectorName);
+    setSelectedVectors(updatedSelectedVectors);
   };
 
   return (
@@ -34,7 +34,7 @@ const ImpactVectorTable = () => {
               </td>
               <td className="py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm ">
                 <div className="flex flex-col ">
-                  <span className="font-semibold">{vector.name}</span>
+                  <span className="font-semibold">{vector.name.split(":")[1]}</span>
                 </div>
               </td>
               <td className="px-3 lg:px-6 py-2 sm:py-4 whitespace-nowrap text-sm ">
@@ -54,7 +54,7 @@ const ImpactVectorTable = () => {
                 <div className="grid gap-2 items-center justify-end grid-flow-col">
                   <div className="flex gap-1 sm:gap-3 ">
                     <button className="w-[20px]">
-                      <FiTrash2 size={20} />
+                      <FiTrash2 size={20} onClick={() => handleRemoveVector(vector.name)} />
                     </button>
                   </div>
                 </div>

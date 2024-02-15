@@ -1,20 +1,19 @@
 import ImpactVectorCard from "./ImpactVectorCard";
-import impactVectorJson from "~~/public/data/ImpactVectors.json";
+import { impactVectors } from "./ImpactVectors";
 
 const ImpactVectorDisplay = () => {
   return (
     <div
       className="max-h-[700px] overflow-y-auto
-scrollbar-none "
+scrollbar-none pb-60"
     >
       {/* this is hard coded for now */}
-      {impactVectorJson.map((vector, index) => (
+      {impactVectors.map((vector, index) => (
         <ImpactVectorCard
           key={index}
-          name={vector.split(":")[1]}
-          description=" This impact vector measures the growth and activity levels of users within the optimism ecosystem
-             "
-          username="chatgpt"
+          name={vector.name}
+          description={vector.description}
+          username={vector.sourceName}
         />
       ))}
     </div>
