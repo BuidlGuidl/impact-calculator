@@ -15,7 +15,7 @@ const ImpactTableHeader = () => {
           Percentage
         </th>
         <th scope="col" className="pl-6 py-3 w-[20%]  text-start  text-xs font-medium  ">
-          6 month
+          Remove
         </th>
       </tr>
     </>

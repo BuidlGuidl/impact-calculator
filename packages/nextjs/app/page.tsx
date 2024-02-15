@@ -7,18 +7,19 @@ import ImpactVectorDisplay from "~~/components/impact-vector/ImpactVectorDisplay
 import ImpactVectorGraph from "~~/components/impact-vector/ImpactVectorGraph";
 import ImpactVectorTable from "~~/components/impact-vector/ImpactVectorTable";
 import { SearchBar } from "~~/components/impact-vector/SearchBar";
+import { useGlobalState } from "~~/services/store/store";
 
 const Home: NextPage = () => {
-  const [selectedVectors, setSelectedVectors] = useState<{ name: string; weight: number }[]>([]);
+  const { selectedVectors, setSelectedVectors } = useGlobalState();
   const [impactData, setImpactData] = useState<DataSet[]>([]);
 
   useEffect(() => {
-    // Initialize selected vectors with two vectorsWeights
+    // Initialize selected vectors with two vectorWeights
     setSelectedVectors([
       { name: "OSO: Total Stars", weight: 50 },
       { name: "OSO: Total Onchain Users", weight: 100 },
     ]);
-  }, []);
+  }, [setSelectedVectors]);
 
   useEffect(() => {
     const fetchData = async () => {
