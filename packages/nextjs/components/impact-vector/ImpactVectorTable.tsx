@@ -34,7 +34,8 @@ const ImpactVectorTable = () => {
               </td>
               <td className="py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm ">
                 <div className="flex flex-col ">
-                  <span className="font-semibold">{vector.name.split(":")[1]}</span>
+                  <span className="font-semibold">{vector.name.split(":")[1].substring(1)}</span>
+                  <span className="text-gray-500">{vector.name}</span>
                 </div>
               </td>
               <td className="px-3 lg:px-6 py-2 sm:py-4 whitespace-nowrap text-sm ">
@@ -44,10 +45,10 @@ const ImpactVectorTable = () => {
                     min={0}
                     max="100"
                     value={vector.weight}
-                    className="range range-error range-xs max-w-[90%] w-full bg-gray-200"
+                    className="range range-primary range-xs  w-full bg-[#F9F5FF] h-2"
                     onChange={e => handleRangeChange(index, parseInt(e.target.value, 10))}
                   />
-                  <span>{vector.weight}%</span>
+                  <span>{vector.weight}</span>
                 </div>
               </td>
               <td className="pr-2 lg:pr-6 py-2 sm:py-4 whitespace-nowrap ">

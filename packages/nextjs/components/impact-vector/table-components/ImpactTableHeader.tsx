@@ -11,12 +11,10 @@ const ImpactTableHeader = () => {
           Impact Vector
         </th>
 
-        <th scope="col" className="px-3 lg:px-6  py-3 w-[58%]  text-start text-xs font-medium  ">
+        <th scope="col" className="px-3 lg:px-6  py-3 w-[75%]  text-start text-xs font-medium  ">
           Percentage
         </th>
-        <th scope="col" className="pl-6 py-3 w-[20%]  text-start  text-xs font-medium  ">
-          Remove
-        </th>
+        <th scope="col" className="pl-6 py-3 w-[10%]  text-start  text-xs font-medium  "></th>
       </tr>
     </>
   );
