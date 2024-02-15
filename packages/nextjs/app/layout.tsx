@@ -11,16 +11,16 @@ const imageUrl = `${baseUrl}/thumbnail.jpg`;
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "Scaffold-ETH 2 App",
-    template: "%s | Scaffold-ETH 2",
+    default: "Impact Calculator",
+    template: "%s | Impact Calculator",
   },
-  description: "Built with 🏗 Scaffold-ETH 2",
+  description: "Built with 🏗 Impact Calculator",
   openGraph: {
     title: {
-      default: "Scaffold-ETH 2 App",
-      template: "%s | Scaffold-ETH 2",
+      default: "Impact Calculator App",
+      template: "%s | Impact Calculator",
     },
-    description: "Built with 🏗 Scaffold-ETH 2",
+    description: "Built with 🏗 Impact Calculator",
     images: [
       {
         url: imageUrl,
@@ -31,10 +31,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     images: [imageUrl],
     title: {
-      default: "Scaffold-ETH 2",
-      template: "%s | Scaffold-ETH 2",
+      default: "Impact Calculator",
+      template: "%s | Impact Calculator",
     },
-    description: "Built with 🏗 Scaffold-ETH 2",
+    description: "Built with 🏗 Impact Calculator",
   },
   icons: {
     icon: [{ url: "/favicon.png", sizes: "32x32", type: "image/png" }],
