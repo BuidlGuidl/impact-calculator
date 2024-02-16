@@ -1,17 +1,16 @@
 interface CustomXAxisProps {
   x: number;
   y: number;
-  // payload: any;
+  image: any;
+  hovered: string | null;
+  payload: any;
 }
 
-const CustomXAxisTick: React.FC<CustomXAxisProps> = ({
-  x,
-  y,
-  // payload
-}) => {
+const CustomXAxisTick: React.FC<CustomXAxisProps> = ({ x, y, hovered, image, payload }) => {
+  const isHovered = payload && payload.value === hovered;
   return (
     <g transform={`translate(${x},${y})`} style={{ fontSize: 12, fill: "#333" }}>
-      {/* on hover display project image or name */}
+      {isHovered && image && <image href={image} width={45} height={45} />}
     </g>
   );
 };

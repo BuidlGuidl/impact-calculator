@@ -17,7 +17,7 @@ const transformData = (impactData: DataSet[]): any[] => {
     const transformedItem: any = {
       image: item.metadata["Meta: Project Image"],
       name: item.metadata["Meta: Project Name"],
-      total: Math.floor(item.total),
+      Rank: Math.floor(item.total),
     };
 
     dataKeys.forEach(key => {
@@ -28,14 +28,22 @@ const transformData = (impactData: DataSet[]): any[] => {
   });
 };
 
-// Function to sort array in descending order based on 'total'
+// Function to sort array in descending order based on rank
 const sortByTotalDescending = (dataSetArray: any[]) => {
   return dataSetArray.slice().sort((a, b) => b.total - a.total);
 };
 
 export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
   const [showVectors, setShowVectors] = useState(false);
+  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   const transformedData = transformData(sortByTotalDescending(data));
+
+  const handleMouseMove = (e: any) => {
+    const { value } = e;
+    if (hoveredProject !== value) {
+      setHoveredProject(value);
+    }
+  };
 
   return (
     <div className="flex flex-col w-full">
@@ -50,11 +58,37 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             left: 20,
             bottom: 40,
           }}
+          onMouseMove={e => {
+            const { activePayload } = e;
+            if (activePayload && activePayload.length > 0) {
+              const hoveredProjectName = activePayload[0].payload.name;
+              if (hoveredProject !== hoveredProjectName) {
+                setHoveredProject(hoveredProjectName);
+              }
+            } else {
+              setHoveredProject(null);
+            }
+          }}
         >
-          <XAxis dataKey="name" axisLine={false} tickLine={false} tick={<CustomXAxis x={0} y={0} />} interval={0} />
+          <XAxis
+            dataKey="name"
+            onMouseMove={handleMouseMove}
+            axisLine={false}
+            tickLine={false}
+            tick={
+              <CustomXAxis
+                payload
+                image={hoveredProject ? transformedData.find(item => item.name === hoveredProject)?.image : null}
+                hovered={hoveredProject && hoveredProject}
+                x={0}
+                y={0}
+              />
+            }
+            interval={0}
+          />
           <Tooltip />
 
-          <Line type="monotone" dataKey="total" stroke="red" dot={false} strokeWidth={3} />
+          <Line type="monotone" dataKey="Rank" stroke="red" dot={false} strokeWidth={3} />
 
           {showVectors &&
             transformedData[0] &&
