@@ -19,6 +19,9 @@ const nextConfig = {
       fullUrl: true,
     },
   },
+  images: {
+    domains: ['content.optimism.io'],
+  }
 };
 
 module.exports = nextConfig;
