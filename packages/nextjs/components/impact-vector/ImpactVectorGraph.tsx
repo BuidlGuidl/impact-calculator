@@ -17,11 +17,12 @@ const transformData = (impactData: DataSet[]): any[] => {
     const transformedItem: any = {
       image: item.metadata["Meta: Project Image"],
       name: item.metadata["Meta: Project Name"],
-      Rank: Math.floor(item.total),
+      Rank: Math.floor(item.rank),
     };
 
     dataKeys.forEach(key => {
-      transformedItem[key] = item.data[key];
+      transformedItem[`${key}_normalized`] = item.data[key]?.normalized;
+      transformedItem[`${key}_actual`] = item.data[key]?.actual;
     });
 
     return transformedItem;
@@ -30,7 +31,7 @@ const transformData = (impactData: DataSet[]): any[] => {
 
 // Function to sort array in descending order based on rank
 const sortByTotalDescending = (dataSetArray: any[]) => {
-  return dataSetArray.slice().sort((a, b) => b.total - a.total);
+  return dataSetArray.slice().sort((a, b) => b.rank - a.rank);
 };
 
 export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
@@ -44,6 +45,20 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
       setHoveredProject(value);
     }
   };
+
+  // color array for vector lines
+  const vectorColors = [
+    "#ff0000",
+    "#00ff00",
+    "#0000ff",
+    "#ffff00",
+    "#00ffff",
+    "#ff00ff",
+    "#ffa500",
+    "#008000",
+    "#800080",
+    "#000080",
+  ];
 
   return (
     <div className="flex flex-col w-full">
@@ -86,20 +101,42 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             }
             interval={0}
           />
-          <Tooltip />
+          <Tooltip
+            content={({ active, payload }) => {
+              if (active && payload && payload.length) {
+                const data = payload[0].payload;
+                return (
+                  <div className="w-fit h-fit space-y-2 p-4 pt-1 text-sm bg-base-100">
+                    <p>{`${data.name}`}</p>
+                    <p className=" text-red-500 font-semibold">{`Rank: ${data.Rank}`}</p>
+                    {Object.keys(data)
+                      .filter(key => key.endsWith("_actual"))
+                      .map(key => {
+                        const value = data[key];
+                        const formattedValue = !isNaN(value) ? Math.floor(parseFloat(value)) : value;
+                        return (
+                          <p key={key}>{`${key.replace(/^OSO:/, "").replace("_actual", "")}: ${formattedValue}`}</p>
+                        );
+                      })}
+                  </div>
+                );
+              }
+              return null;
+            }}
+          />
 
           <Line type="monotone" dataKey="Rank" stroke="red" dot={false} strokeWidth={3} />
 
           {showVectors &&
             transformedData[0] &&
-            Object.keys(transformedData[0]).map(key => {
-              if (key !== "image" && key !== "name" && key !== "total") {
+            Object.keys(transformedData[0]).map((key, index) => {
+              if (key !== "image" && key !== "name" && key !== "Rank" && !key.includes("_actual")) {
                 return (
                   <Line
                     key={key}
                     type="monotone"
                     dataKey={key}
-                    stroke={`#${Math.floor(Math.random() * 16777215).toString(16)}`}
+                    stroke={vectorColors[index % vectorColors.length]}
                     dot={false}
                     strokeWidth={1}
                   />

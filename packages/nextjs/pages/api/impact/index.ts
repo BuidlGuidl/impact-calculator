@@ -7,8 +7,8 @@ import { ImpactVectors, Metadata, RetroPGF3Results } from "~~/app/types/data";
 const dataFilePath = path.join(process.cwd(), "public", "data/RPGF3Results.csv");
 
 interface DataSet {
-  total: number;
-  data: { [key in keyof ImpactVectors]: number };
+  rank: number;
+  data: { [key in keyof ImpactVectors]: { normalized: number; actual: string | number | undefined } };
   metadata: Metadata;
 }
 
@@ -82,8 +82,8 @@ async function getImpact(vectorWeights: VectorWeight[]) {
   // Apply that multiple to each value in the vector and apply the weight
   for (const data of projectData) {
     const relevant: DataSet = {
-      data: {} as { [key in keyof ImpactVectors]: number },
-      total: 0,
+      data: {} as { [key in keyof ImpactVectors]: { normalized: number; actual: string | number | undefined } },
+      rank: 0,
       metadata: {
         "Meta: Project Name": data["Meta: Project Name"],
         "Meta: Project Image": data["Meta: Project Image"],
@@ -98,20 +98,24 @@ async function getImpact(vectorWeights: VectorWeight[]) {
       },
     };
     for (const { vector, weight } of vectorWeights) {
+      const actualValue = data[vector];
       const currentValue = transformField(data[vector]);
       const multiplier = multipliers[vector];
 
       // Apply the multiplier to equalize the vectors
       const scaledValue = currentValue && multiplier ? currentValue * multiplier : 0;
       // Apply the weight
-      relevant.data[vector] = scaledValue && weight ? scaledValue * weight : 0;
-      // Add to the total
-      relevant.total += relevant.data[vector] || 0;
+      relevant.data[vector] = {
+        normalized: scaledValue && weight ? scaledValue * weight : 0,
+        actual: actualValue,
+      };
+      // Add to the rank
+      relevant.rank += relevant.data[vector]?.normalized || 0;
     }
     relevantData.push(relevant);
   }
   // Remove projects with no impact
-  return relevantData.filter(data => data.total > 0);
+  return relevantData.filter(data => data.rank > 0);
 }
 
 function transformField(field: string | number | boolean | undefined): number {
