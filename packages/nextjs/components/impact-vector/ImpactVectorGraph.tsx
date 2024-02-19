@@ -107,7 +107,7 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
                 const data = payload[0].payload;
                 return (
                   <div className="w-fit h-fit space-y-2 p-4 pt-1 text-sm bg-base-100">
-                    <p>{`Name: ${data.name}`}</p>
+                    <p>{`${data.name}`}</p>
                     <p className=" text-red-500 font-semibold">{`Rank: ${data.Rank}`}</p>
                     {Object.keys(data)
                       .filter(key => key.endsWith("_actual"))
