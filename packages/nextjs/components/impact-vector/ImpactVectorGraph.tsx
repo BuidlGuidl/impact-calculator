@@ -3,11 +3,14 @@
 import React, { useState } from "react";
 import CustomXAxis from "./CustomXAxis";
 import {
-  Line,
-  LineChart, // Legend,
+  Area,
+  AreaChart,
+  CartesianGrid,
+  Line, // Legend,
   ResponsiveContainer,
   Tooltip,
   XAxis,
+  YAxis,
 } from "recharts";
 import { DataSet, ImpactVectors } from "~~/app/types/data";
 
@@ -18,6 +21,7 @@ const transformData = (impactData: DataSet[]): any[] => {
       image: item.metadata["Meta: Project Image"],
       name: item.metadata["Meta: Project Name"],
       Rank: Math.floor(item.rank),
+      profile: `${item.metadata["Meta: Project Name"]}===${item.metadata["Meta: Project Image"]}`,
     };
 
     dataKeys.forEach(key => {
@@ -63,7 +67,7 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
   return (
     <div className="flex flex-col w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart
+        <AreaChart
           width={500}
           height={300}
           data={transformedData}
@@ -85,20 +89,13 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             }
           }}
         >
+          <YAxis axisLine={false} tickLine={false} className="text-xs opacity-50" tickMargin={10} />
           <XAxis
-            dataKey="name"
+            dataKey="profile"
             onMouseMove={handleMouseMove}
             axisLine={false}
             tickLine={false}
-            tick={
-              <CustomXAxis
-                payload
-                image={hoveredProject ? transformedData.find(item => item.name === hoveredProject)?.image : null}
-                hovered={hoveredProject && hoveredProject}
-                x={0}
-                y={0}
-              />
-            }
+            tick={<CustomXAxis x={0} y={0} hovered={hoveredProject} />}
             interval={0}
           />
           <Tooltip
@@ -125,8 +122,6 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             }}
           />
 
-          <Line type="monotone" dataKey="Rank" stroke="red" dot={false} strokeWidth={3} />
-
           {showVectors &&
             transformedData[0] &&
             Object.keys(transformedData[0]).map((key, index) => {
@@ -144,7 +139,15 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
               }
               return null;
             })}
-        </LineChart>
+          <defs>
+            <linearGradient id="colorTotal" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="5%" stopColor="rgba(20, 124, 73, 0.1)" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#FBDD5D" stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <CartesianGrid y={3000000} strokeDasharray="2" />
+          <Area type="monotone" dataKey="Rank" stroke="#F00420" fillOpacity={1} fill="url(#colorTotal)" />
+        </AreaChart>
       </ResponsiveContainer>
 
       {transformedData.length > 0 && (
