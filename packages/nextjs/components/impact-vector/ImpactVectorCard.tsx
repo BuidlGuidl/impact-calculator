@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { trim } from "lodash";
 import { useGlobalState } from "~~/services/store/store";
 
 interface ImpactVectorCardProps {
@@ -28,12 +29,12 @@ const ImpactVectorCard = ({ name, description, username }: ImpactVectorCardProps
       onClick={() => router.push("/impact/1")}
       className="cursor-pointer rounded-xl text-sm border-[0.2px] border-secondary-text/50 p-4 bg-base-300 flex flex-col justify-between gap-4 my-2"
     >
-      <h2 className="pl-2  m-0 font-bold">{name.split(":")[1]}</h2>
-      <div className="flex items-center">
-        <div className="w-[70%] text-base-content-100   ">
+      <h2 className=" m-0 font-bold"> {trim(name.split(":")[1])}</h2>
+      <div className="flex items-center justify-between">
+        <div className=" text-base-content-100   ">
           <p className="m-0 p-0">{description.length > 100 ? description.slice(0, 100) + "..." : description}</p>
         </div>
-        <div className=" w-[30%] text-center">
+        <div className="">
           <button
             onClick={e => {
               e.stopPropagation();

@@ -70,7 +70,7 @@ const Home: NextPage = () => {
         </div>
       </div>
 
-      <div className="max-h-[100dvh] overflow-hidden b-md:max-w-[34rem] w-full rounded-3xl p-6 border grid gap-6 ">
+      <div className="max-h-[100dvh] overflow-hidden b-md:max-w-[34rem] w-full rounded-3xl p-6 border grid gap-6 mx-auto">
         <div className="rounded-xl grid grid-cols-2 bg-base-300 p-1">
           <button className={` bg-base-100 font-semibold  py-3 text- rounded-xl text-center w-full`}>
             Impact Vectors
