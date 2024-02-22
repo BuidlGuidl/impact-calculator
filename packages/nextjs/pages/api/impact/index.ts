@@ -78,6 +78,7 @@ async function getImpact(vectorWeights: VectorWeight[]) {
     const relevant: DataSet = {
       data: {} as { [key in keyof ImpactVectors]: { normalized: number; actual: string | number | undefined } },
       rank: 0,
+      receivedOP: Number(data["Result: Received OP"] || ""),
       metadata: {
         "Meta: Project Name": data["Meta: Project Name"],
         "Meta: Project Image": data["Meta: Project Image"],
