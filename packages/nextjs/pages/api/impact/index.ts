@@ -2,15 +2,9 @@ import csv from "csv-parser";
 import fs from "fs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import path from "path";
-import { ImpactVectors, Metadata, RetroPGF3Results } from "~~/app/types/data";
+import { DataSet, ImpactVectors, RetroPGF3Results } from "~~/app/types/data";
 
 const dataFilePath = path.join(process.cwd(), "public", "data/RPGF3Results.csv");
-
-interface DataSet {
-  rank: number;
-  data: { [key in keyof ImpactVectors]: { normalized: number; actual: string | number | undefined } };
-  metadata: Metadata;
-}
 
 interface VectorWeight {
   vector: keyof ImpactVectors;
