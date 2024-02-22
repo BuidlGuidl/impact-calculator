@@ -155,6 +155,7 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             </linearGradient>
           </defs>
           <CartesianGrid y={3000000} strokeDasharray="2" />
+<<<<<<< HEAD
           <Area
             type="monotone"
             dataKey="opAllocation"
@@ -163,6 +164,9 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             fill="url(#colorTotal)"
             name="OP Allocation"
           />
+=======
+          <Area type="monotone" dataKey="receivedOP" stroke="#F00420" fillOpacity={1} fill="url(#colorTotal)" />
+>>>>>>> f3da886 (change y-axis unit to received OP)
         </AreaChart>
       </ResponsiveContainer>
     </div>
