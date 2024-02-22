@@ -22,6 +22,7 @@ const transformData = (impactData: DataSet[]): any[] => {
       name: item.metadata["Meta: Project Name"],
       Rank: Math.floor(item.rank),
       profile: `${item.metadata["Meta: Project Name"]}===${item.metadata["Meta: Project Image"]}`,
+      receivedOP: item.receivedOP,
     };
 
     dataKeys.forEach(key => {
@@ -146,7 +147,7 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             </linearGradient>
           </defs>
           <CartesianGrid y={3000000} strokeDasharray="2" />
-          <Area type="monotone" dataKey="Rank" stroke="#F00420" fillOpacity={1} fill="url(#colorTotal)" />
+          <Area type="monotone" dataKey="receivedOP" stroke="#F00420" fillOpacity={1} fill="url(#colorTotal)" />
         </AreaChart>
       </ResponsiveContainer>
 
