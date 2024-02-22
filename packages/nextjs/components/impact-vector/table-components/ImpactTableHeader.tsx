@@ -19,10 +19,7 @@ const ImpactTableHeader = ({ sortDesc, setSortDesc, sortBy, setSortBy }: Props) 
   return (
     <>
       <tr>
-        <th scope="col" className=" w-8 py-3 px-2 md:px-4 ">
-          <div className="flex items-center h-5"></div>
-        </th>
-        <th scope="col" className=" py-3 w-[20%]  text-start text-xs font-medium  ">
+        <th scope="col" className=" py-3  w-[20%]  text-start text-xs font-medium  ">
           <div className="flex items-center gap-1">
             <span className="cursor-pointer" onClick={getClickHandler("name")}>
               Impact Vector
