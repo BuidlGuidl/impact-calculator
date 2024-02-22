@@ -60,7 +60,7 @@ const Home: NextPage = () => {
   }, [selectedVectors]);
 
   return (
-    <main className="max-w-[1700px] mx-auto w-full flex flex-col gap-2 b-md:flex-row py-3">
+    <main className="max-w-[1700px] mx-auto w-full flex flex-col gap-6 sm:gap-10 b-md:flex-row p-3">
       <div className="w-full min-w-[55%]">
         <h2 className="text-center">Impact Calculator 🌱</h2>
         <div className="flex w-full h-1/2 pb-2">{impactData.length > 0 && <ImpactVectorGraph data={impactData} />}</div>
@@ -70,7 +70,7 @@ const Home: NextPage = () => {
         </div>
       </div>
 
-      <div className="max-h-[100dvh] overflow-hidden b-md:max-w-[34rem] w-full rounded-3xl p-6 border grid gap-6 ">
+      <div className="max-h-[100dvh] overflow-hidden b-md:max-w-[34rem] w-full rounded-3xl p-6 border grid gap-6 mx-auto">
         <div className="rounded-xl grid grid-cols-2 bg-base-300 p-1">
           <button className={` bg-base-100 font-semibold  py-3 text- rounded-xl text-center w-full`}>
             Impact Vectors
