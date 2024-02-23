@@ -31,7 +31,7 @@ const ImpactVectorCard = ({ name, description, username }: ImpactVectorCardProps
     >
       <h2 className=" m-0 font-bold"> {trim(name.split(":")[1])}</h2>
       <div className="flex items-center justify-between">
-        <div className=" text-base-content-100   ">
+        <div className=" text-base-content-100 max-w-sm">
           <p className="m-0 p-0">{description.length > 100 ? description.slice(0, 100) + "..." : description}</p>
         </div>
         <div className="">

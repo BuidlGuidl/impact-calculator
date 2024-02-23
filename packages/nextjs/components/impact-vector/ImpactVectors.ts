@@ -1,7 +1,7 @@
 export const impactVectors = [
   {
     name: "OSO: Total Stars",
-    description: "Description for Total Stars impact vector.",
+    description: "Reflects the overall popularity and community interest in the project based on the total number of stars it has received.",
     sourceName: "OSO",
   },
   {
@@ -11,7 +11,8 @@ export const impactVectors = [
   },
   {
     name: "OSO: Contributors Last 6 Months",
-    description: "Description for Contributors Last 6 Months impact vector.",
+    description:
+      "Measures the project's recent contributor activity, providing insights into the current engagement and collaborative nature of the development team.",
     sourceName: "OSO",
   },
   {
