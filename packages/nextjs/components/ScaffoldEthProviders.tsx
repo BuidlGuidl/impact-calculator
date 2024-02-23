@@ -1,5 +1,6 @@
 "use client";
 
+import { Footer } from "./Footer";
 import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowkit";
 import { WagmiConfig } from "wagmi";
 import { BlockieAvatar } from "~~/components/scaffold-eth";
@@ -21,6 +22,7 @@ export const ScaffoldEthProviders = ({ children }: { children: React.ReactNode }
       >
         {children}
       </RainbowKitProvider>
+      <Footer />
     </WagmiConfig>
   );
 };
