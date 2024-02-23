@@ -128,15 +128,7 @@ async function getImpact(vectorWeights: VectorWeight[]) {
   const totalScore = nonZeroProjects.reduce((total, curr) => total + curr.score, 0);
   const projectsWithOPAllocated = nonZeroProjects.map(project => ({
     ...project,
-<<<<<<< HEAD
-<<<<<<< HEAD
     opAllocation: (project.score / totalScore) * 10000000,
-=======
-    opAllocated: (project.score / totalScore) * 10000000,
->>>>>>> adc9232 (add `opAllocated` field to return data)
-=======
-    opAllocation: (project.score / totalScore) * 10000000,
->>>>>>> c45539e (rename opAllocated => opAllocation)
   }));
   // Remove projects with no impact
   return projectsWithOPAllocated;
