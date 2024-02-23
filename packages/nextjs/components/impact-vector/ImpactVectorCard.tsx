@@ -28,7 +28,7 @@ const ImpactVectorCard = ({ name, description, sourceName }: ImpactVectorCardPro
   useEffect(() => {
     const selected = selectedVectors.find(vector => vector.name === name);
     setIsSelected(selected ? true : false);
-  }, [selectedVectors]);
+  }, [selectedVectors, name]);
 
   return (
     <div
