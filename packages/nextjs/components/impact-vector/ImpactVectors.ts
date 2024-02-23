@@ -50,7 +50,7 @@ export const impactVectors = [
   {
     name: "OSO: Txn Fees Last 6 Months (ETH)",
     description:
-      "Captures the total transaction fees paid in Ethereum (ETH) associated with the project's contracts within the last six months. This impact vector highlights recent economic activity and transactional trends, providing valuable insights into the project's financial dynamics.",
+      "Captures the total transaction fees paid in Ether (ETH) associated with the project's contracts within the last six months. This impact vector highlights recent economic activity and transactional trends, providing valuable insights into the project's financial dynamics.",
     sourceName: "OSO",
   },
   {
