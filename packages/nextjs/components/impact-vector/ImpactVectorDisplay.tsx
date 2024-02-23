@@ -13,7 +13,7 @@ const ImpactVectorDisplay = () => {
           key={index}
           name={vector.name}
           description={vector.description}
-          username={vector.sourceName}
+          sourceName={vector.sourceName}
         />
       ))}
     </div>

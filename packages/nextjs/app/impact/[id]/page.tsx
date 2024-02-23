@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { FaFile } from "react-icons/fa6";
 import { IoMdOpen } from "react-icons/io";
 import { IoCloseOutline } from "react-icons/io5";
@@ -103,7 +104,9 @@ const ImpactDetailPage = () => {
       </div>
       <div className="w-full">
         <div className="flex justify-end">
-          <IoCloseOutline className="cursor-pointer" size={30} />
+          <Link href="/">
+            <IoCloseOutline className="cursor-pointer" size={30} />
+          </Link>
         </div>
         <div className="mt-11 ">{/* <ImpactVectorGraph /> */}</div>
         <div className="mt-4 rounded-xl border py-[1.1rem] px-6">
