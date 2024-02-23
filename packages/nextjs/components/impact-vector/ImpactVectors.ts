@@ -1,15 +1,5 @@
 export const impactVectors = [
   {
-    name: "OSO: # GitHub Repos",
-    description: "Description for GitHub Repos impact vector.",
-    sourceName: "OSO",
-  },
-  {
-    name: "OSO: Date First Commit",
-    description: "Description for Date First Commit impact vector.",
-    sourceName: "OSO",
-  },
-  {
     name: "OSO: Total Stars",
     description: "Description for Total Stars impact vector.",
     sourceName: "OSO",
@@ -20,11 +10,6 @@ export const impactVectors = [
     sourceName: "OSO",
   },
   {
-    name: "OSO: Total Contributors",
-    description: "Description for Total Contributors impact vector.",
-    sourceName: "OSO",
-  },
-  {
     name: "OSO: Contributors Last 6 Months",
     description: "Description for Contributors Last 6 Months impact vector.",
     sourceName: "OSO",
@@ -32,16 +17,6 @@ export const impactVectors = [
   {
     name: "OSO: Avg Monthly Active Devs Last 6 Months",
     description: "Description for Avg Monthly Active Devs Last 6 Months impact vector.",
-    sourceName: "OSO",
-  },
-  {
-    name: "OSO: # OP Contracts",
-    description: "Description for OP Contracts impact vector.",
-    sourceName: "OSO",
-  },
-  {
-    name: "OSO: Date First Txn",
-    description: "Description for Date First Txn impact vector.",
     sourceName: "OSO",
   },
   {
@@ -67,11 +42,6 @@ export const impactVectors = [
   {
     name: "OSO: Txn Fees Last 6 Months (ETH)",
     description: "Description for Txn Fees Last 6 Months (ETH) impact vector.",
-    sourceName: "OSO",
-  },
-  {
-    name: "OSO: # NPM Packages",
-    description: "Description for NPM Packages impact vector.",
     sourceName: "OSO",
   },
   {
