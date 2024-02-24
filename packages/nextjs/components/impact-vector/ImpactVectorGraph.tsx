@@ -41,6 +41,7 @@ const sortByTotalDescending = (dataSetArray: any[]) => {
 
 export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
   const [showVectors, setShowVectors] = useState(false);
+  const [isLogarithmic, setIsLogarithmic] = useState(false);
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   const transformedData = transformData(sortByTotalDescending(data));
 
@@ -90,8 +91,14 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             }
           }}
         >
-          <Legend />
-          <YAxis axisLine={false} tickLine={false} className="text-xs opacity-50" tickMargin={10} />
+          <YAxis
+            axisLine={false}
+            tickLine={false}
+            className="text-xs opacity-50"
+            tickMargin={10}
+            scale={isLogarithmic ? "log" : "linear"}
+            domain={["auto", "auto"]}
+          />
           <XAxis
             dataKey="profile"
             onMouseMove={handleMouseMove}
@@ -112,7 +119,9 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
                       .filter(key => key.endsWith("_actual"))
                       .map(key => {
                         const value = data[key];
-                        const formattedValue = !isNaN(value) ? Math.floor(parseFloat(value)) : value;
+                        const formattedValue = !isNaN(value || "string")
+                          ? Math.floor(parseFloat(value)) || "none"
+                          : value || "none";
                         return (
                           <p key={key}>{`${key.replace(/^OSO:/, "").replace("_actual", "")}: ${formattedValue}`}</p>
                         );
@@ -162,6 +171,9 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
       {transformedData.length > 0 && (
         <div className="items-center text-xs justify-end flex">
           <button onClick={() => setShowVectors(!showVectors)}>{showVectors ? "Hide Vectors" : "Show Vectors"}</button>
+          <button className="px-3" onClick={() => setIsLogarithmic(!isLogarithmic)}>
+            {isLogarithmic ? "Linear" : "Logarithmic"}
+          </button>
         </div>
       )}
     </div>
