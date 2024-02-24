@@ -21,7 +21,7 @@ const transformData = (impactData: DataSet[]): any[] => {
       image: item.metadata["Meta: Project Image"],
       name: item.metadata["Meta: Project Name"],
       profile: `${item.metadata["Meta: Project Name"]}===${item.metadata["Meta: Project Image"]}`,
-      opAllocated: Math.floor(item.opAllocated),
+      opAllocation: Math.floor(item.opAllocation),
     };
 
     dataKeys.forEach(key => {
@@ -33,9 +33,9 @@ const transformData = (impactData: DataSet[]): any[] => {
   });
 };
 
-// Function to sort array in descending order based on opAllocated
+// Function to sort array in descending order based on opAllocation
 const sortByTotalDescending = (dataSetArray: any[]) => {
-  return dataSetArray.slice().sort((a, b) => b.opAllocated - a.opAllocated);
+  return dataSetArray.slice().sort((a, b) => b.opAllocation - a.opAllocation);
 };
 
 export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
@@ -105,7 +105,7 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
                 return (
                   <div className="w-fit h-fit space-y-2 p-4 pt-1 text-sm bg-base-100">
                     <p>{`${data.name}`}</p>
-                    <p className=" text-red-500 font-semibold">{`OP Allocated: ${data.opAllocated}`}</p>
+                    <p className=" text-red-500 font-semibold">{`OP Allocation: ${data.opAllocation}`}</p>
                     {Object.keys(data)
                       .filter(key => key.endsWith("_actual"))
                       .map(key => {
@@ -146,7 +146,7 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             </linearGradient>
           </defs>
           <CartesianGrid y={3000000} strokeDasharray="2" />
-          <Area type="monotone" dataKey="opAllocated" stroke="#F00420" fillOpacity={1} fill="url(#colorTotal)" />
+          <Area type="monotone" dataKey="opAllocation" stroke="#F00420" fillOpacity={1} fill="url(#colorTotal)" />
         </AreaChart>
       </ResponsiveContainer>
 
