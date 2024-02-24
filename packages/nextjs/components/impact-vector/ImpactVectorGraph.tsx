@@ -6,6 +6,7 @@ import {
   Area,
   AreaChart,
   CartesianGrid,
+  Legend,
   Line, // Legend,
   ResponsiveContainer,
   Tooltip,
@@ -89,6 +90,7 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             }
           }}
         >
+          <Legend />
           <YAxis axisLine={false} tickLine={false} className="text-xs opacity-50" tickMargin={10} />
           <XAxis
             dataKey="profile"
@@ -146,7 +148,14 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             </linearGradient>
           </defs>
           <CartesianGrid y={3000000} strokeDasharray="2" />
-          <Area type="monotone" dataKey="opAllocation" stroke="#F00420" fillOpacity={1} fill="url(#colorTotal)" />
+          <Area
+            type="monotone"
+            dataKey="opAllocation"
+            stroke="#F00420"
+            fillOpacity={1}
+            fill="url(#colorTotal)"
+            name="OP Allocation"
+          />
         </AreaChart>
       </ResponsiveContainer>
 
