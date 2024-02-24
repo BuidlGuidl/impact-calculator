@@ -20,7 +20,7 @@ const transformData = (impactData: DataSet[]): any[] => {
     const transformedItem: any = {
       image: item.metadata["Meta: Project Image"],
       name: item.metadata["Meta: Project Name"],
-      Rank: item.rank.toFixed(2),
+      Rank: Math.ceil(item.rank),
       profile: `${item.metadata["Meta: Project Name"]}===${item.metadata["Meta: Project Image"]}`,
     };
 
