@@ -84,10 +84,14 @@ async function getImpact(vectorWeights: VectorWeight[]) {
       data: {} as { [key in keyof ImpactVectors]: { normalized: number; actual: string | number | undefined } },
       score: 0,
 <<<<<<< HEAD
+<<<<<<< HEAD
       opAllocation: 0,
 =======
       opAllocated: 0,
 >>>>>>> adc9232 (add `opAllocated` field to return data)
+=======
+      opAllocation: 0,
+>>>>>>> c45539e (rename opAllocated => opAllocation)
       metadata: {
         "Meta: Project Name": data["Meta: Project Name"],
         "Meta: Project Image": data["Meta: Project Image"],
@@ -125,10 +129,14 @@ async function getImpact(vectorWeights: VectorWeight[]) {
   const projectsWithOPAllocated = nonZeroProjects.map(project => ({
     ...project,
 <<<<<<< HEAD
+<<<<<<< HEAD
     opAllocation: (project.score / totalScore) * 10000000,
 =======
     opAllocated: (project.score / totalScore) * 10000000,
 >>>>>>> adc9232 (add `opAllocated` field to return data)
+=======
+    opAllocation: (project.score / totalScore) * 10000000,
+>>>>>>> c45539e (rename opAllocated => opAllocation)
   }));
   // Remove projects with no impact
   return projectsWithOPAllocated;

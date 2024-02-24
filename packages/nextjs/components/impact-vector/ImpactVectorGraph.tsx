@@ -12,7 +12,7 @@ const transformData = (impactData: DataSet[]): any[] => {
       image: item.metadata["Meta: Project Image"],
       name: item.metadata["Meta: Project Name"],
       profile: `${item.metadata["Meta: Project Name"]}===${item.metadata["Meta: Project Image"]}`,
-      opAllocation: Math.ceil(item.opAllocation),
+      opAllocation: Math.floor(item.opAllocation),
     };
 
     dataKeys.forEach(key => {
@@ -112,11 +112,7 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
                 return (
                   <div className="w-fit h-fit space-y-2 p-4 pt-1 text-sm bg-base-100">
                     <p>{`${data.name}`}</p>
-<<<<<<< HEAD
-                    <p className=" text-red-500 font-semibold">{`OP Allocation: ${data.opAllocation.toLocaleString()}`}</p>
-=======
-                    <p className=" text-red-500 font-semibold">{`OP Allocated: ${data.opAllocated}`}</p>
->>>>>>> adc9232 (add `opAllocated` field to return data)
+                    <p className=" text-red-500 font-semibold">{`OP Allocation: ${data.opAllocation}`}</p>
                     {Object.keys(data)
                       .filter(key => key.endsWith("_actual"))
                       .map(key => {
@@ -159,8 +155,6 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             </linearGradient>
           </defs>
           <CartesianGrid y={3000000} strokeDasharray="2" />
-<<<<<<< HEAD
-<<<<<<< HEAD
           <Area
             type="monotone"
             dataKey="opAllocation"
@@ -169,12 +163,6 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             fill="url(#colorTotal)"
             name="OP Allocation"
           />
-=======
-          <Area type="monotone" dataKey="receivedOP" stroke="#F00420" fillOpacity={1} fill="url(#colorTotal)" />
->>>>>>> f3da886 (change y-axis unit to received OP)
-=======
-          <Area type="monotone" dataKey="opAllocated" stroke="#F00420" fillOpacity={1} fill="url(#colorTotal)" />
->>>>>>> adc9232 (add `opAllocated` field to return data)
         </AreaChart>
       </ResponsiveContainer>
     </div>
