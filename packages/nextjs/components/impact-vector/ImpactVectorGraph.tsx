@@ -20,9 +20,8 @@ const transformData = (impactData: DataSet[]): any[] => {
     const transformedItem: any = {
       image: item.metadata["Meta: Project Image"],
       name: item.metadata["Meta: Project Name"],
-      Rank: Math.floor(item.rank),
       profile: `${item.metadata["Meta: Project Name"]}===${item.metadata["Meta: Project Image"]}`,
-      receivedOP: item.receivedOP,
+      opAllocated: Math.floor(item.opAllocated),
     };
 
     dataKeys.forEach(key => {
@@ -34,9 +33,9 @@ const transformData = (impactData: DataSet[]): any[] => {
   });
 };
 
-// Function to sort array in descending order based on rank
+// Function to sort array in descending order based on opAllocated
 const sortByTotalDescending = (dataSetArray: any[]) => {
-  return dataSetArray.slice().sort((a, b) => b.rank - a.rank);
+  return dataSetArray.slice().sort((a, b) => b.opAllocated - a.opAllocated);
 };
 
 export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
@@ -106,7 +105,7 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
                 return (
                   <div className="w-fit h-fit space-y-2 p-4 pt-1 text-sm bg-base-100">
                     <p>{`${data.name}`}</p>
-                    <p className=" text-red-500 font-semibold">{`Rank: ${data.Rank}`}</p>
+                    <p className=" text-red-500 font-semibold">{`OP Allocated: ${data.opAllocated}`}</p>
                     {Object.keys(data)
                       .filter(key => key.endsWith("_actual"))
                       .map(key => {
@@ -147,7 +146,7 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             </linearGradient>
           </defs>
           <CartesianGrid y={3000000} strokeDasharray="2" />
-          <Area type="monotone" dataKey="receivedOP" stroke="#F00420" fillOpacity={1} fill="url(#colorTotal)" />
+          <Area type="monotone" dataKey="opAllocated" stroke="#F00420" fillOpacity={1} fill="url(#colorTotal)" />
         </AreaChart>
       </ResponsiveContainer>
 
