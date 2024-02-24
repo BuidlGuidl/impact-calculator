@@ -67,6 +67,14 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
 
   return (
     <div className="flex flex-col w-full">
+      {transformedData.length > 0 && (
+        <div className="items-center text-xs justify-end flex">
+          <button onClick={() => setShowVectors(!showVectors)}>{showVectors ? "Hide Vectors" : "Show Vectors"}</button>
+          <button className="px-3" onClick={() => setIsLogarithmic(!isLogarithmic)}>
+            {isLogarithmic ? "Linear" : "Logarithmic"}
+          </button>
+        </div>
+      )}
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           width={500}
@@ -159,15 +167,6 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
           <Area type="monotone" dataKey="Rank" stroke="#F00420" fillOpacity={1} fill="url(#colorTotal)" />
         </AreaChart>
       </ResponsiveContainer>
-
-      {transformedData.length > 0 && (
-        <div className="items-center text-xs justify-end flex">
-          <button onClick={() => setShowVectors(!showVectors)}>{showVectors ? "Hide Vectors" : "Show Vectors"}</button>
-          <button className="px-3" onClick={() => setIsLogarithmic(!isLogarithmic)}>
-            {isLogarithmic ? "Linear" : "Logarithmic"}
-          </button>
-        </div>
-      )}
     </div>
   );
 }

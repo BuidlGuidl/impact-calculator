@@ -63,9 +63,9 @@ const Home: NextPage = () => {
     <main className="max-w-[1700px] mx-auto w-full flex flex-col gap-6 sm:gap-10 b-md:flex-row p-3">
       <div className="w-full min-w-[55%]">
         <h2 className="text-center">Impact Calculator 🌱</h2>
-        <div className="flex w-full h-1/2 pb-2">{impactData.length > 0 && <ImpactVectorGraph data={impactData} />}</div>
+        <div className="flex w-full h-1/2">{impactData.length > 0 && <ImpactVectorGraph data={impactData} />}</div>
         {/* still a work in progress */}
-        <div className="mt-4">
+        <div className="">
           <ImpactVectorTable />
         </div>
       </div>
