@@ -50,7 +50,7 @@ export const Footer = () => {
                 rel="noreferrer"
                 className="link"
               >
-                Fork me
+                View repository
               </a>
             </div>
             <span>·</span>
