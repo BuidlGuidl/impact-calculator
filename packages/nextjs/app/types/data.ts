@@ -66,8 +66,8 @@ export interface Metadata {
 }
 
 export interface DataSet {
-  rank: number;
-  receivedOP: number;
+  score: number;
+  opAllocated: number;
   data: { [key in keyof ImpactVectors]: { normalized: number; actual: string | number | undefined } };
   metadata: Metadata;
 }
