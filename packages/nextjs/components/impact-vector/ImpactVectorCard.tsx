@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { trim } from "lodash";
-import { MdCheck } from "react-icons/md";
+import { HiMiniCheckBadge } from "react-icons/hi2";
 import { useGlobalState } from "~~/services/store/store";
 
 interface ImpactVectorCardProps {
@@ -43,9 +43,9 @@ const ImpactVectorCard = ({ name, description, sourceName }: ImpactVectorCardPro
         {isSelected ? (
           <div
             onClick={e => e.stopPropagation()}
-            className="flex items-center cursor-pointer  p-4 border border-[#7F56D9] rounded-lg"
+            className="flex items-center cursor-pointer  p-3 border-2 border-gray-300 rounded-lg"
           >
-            <MdCheck size={24} className="text-[#7F56D9] w-5 h-5" />
+            <HiMiniCheckBadge size={28} className="text-OPred " />
           </div>
         ) : (
           <div className="">
