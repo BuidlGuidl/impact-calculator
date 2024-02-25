@@ -41,12 +41,9 @@ const ImpactVectorCard = ({ name, description, sourceName }: ImpactVectorCardPro
           <p className="m-0 p-0">{description.length > 100 ? description.slice(0, 100) + "..." : description}</p>
         </div>
         {isSelected ? (
-          <div
-            onClick={e => e.stopPropagation()}
-            className="flex items-center cursor-pointer  p-3 border-2 border-gray-300 rounded-lg"
-          >
-            <HiMiniCheckBadge size={28} className="text-OPred " />
-          </div>
+          <button onClick={e => e.stopPropagation()} className=" p-4 border-2 border-gray-300 rounded-lg">
+            <HiMiniCheckBadge size={24} className="text-OPred w-5 h-5" />
+          </button>
         ) : (
           <div className="">
             <button
@@ -55,7 +52,7 @@ const ImpactVectorCard = ({ name, description, sourceName }: ImpactVectorCardPro
                 e.stopPropagation();
                 handleAddVector(name);
               }}
-              className="rounded-xl bg-primary hover:bg-red-600 p-4"
+              className="rounded-xl border-2 border-primary bg-primary hover:bg-red-600 p-4"
             >
               <Image
                 className="w-5 h-5"
