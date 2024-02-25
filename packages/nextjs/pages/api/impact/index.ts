@@ -2,15 +2,9 @@ import csv from "csv-parser";
 import fs from "fs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import path from "path";
-import { ImpactVectors, Metadata, RetroPGF3Results } from "~~/app/types/data";
+import { DataSet, ImpactVectors, RetroPGF3Results } from "~~/app/types/data";
 
 const dataFilePath = path.join(process.cwd(), "public", "data/RPGF3Results.csv");
-
-interface DataSet {
-  rank: number;
-  data: { [key in keyof ImpactVectors]: { normalized: number; actual: string | number | undefined } };
-  metadata: Metadata;
-}
 
 interface VectorWeight {
   vector: keyof ImpactVectors;
@@ -83,7 +77,8 @@ async function getImpact(vectorWeights: VectorWeight[]) {
   for (const data of projectData) {
     const relevant: DataSet = {
       data: {} as { [key in keyof ImpactVectors]: { normalized: number; actual: string | number | undefined } },
-      rank: 0,
+      score: 0,
+      opAllocation: 0,
       metadata: {
         "Meta: Project Name": data["Meta: Project Name"],
         "Meta: Project Image": data["Meta: Project Image"],
@@ -109,13 +104,21 @@ async function getImpact(vectorWeights: VectorWeight[]) {
         normalized: scaledValue && weight ? scaledValue * weight : 0,
         actual: actualValue,
       };
-      // Add to the rank
-      relevant.rank += relevant.data[vector]?.normalized || 0;
+      // Add to the score
+      relevant.score += relevant.data[vector]?.normalized || 0;
     }
     relevantData.push(relevant);
   }
+
+  const nonZeroProjects = relevantData.filter(data => data.score > 0);
+  // Calculate total OP allocated to each project
+  const totalScore = nonZeroProjects.reduce((total, curr) => total + curr.score, 0);
+  const projectsWithOPAllocated = nonZeroProjects.map(project => ({
+    ...project,
+    opAllocation: (project.score / totalScore) * 10000000,
+  }));
   // Remove projects with no impact
-  return relevantData.filter(data => data.rank > 0);
+  return projectsWithOPAllocated;
 }
 
 function transformField(field: string | number | boolean | undefined): number {

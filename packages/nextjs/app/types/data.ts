@@ -3,7 +3,7 @@ export interface RetroPGF3Results extends ImpactVectors, Metadata {
   "Result: # Ballots": number;
   "Result: Median OP": number;
   "Result: Quorum Reached": boolean;
-  "Result: Received OP": number;
+  "Result: Received OP": string;
   "Funding: Governance Fund": number;
   "Funding: Other": number;
   "Funding: Partner Fund": number;
@@ -66,7 +66,8 @@ export interface Metadata {
 }
 
 export interface DataSet {
-  rank: number;
+  score: number;
+  opAllocation: number;
   data: { [key in keyof ImpactVectors]: { normalized: number; actual: string | number | undefined } };
   metadata: Metadata;
 }

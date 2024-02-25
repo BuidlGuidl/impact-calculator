@@ -2,16 +2,7 @@
 
 import React, { useState } from "react";
 import CustomXAxis from "./CustomXAxis";
-import {
-  Area,
-  AreaChart,
-  CartesianGrid,
-  Line, // Legend,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { Area, AreaChart, CartesianGrid, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { DataSet, ImpactVectors } from "~~/app/types/data";
 
 const transformData = (impactData: DataSet[]): any[] => {
@@ -20,8 +11,8 @@ const transformData = (impactData: DataSet[]): any[] => {
     const transformedItem: any = {
       image: item.metadata["Meta: Project Image"],
       name: item.metadata["Meta: Project Name"],
-      Rank: Math.ceil(item.rank),
       profile: `${item.metadata["Meta: Project Name"]}===${item.metadata["Meta: Project Image"]}`,
+      opAllocation: Math.floor(item.opAllocation),
     };
 
     dataKeys.forEach(key => {
@@ -33,9 +24,9 @@ const transformData = (impactData: DataSet[]): any[] => {
   });
 };
 
-// Function to sort array in descending order based on rank
+// Function to sort array in descending order based on opAllocation
 const sortByTotalDescending = (dataSetArray: any[]) => {
-  return dataSetArray.slice().sort((a, b) => b.rank - a.rank);
+  return dataSetArray.slice().sort((a, b) => b.opAllocation - a.opAllocation);
 };
 
 export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
@@ -121,7 +112,7 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
                 return (
                   <div className="w-fit h-fit space-y-2 p-4 pt-1 text-sm bg-base-100">
                     <p>{`${data.name}`}</p>
-                    <p className=" text-red-500 font-semibold">{`Rank: ${data.Rank}`}</p>
+                    <p className=" text-red-500 font-semibold">{`OP Allocation: ${data.opAllocation}`}</p>
                     {Object.keys(data)
                       .filter(key => key.endsWith("_actual"))
                       .map(key => {
@@ -164,7 +155,14 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             </linearGradient>
           </defs>
           <CartesianGrid y={3000000} strokeDasharray="2" />
-          <Area type="monotone" dataKey="Rank" stroke="#F00420" fillOpacity={1} fill="url(#colorTotal)" />
+          <Area
+            type="monotone"
+            dataKey="opAllocation"
+            stroke="#F00420"
+            fillOpacity={1}
+            fill="url(#colorTotal)"
+            name="OP Allocation"
+          />
         </AreaChart>
       </ResponsiveContainer>
     </div>
