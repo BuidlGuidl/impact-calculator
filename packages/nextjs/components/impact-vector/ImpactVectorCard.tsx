@@ -1,18 +1,20 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { trim } from "lodash";
+import { HiMiniCheckBadge } from "react-icons/hi2";
 import { useGlobalState } from "~~/services/store/store";
 
 interface ImpactVectorCardProps {
   name: string;
   description: string;
-  username: string;
+  sourceName: string;
 }
-const ImpactVectorCard = ({ name, description, username }: ImpactVectorCardProps) => {
+const ImpactVectorCard = ({ name, description, sourceName }: ImpactVectorCardProps) => {
   //the route is hard coded for now
+  const [isSelected, setIsSelected] = useState(false);
   const router = useRouter();
   const { selectedVectors, setSelectedVectors } = useGlobalState();
 
@@ -23,6 +25,10 @@ const ImpactVectorCard = ({ name, description, username }: ImpactVectorCardProps
       setSelectedVectors(newSelectedVectors);
     }
   };
+  useEffect(() => {
+    const selected = selectedVectors.find(vector => vector.name === name);
+    setIsSelected(selected ? true : false);
+  }, [selectedVectors, name]);
 
   return (
     <div
@@ -34,25 +40,32 @@ const ImpactVectorCard = ({ name, description, username }: ImpactVectorCardProps
         <div className=" text-base-content-100 max-w-sm pr-4">
           <p className="m-0 p-0">{description.length > 100 ? description.slice(0, 100) + "..." : description}</p>
         </div>
-        <div className="">
-          <button
-            onClick={e => {
-              e.stopPropagation();
-              handleAddVector(name);
-            }}
-            className="rounded-xl bg-primary hover:bg-red-600 p-4"
-          >
-            <Image
-              className="w-5 h-5"
-              src="assets/svg/folderPlusIcon.svg"
-              alt="folder plus icon"
-              width={24}
-              height={24}
-            />
+        {isSelected ? (
+          <button onClick={e => e.stopPropagation()} className=" p-4 border-2 border-gray-300 rounded-lg">
+            <HiMiniCheckBadge size={24} className="text-OPred w-5 h-5" />
           </button>
-        </div>
+        ) : (
+          <div className="">
+            <button
+              disabled={isSelected}
+              onClick={e => {
+                e.stopPropagation();
+                handleAddVector(name);
+              }}
+              className="rounded-xl border-2 border-primary bg-primary hover:bg-red-600 p-4"
+            >
+              <Image
+                className="w-5 h-5"
+                src="assets/svg/folderPlusIcon.svg"
+                alt="folder plus icon"
+                width={24}
+                height={24}
+              />
+            </button>
+          </div>
+        )}
       </div>
-      <p className=" text-base-content-100  m-0">@{username}</p>
+      <p className=" text-base-content-100  m-0">@{sourceName}</p>
     </div>
   );
 };
