@@ -2,17 +2,7 @@
 
 import React, { useState } from "react";
 import CustomXAxis from "./CustomXAxis";
-import {
-  Area,
-  AreaChart,
-  CartesianGrid,
-  Legend,
-  Line, // Legend,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { Area, AreaChart, CartesianGrid, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { DataSet, ImpactVectors } from "~~/app/types/data";
 
 const transformData = (impactData: DataSet[]): any[] => {
