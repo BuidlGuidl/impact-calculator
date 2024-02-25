@@ -31,7 +31,7 @@ const ImpactTableHeader = ({ sortDesc, setSortDesc, sortBy, setSortBy }: Props) 
         <th scope="col" className=" px-3 lg:px-6  pb-3 w-[75%]  text-start text-xs font-medium  ">
           <div className="flex items-center gap-1">
             <span className="cursor-pointer" onClick={getClickHandler("weight")}>
-              Percentage
+              Weight
             </span>
             {sortBy === "weight" && (sortDesc ? <IoArrowDownSharp /> : <IoArrowUpSharp />)}
           </div>
