@@ -15,9 +15,9 @@ const CustomXAxisTick: React.FC<CustomXAxisProps> = ({ x, y, hovered, payload })
   if (imageUrl)
     return (
       <foreignObject
-        className={`duration-100 ${isHovered ? "z-[1000000000]" : "z-0"}`}
-        x={isHovered ? x - 20 : x}
-        y={isHovered ? y - 20 : y}
+        className={`duration-100 ${isHovered ? "z-[1000000000]" : "z-0"} h-[55px]`}
+        x={isHovered ? x - 22.5 : x}
+        y={y}
         width={isHovered ? "45px" : "7px"}
         height={isHovered ? "45px" : "7px"}
       >
@@ -25,7 +25,7 @@ const CustomXAxisTick: React.FC<CustomXAxisProps> = ({ x, y, hovered, payload })
           width={isHovered ? 45 : 7}
           height={isHovered ? 45 : 7}
           src={imageUrl}
-          style={{ borderRadius: "50%" }}
+          style={{ borderRadius: "50%", marginTop: isHovered ? "8px" : "0px" }}
           alt={name}
         />
       </foreignObject>
