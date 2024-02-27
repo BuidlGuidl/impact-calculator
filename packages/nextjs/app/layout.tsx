@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     description: "Built with 🏗 Impact Calculator",
   },
   icons: {
-    icon: [{ url: "/favicon.png", sizes: "32x32", type: "image/png" }],
+    icon: [{ url: "/favicon.svg", sizes: "32x32", type: "image/svg" }],
   },
 };
 
