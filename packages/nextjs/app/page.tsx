@@ -71,10 +71,8 @@ const Home: NextPage = () => {
       </div>
 
       <div className="max-h-[100dvh] overflow-hidden b-md:max-w-[28rem] w-full rounded-3xl border grid gap-3 mx-auto">
-        <div className="rounded-xl grid grid-cols-2 bg-base-300 p-1">
-          <button className={` bg-base-100 font-semibold  py-1 text- rounded-xl text-center w-full`}>
-            Impact Vectors
-          </button>
+        <div className="rounded-xl grid text-base grid-cols-2 bg-base-300 p-1">
+          <button className={` bg-base-100 py-1 rounded-xl text-center w-full`}>Impact Vectors</button>
           <button className={`py-1 text-customGray rounded-xl text-center w-full bg-[#f2f4f9]`}>Lists</button>
         </div>
         <SearchBar />
