@@ -162,7 +162,7 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             fillOpacity={1}
             fill="url(#colorTotal)"
             name="OP Allocation"
-            strokeWidth={2}
+            strokeWidth={1.5}
           />
         </AreaChart>
       </ResponsiveContainer>
