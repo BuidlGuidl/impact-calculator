@@ -112,7 +112,7 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
                 return (
                   <div className="w-fit h-fit space-y-2 p-4 pt-1 text-sm bg-base-100">
                     <p>{`${data.name}`}</p>
-                    <p className=" text-red-500 font-semibold">{`OP Allocation: ${data.opAllocation}`}</p>
+                    <p className=" text-red-500 font-semibold">{`OP Allocation: ${data.opAllocation.toLocaleString()}`}</p>
                     {Object.keys(data)
                       .filter(key => key.endsWith("_actual"))
                       .map(key => {
