@@ -110,9 +110,9 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
               if (active && payload && payload.length) {
                 const data = payload[0].payload;
                 return (
-                  <div className="w-fit h-fit space-y-2 p-4 pt-1 text-sm bg-base-100">
+                  <div className="w-fit h-fit space-y-2 p-4 pt-1 text-sm bg-base-300">
                     <p>{`${data.name}`}</p>
-                    <p className=" text-red-500 font-semibold">{`OP Allocation: ${data.opAllocation}`}</p>
+                    <p className=" text-red-500 text-base font-semibold">{`OP Allocation: ${data.opAllocation}`}</p>
                     {Object.keys(data)
                       .filter(key => key.endsWith("_actual"))
                       .map(key => {

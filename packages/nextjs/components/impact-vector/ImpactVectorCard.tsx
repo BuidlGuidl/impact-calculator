@@ -35,9 +35,9 @@ const ImpactVectorCard = ({ name, description, sourceName }: ImpactVectorCardPro
       onClick={() => router.push("/impact/1")}
       className="mr-1 cursor-pointer rounded-xl text-sm border-[0.2px] border-secondary-text/50 p-4 bg-base-300 flex flex-col justify-between gap-4 my-1"
     >
-      <h2 className=" m-0 font-bold"> {trim(name.split(":")[1])}</h2>
+      <h2 className="m-0 font-bold"> {trim(name.split(":")[1])}</h2>
       <div className="flex items-center justify-between">
-        <div className=" text-xs text-gray-600 max-w-sm pr-4">
+        <div className=" text-sm text-gray-600 max-w-sm pr-4">
           <p className="m-0 p-0">{description.length > 100 ? description.slice(0, 100) + "..." : description}</p>
         </div>
         {isSelected ? (
