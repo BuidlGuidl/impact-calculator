@@ -6,6 +6,9 @@ import { DataSet, ImpactVectors, RetroPGF3Results } from "~~/app/types/data";
 
 const dataFilePath = path.join(process.cwd(), "public", "data/RPGF3Results.csv");
 
+// Protocol Guild contains metrics for many different projects that are included individually
+const excludedProjects = ["Protocol Guild"];
+
 interface VectorWeight {
   vector: keyof ImpactVectors;
   weight: number;
@@ -55,7 +58,9 @@ async function getImpact(vectorWeights: VectorWeight[]) {
     fs.createReadStream(dataFilePath)
       .pipe(csv())
       .on("data", row => {
-        data.push(row);
+        if (!excludedProjects.includes(row["Meta: Project Name"])) {
+          data.push(row);
+        }
       })
       .on("end", () => {
         resolve(data);
