@@ -37,15 +37,15 @@ const ImpactVectorCard = ({ name, description, sourceName }: ImpactVectorCardPro
     >
       <h2 className=" m-0 font-bold"> {trim(name.split(":")[1])}</h2>
       <div className="flex items-center justify-between">
-        <div className=" text-base-content-100 max-w-sm pr-8">
+        <div className=" text-xs text-gray-600 max-w-sm pr-4">
           <p className="m-0 p-0">{description.length > 100 ? description.slice(0, 100) + "..." : description}</p>
         </div>
         {isSelected ? (
-          <button onClick={e => e.stopPropagation()} className=" p-4 border-2 border-gray-300 rounded-lg">
+          <button onClick={e => e.stopPropagation()} className="p-4 border-2 border-gray-300 rounded-lg">
             <HiMiniCheckBadge size={24} className="text-OPred w-5 h-5" />
           </button>
         ) : (
-          <div className="">
+          <div className="w-1/3 flex justify-end">
             <button
               disabled={isSelected}
               onClick={e => {
