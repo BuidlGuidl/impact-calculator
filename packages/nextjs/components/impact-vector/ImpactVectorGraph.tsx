@@ -12,7 +12,7 @@ const transformData = (impactData: DataSet[]): any[] => {
       image: item.metadata["Meta: Project Image"],
       name: item.metadata["Meta: Project Name"],
       profile: `${item.metadata["Meta: Project Name"]}===${item.metadata["Meta: Project Image"]}`,
-      opAllocation: Math.floor(item.opAllocation),
+      opAllocation: Math.ceil(item.opAllocation),
     };
 
     dataKeys.forEach(key => {
