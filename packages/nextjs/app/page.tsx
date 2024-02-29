@@ -13,6 +13,7 @@ import { useGlobalState } from "~~/services/store/store";
 const Home: NextPage = () => {
   const { selectedVectors, setSelectedVectors } = useGlobalState();
   const [impactData, setImpactData] = useState<DataSet[]>([]);
+  const [fullGraph, setFullGraph] = useState<boolean>(false);
 
   useEffect(() => {
     // Initialize selected vector
@@ -63,7 +64,11 @@ const Home: NextPage = () => {
     <main className="w-full flex flex-col gap-6 sm:gap-10 b-md:flex-row p-3">
       <div className="w-full min-w-[55%]">
         <h2 className="text-center">Impact Calculator 🌱</h2>
-        <div className="flex w-full h-1/2">{impactData.length > 0 && <ImpactVectorGraph data={impactData} />}</div>
+        <div className="flex w-full h-1/2">
+          {impactData.length > 0 && (
+            <ImpactVectorGraph data={impactData} fullGraph={fullGraph} setFullGraph={setFullGraph} />
+          )}
+        </div>
         {/* still a work in progress */}
         <div className="mx-5">
           <ImpactVectorTable />
