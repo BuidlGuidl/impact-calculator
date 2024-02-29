@@ -64,28 +64,29 @@ const Home: NextPage = () => {
     <main
       className={`w-full flex flex-col gap-6 sm:gap-10 b-md:flex-row p-3 ${!fullGraph && "lg:mb-[22rem]"} relative`}
     >
-      <div className="w-full min-w-[55%]">
+      <div className={`${fullGraph ? "w-full" : "lg:w-[55%]"} duration-400 ease-in-out h-[60vh] transition-all`}>
         <h2 className="text-center">Impact Calculator 🌱</h2>
-        <div className="flex w-full h-1/2">
+        <div className="flex w-full h-[60vh]">
           {impactData.length > 0 && (
             <ImpactVectorGraph data={impactData} fullGraph={fullGraph} setFullGraph={setFullGraph} />
           )}
         </div>
-        {/* still a work in progress */}
+      </div>
+
+      <div className="flex flex-col lg:flex-row">
         <div className="mx-5">
           <ImpactVectorTable />
         </div>
-      </div>
-
-      <div className="max-h-[100dvh] overflow-hidden b-md:max-w-[34rem] w-full rounded-3xl p-6 border grid gap-6 mx-auto">
-        <div className="rounded-xl grid grid-cols-2 bg-base-300 p-1">
-          <button className={` bg-base-100 font-semibold  py-3 text- rounded-xl text-center w-full`}>
-            Impact Vectors
-          </button>
-          <button className={`py-3 text-customGray rounded-xl text-center w-full bg-[#f2f4f9]`}>Lists</button>
+        <div className="max-h-[100dvh] overflow-hidden b-md:max-w-[34rem] w-full rounded-3xl p-6 border grid gap-6 mx-auto">
+          <div className="rounded-xl grid grid-cols-2 bg-base-300 p-1">
+            <button className={` bg-base-100 font-semibold  py-3 text- rounded-xl text-center w-full`}>
+              Impact Vectors
+            </button>
+            <button className={`py-3 text-customGray rounded-xl text-center w-full bg-[#f2f4f9]`}>Lists</button>
+          </div>
+          <SearchBar />
+          <ImpactVectorDisplay />
         </div>
-        <SearchBar />
-        <ImpactVectorDisplay />
       </div>
     </main>
   );
