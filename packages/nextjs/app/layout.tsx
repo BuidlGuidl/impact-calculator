@@ -13,13 +13,13 @@ export const metadata: Metadata = {
     default: "Impact Calculator",
     template: "%s | Impact Calculator",
   },
-  description: "Built with 🏗 Impact Calculator",
+  description: "Impact Calculator | Powered by BuidlGuidl",
   openGraph: {
     title: {
       default: "Impact Calculator App",
       template: "%s | Impact Calculator",
     },
-    description: "Built with 🏗 Impact Calculator",
+    description: "Impact Calculator | Powered by BuidlGuidl",
     images: [
       {
         url: imageUrl,
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
       default: "Impact Calculator",
       template: "%s | Impact Calculator",
     },
-    description: "Built with 🏗 Impact Calculator",
+    description: "Impact Calculator | Powered by BuidlGuidl",
   },
   icons: {
     icon: [{ url: "/favicon.svg", sizes: "32x32", type: "image/svg" }],
