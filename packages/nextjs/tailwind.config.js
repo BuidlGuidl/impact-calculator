@@ -110,6 +110,7 @@ module.exports = {
       screens: {
         xs: "480px",
         "b-md": "880px",
+        "3xl": "1800px",
       },
     },
   },

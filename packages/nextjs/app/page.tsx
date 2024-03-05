@@ -62,7 +62,11 @@ const Home: NextPage = () => {
 
   return (
     <main className={`w-full flex flex-col gap-6 sm:gap-10 p-3 ${!fullGraph && "lg:mb-[22rem]"} relative`}>
-      <div className={`${fullGraph ? "w-full" : "lg:w-[58%]"} duration-500 ease-in-out h-[60vh] transition-all`}>
+      <div
+        className={`${
+          fullGraph ? "w-full" : "lg:w-[50%] xl:w-[58%] 2xl:w-[64%] 3xl:w-[70%]"
+        } duration-500 ease-in-out h-[60vh] transition-all`}
+      >
         <h2 className="text-center">Impact Calculator 🌱</h2>
         <div className="flex w-full h-[60vh]">
           {impactData.length > 0 && (
@@ -72,7 +76,11 @@ const Home: NextPage = () => {
       </div>
 
       <div className="flex flex-col lg:flex-row">
-        <div className={`lg:mx-5 ${fullGraph ? "flex-1" : "lg:w-[58%]"} w-full lg:mt-0 mt-6`}>
+        <div
+          className={`lg:mx-5 ${
+            fullGraph ? "flex-1" : "lg:w-[50%] xl:w-[58%] 2xl:w-[64%] 3xl:w-[70%]"
+          } w-full lg:mt-0 mt-6`}
+        >
           <ImpactVectorTable />
         </div>
         <div
