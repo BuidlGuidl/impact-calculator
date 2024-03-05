@@ -80,7 +80,6 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
     }
   };
 
-  console.log({ transformedData });
   return (
     <div className="flex flex-col w-full">
       {transformedData.length > 0 && (
