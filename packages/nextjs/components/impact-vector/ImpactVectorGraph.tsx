@@ -47,15 +47,13 @@ const transformData = (impactData: DataSet[]): any[] => {
     const totalNormalized = dataKeys.reduce((total, key) => total + (vectorDataSet.data[key]?.normalized || 0), 0);
 
     dataKeys.forEach(key => {
-      const normalizedValue = vectorDataSet.data[key]?.normalized;
-      if (normalizedValue) {
-        const percentageOfOp = normalizedValue / totalNormalized;
-        const amountOPDueToVector = vectorDataSet.opAllocation * percentageOfOp;
+      const normalizedValue = vectorDataSet.data[key]?.normalized || 0;
+      const percentageOfOp = normalizedValue / totalNormalized;
+      const amountOPDueToVector = vectorDataSet.opAllocation * percentageOfOp;
 
-        transformedItem[`${key}_normalized`] = normalizedValue;
-        transformedItem[`${key}_actual`] = vectorDataSet.data[key]?.actual;
-        transformedItem[`${key}`] = amountOPDueToVector;
-      }
+      transformedItem[`${key}_normalized`] = normalizedValue;
+      transformedItem[`${key}_actual`] = vectorDataSet.data[key]?.actual;
+      transformedItem[`${key}`] = amountOPDueToVector;
     });
 
     return transformedItem;
@@ -169,7 +167,6 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             Object.keys(transformedData[0])
               .filter(shouldRenderAsVector)
               .map(key => {
-                console.log({ key });
                 return (
                   <Bar
                     key={key}
