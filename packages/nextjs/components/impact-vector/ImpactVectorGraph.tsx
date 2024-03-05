@@ -3,8 +3,9 @@
 import React, { useState } from "react";
 import CustomXAxis from "./CustomXAxis";
 import { scaleSymlog } from "d3-scale";
-import { Area, Bar, CartesianGrid, ComposedChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, Bar, CartesianGrid, ComposedChart, ResponsiveContainer, Text, Tooltip, XAxis, YAxis } from "recharts";
 import { DataSet, ImpactVectors } from "~~/app/types/data";
+import { abbreviateNumber } from "~~/utils/impactCalculator/common";
 
 const logScale = scaleSymlog();
 
@@ -80,7 +81,6 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
     }
   };
 
-  console.log({ transformedData });
   return (
     <div className="flex flex-col w-full">
       {transformedData.length > 0 && (
@@ -121,7 +121,13 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             tickMargin={10}
             scale={isLogarithmic ? logScale : "linear"}
             domain={["auto", "auto"]}
+            tickFormatter={abbreviateNumber}
             allowDataOverflow
+            label={
+              <Text x={0} y={0} dx={15} dy={150} offset={0} angle={-90}>
+                OP Allocation
+              </Text>
+            }
           />
           <XAxis
             dataKey="profile"
