@@ -3,23 +3,33 @@
 import React, { useState } from "react";
 import CustomXAxis from "./CustomXAxis";
 import { scaleSymlog } from "d3-scale";
-import { Area, CartesianGrid, ComposedChart, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, Bar, CartesianGrid, ComposedChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { DataSet, ImpactVectors } from "~~/app/types/data";
 
 const logScale = scaleSymlog();
 
 const NON_VECTOR_KEYS = ["image", "name", "profile", "opAllocation"];
-const VECTOR_COLORS = [
-  "text-[#ffa500]",
-  "text-[#00ff00]",
-  "text-[#0000ff]",
-  "text-[#ffff00]",
-  "text-[#00ffff]",
-  "text-[#008000]",
-  "text-[#ff00ff]",
-  "text-[#800080]",
-  "text-[#000080]",
-];
+
+const COLOR_CLASS_BY_VECTOR: { [key in keyof ImpactVectors]: string } = {
+  "OSO: # GitHub Repos": "text-[#ff0000]",
+  "OSO: Date First Commit": "text-[#00ff00]",
+  "OSO: Total Stars": "text-[#0000ff]",
+  "OSO: Total Forks": "text-[#ffff00]",
+  "OSO: Total Contributors": "text-[#ff00ff]",
+  "OSO: Contributors Last 6 Months": "text-[#00ffff]",
+  "OSO: Avg Monthly Active Devs Last 6 Months": "text-[#ff8000]",
+  "OSO: # OP Contracts": "text-[#8000ff]",
+  "OSO: Date First Txn": "text-[#00ff80]",
+  "OSO: Total Onchain Users": "text-[#ff0080]",
+  "OSO: Onchain Users Last 6 Months": "text-[#80ff00]",
+  "OSO: Total Txns": "text-[#0080ff]",
+  "OSO: Total Txn Fees (ETH)": "text-[#ff0080]",
+  "OSO: Txn Fees Last 6 Months (ETH)": "text-[#ff80ff]",
+  "OSO: # NPM Packages": "text-[#80ff80]",
+  "OSO: Date First Download": "text-[#8080ff]",
+  "OSO: Total Downloads": "text-[#ffff80]",
+  "OSO: Downloads Last 6 Months": "text-[#80ffff]",
+};
 const shouldRenderAsVector = (key: string) =>
   !key.includes("_actual") && !key.includes("_normalized") && !NON_VECTOR_KEYS.includes(key);
 
@@ -70,6 +80,7 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
     }
   };
 
+  console.log({ transformedData });
   return (
     <div className="flex flex-col w-full">
       {transformedData.length > 0 && (
@@ -127,18 +138,24 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
                 return (
                   <div className="w-fit h-fit space-y-2 p-4 pt-1 text-sm bg-base-100">
                     <p>{`${data.name}`}</p>
-                    <p className=" text-red-500 font-semibold">{`OP Allocation: ${data.opAllocation}`}</p>
+                    <p>
+                      <span className=" text-red-500 font-semibold">OP Allocation:</span> {data.opAllocation}
+                    </p>
                     {Object.keys(data)
                       .filter(key => key.endsWith("_actual"))
-                      .map((key, i) => {
+                      .map(key => {
                         const value = data[key];
                         const formattedValue = !isNaN(value || "string")
                           ? Math.floor(parseFloat(value)) || "none"
                           : value || "none";
+                        const label = key.replace(/^OSO:/, "").replace("_actual", "");
                         return (
-                          <p className={VECTOR_COLORS[i]} key={key}>{`${key
-                            .replace(/^OSO:/, "")
-                            .replace("_actual", "")}: ${formattedValue}`}</p>
+                          <p key={key}>
+                            <span className={COLOR_CLASS_BY_VECTOR[key.replace("_actual", "") as keyof ImpactVectors]}>
+                              {label}:{" "}
+                            </span>
+                            {`${formattedValue}`}
+                          </p>
                         );
                       })}
                   </div>
@@ -152,15 +169,14 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             transformedData[0] &&
             Object.keys(transformedData[0])
               .filter(shouldRenderAsVector)
-              .map((key, index) => {
+              .map(key => {
+                console.log({ key });
                 return (
-                  <Line
+                  <Bar
                     key={key}
-                    type="monotone"
                     dataKey={key}
-                    stroke={VECTOR_COLORS[index].match(/#[0-9A-Fa-f]{6}/)?.[0]}
-                    dot={false}
-                    strokeWidth={1}
+                    fill={COLOR_CLASS_BY_VECTOR[key as keyof ImpactVectors]?.match(/#[0-9A-Fa-f]{6}/)?.[0]}
+                    stackId={1}
                   />
                 );
               })}
