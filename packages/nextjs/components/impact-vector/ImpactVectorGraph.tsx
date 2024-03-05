@@ -2,22 +2,50 @@
 
 import React, { useState } from "react";
 import CustomXAxis from "./CustomXAxis";
-import { Area, AreaChart, CartesianGrid, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { scaleSymlog } from "d3-scale";
+import { Area, CartesianGrid, ComposedChart, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { DataSet, ImpactVectors } from "~~/app/types/data";
 
+const logScale = scaleSymlog();
+
+const NON_VECTOR_KEYS = ["image", "name", "profile", "opAllocation"];
+const VECTOR_COLORS = [
+  "text-[#ffa500]",
+  "text-[#00ff00]",
+  "text-[#0000ff]",
+  "text-[#ffff00]",
+  "text-[#00ffff]",
+  "text-[#008000]",
+  "text-[#ff00ff]",
+  "text-[#800080]",
+  "text-[#000080]",
+];
+const shouldRenderAsVector = (key: string) =>
+  !key.includes("_actual") && !key.includes("_normalized") && !NON_VECTOR_KEYS.includes(key);
+
 const transformData = (impactData: DataSet[]): any[] => {
-  return impactData.map(item => {
-    const dataKeys = Object.keys(item.data) as (keyof ImpactVectors)[];
+  return impactData.map(vectorDataSet => {
+    const dataKeys = Object.keys(vectorDataSet.data) as (keyof ImpactVectors)[];
     const transformedItem: any = {
-      image: item.metadata["Meta: Project Image"],
-      name: item.metadata["Meta: Project Name"],
-      profile: `${item.metadata["Meta: Project Name"]}===${item.metadata["Meta: Project Image"]}`,
-      opAllocation: Math.ceil(item.opAllocation),
+      image: vectorDataSet.metadata["Meta: Project Image"],
+      name: vectorDataSet.metadata["Meta: Project Name"],
+      profile: `${vectorDataSet.metadata["Meta: Project Name"]}===${vectorDataSet.metadata["Meta: Project Image"]}`,
+      opAllocation: Math.floor(vectorDataSet.opAllocation),
     };
 
+    // calculate each vectors portion of total OP allocated
+    const totalNormalized = dataKeys.reduce((total, key) => total + (vectorDataSet.data[key]?.normalized || 0), 0);
+
     dataKeys.forEach(key => {
-      transformedItem[`${key}_normalized`] = item.data[key]?.normalized;
-      transformedItem[`${key}_actual`] = item.data[key]?.actual;
+      const normalizedValue = vectorDataSet.data[key]?.normalized;
+      if (normalizedValue) {
+        const percentageOfOp = normalizedValue / totalNormalized;
+        const amountOPDueToVector = vectorDataSet.opAllocation * percentageOfOp;
+
+        transformedItem[`${key}_normalized`] = normalizedValue;
+        transformedItem[`${key}_actual`] = vectorDataSet.data[key]?.actual;
+        transformedItem[`${key}`] = amountOPDueToVector;
+      }
     });
 
     return transformedItem;
@@ -42,20 +70,6 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
     }
   };
 
-  // color array for vector lines
-  const vectorColors = [
-    "#ff0000",
-    "#00ff00",
-    "#0000ff",
-    "#ffff00",
-    "#00ffff",
-    "#ff00ff",
-    "#ffa500",
-    "#008000",
-    "#800080",
-    "#000080",
-  ];
-
   return (
     <div className="flex flex-col w-full">
       {transformedData.length > 0 && (
@@ -67,7 +81,7 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
         </div>
       )}
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart
+        <ComposedChart
           width={500}
           height={300}
           data={transformedData}
@@ -94,8 +108,9 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             tickLine={false}
             className="text-xs opacity-50"
             tickMargin={10}
-            scale={isLogarithmic ? "log" : "linear"}
+            scale={isLogarithmic ? logScale : "linear"}
             domain={["auto", "auto"]}
+            allowDataOverflow
           />
           <XAxis
             dataKey="profile"
@@ -112,16 +127,18 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
                 return (
                   <div className="w-fit h-fit space-y-2 p-4 pt-1 text-sm bg-base-100">
                     <p>{`${data.name}`}</p>
-                    <p className=" text-red-500 font-semibold">{`OP Allocation: ${data.opAllocation.toLocaleString()}`}</p>
+                    <p className=" text-red-500 font-semibold">{`OP Allocation: ${data.opAllocation}`}</p>
                     {Object.keys(data)
                       .filter(key => key.endsWith("_actual"))
-                      .map(key => {
+                      .map((key, i) => {
                         const value = data[key];
                         const formattedValue = !isNaN(value || "string")
                           ? Math.floor(parseFloat(value)) || "none"
                           : value || "none";
                         return (
-                          <p key={key}>{`${key.replace(/^OSO:/, "").replace("_actual", "")}: ${formattedValue}`}</p>
+                          <p className={VECTOR_COLORS[i]} key={key}>{`${key
+                            .replace(/^OSO:/, "")
+                            .replace("_actual", "")}: ${formattedValue}`}</p>
                         );
                       })}
                   </div>
@@ -133,21 +150,20 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
 
           {showVectors &&
             transformedData[0] &&
-            Object.keys(transformedData[0]).map((key, index) => {
-              if (key !== "image" && key !== "name" && key !== "Rank" && !key.includes("_actual")) {
+            Object.keys(transformedData[0])
+              .filter(shouldRenderAsVector)
+              .map((key, index) => {
                 return (
                   <Line
                     key={key}
                     type="monotone"
                     dataKey={key}
-                    stroke={vectorColors[index % vectorColors.length]}
+                    stroke={VECTOR_COLORS[index].match(/#[0-9A-Fa-f]{6}/)?.[0]}
                     dot={false}
                     strokeWidth={1}
                   />
                 );
-              }
-              return null;
-            })}
+              })}
           <defs>
             <linearGradient id="colorTotal" x1="0" y1="1" x2="0" y2="0">
               <stop offset="5%" stopColor="rgba(20, 124, 73, 0.1)" stopOpacity={0.8} />
@@ -163,7 +179,7 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             fill="url(#colorTotal)"
             name="OP Allocation"
           />
-        </AreaChart>
+        </ComposedChart>
       </ResponsiveContainer>
     </div>
   );
