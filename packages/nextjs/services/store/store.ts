@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { Vector } from "~~/app/types/data";
 import scaffoldConfig from "~~/scaffold.config";
 import { ChainWithAttributes } from "~~/utils/scaffold-eth";
 
@@ -12,8 +13,8 @@ import { ChainWithAttributes } from "~~/utils/scaffold-eth";
  */
 
 type GlobalState = {
-  selectedVectors: { name: string; weight: number }[];
-  setSelectedVectors: (newSelectedVectors: { name: string; weight: number }[]) => void;
+  selectedVectors: Vector[];
+  setSelectedVectors: (newSelectedVectors: Vector[]) => void;
   nativeCurrencyPrice: number;
   setNativeCurrencyPrice: (newNativeCurrencyPriceState: number) => void;
   targetNetwork: ChainWithAttributes;
@@ -22,8 +23,7 @@ type GlobalState = {
 
 export const useGlobalState = create<GlobalState>(set => ({
   selectedVectors: [],
-  setSelectedVectors: (newSelectedVectors: { name: string; weight: number }[]) =>
-    set(() => ({ selectedVectors: newSelectedVectors })),
+  setSelectedVectors: (newSelectedVectors: Vector[]) => set(() => ({ selectedVectors: newSelectedVectors })),
   nativeCurrencyPrice: 0,
   setNativeCurrencyPrice: (newValue: number): void => set(() => ({ nativeCurrencyPrice: newValue })),
   targetNetwork: scaffoldConfig.targetNetworks[0],

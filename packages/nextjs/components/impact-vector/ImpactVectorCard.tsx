@@ -5,10 +5,11 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { trim } from "lodash";
 import { HiMiniCheckBadge } from "react-icons/hi2";
+import { ImpactVectors } from "~~/app/types/data";
 import { useGlobalState } from "~~/services/store/store";
 
 interface ImpactVectorCardProps {
-  name: string;
+  name: keyof ImpactVectors;
   description: string;
   sourceName: string;
 }
@@ -18,7 +19,7 @@ const ImpactVectorCard = ({ name, description, sourceName }: ImpactVectorCardPro
   const router = useRouter();
   const { selectedVectors, setSelectedVectors } = useGlobalState();
 
-  const handleAddVector = (vectorName: string) => {
+  const handleAddVector = (vectorName: keyof ImpactVectors) => {
     // Check if the vector is not already selected
     if (!selectedVectors.find(vector => vector.name === vectorName)) {
       const newSelectedVectors = [...selectedVectors, { name: vectorName, weight: 100 }];

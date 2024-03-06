@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DataSet } from "./types/data";
+import { DataSet, Vector } from "./types/data";
 import { debounce } from "lodash";
 import type { NextPage } from "next";
 import ImpactVectorDisplay from "~~/components/impact-vector/ImpactVectorDisplay";
@@ -30,7 +30,7 @@ const Home: NextPage = () => {
 
         // Check if all selected vectors have valid names and weights
         const isValidSelection = selectedVectors.every(
-          (vector: { name: string; weight: number }) => vector.name.trim() !== "" && !isNaN(vector.weight),
+          (vector: Vector) => vector.name.trim() !== "" && !isNaN(vector.weight),
         );
 
         if (!isValidSelection) {
