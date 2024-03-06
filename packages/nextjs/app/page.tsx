@@ -13,6 +13,7 @@ import { useGlobalState } from "~~/services/store/store";
 const Home: NextPage = () => {
   const { selectedVectors, setSelectedVectors } = useGlobalState();
   const [impactData, setImpactData] = useState<DataSet[]>([]);
+  const [fullGraph, setFullGraph] = useState<boolean>(false);
 
   useEffect(() => {
     // Initialize selected vector
@@ -60,25 +61,42 @@ const Home: NextPage = () => {
   }, [selectedVectors]);
 
   return (
-    <main className="w-full flex flex-col gap-6 sm:gap-10 b-md:flex-row p-3">
-      <div className="w-full min-w-[55%]">
+    <main className={`w-full flex flex-col gap-6 sm:gap-10 p-3 ${!fullGraph && "lg:mb-[22rem]"} relative`}>
+      <div
+        className={`${
+          fullGraph ? "w-full" : "lg:w-[50%] xl:w-[58%] 2xl:w-[64%] 3xl:w-[70%]"
+        } duration-500 ease-in-out h-[60vh] transition-all`}
+      >
         <h2 className="text-center">Impact Calculator 🌱</h2>
-        <div className="flex w-full h-1/2">{impactData.length > 0 && <ImpactVectorGraph data={impactData} />}</div>
-        {/* still a work in progress */}
-        <div className="mx-5">
-          <ImpactVectorTable />
+        <div className="flex w-full h-[60vh]">
+          {impactData.length > 0 && (
+            <ImpactVectorGraph data={impactData} fullGraph={fullGraph} setFullGraph={setFullGraph} />
+          )}
         </div>
       </div>
 
-      <div className="max-h-[100dvh] overflow-hidden b-md:max-w-[34rem] w-full rounded-3xl p-6 border grid gap-6 mx-auto">
-        <div className="rounded-xl grid grid-cols-2 bg-base-300 p-1">
-          <button className={` bg-base-100 font-semibold  py-3 text- rounded-xl text-center w-full`}>
-            Impact Vectors
-          </button>
-          <button className={`py-3 text-customGray rounded-xl text-center w-full bg-[#f2f4f9]`}>Lists</button>
+      <div className="flex flex-col lg:flex-row">
+        <div
+          className={`lg:mx-5 ${
+            fullGraph ? "flex-1" : "lg:w-[50%] xl:w-[58%] 2xl:w-[64%] 3xl:w-[70%]"
+          } w-full lg:mt-0 mt-6`}
+        >
+          <ImpactVectorTable />
         </div>
-        <SearchBar />
-        <ImpactVectorDisplay />
+        <div
+          className={`b-md:w-[34rem] w-full ${
+            fullGraph ? "lg:relative mt-0" : "lg:absolute lg:top-0 lg:right-0"
+          } transition-all overflow-hidden h-auto b-md:max-w-[34rem] rounded-3xl p-6 border grid gap-6 mx-auto duration-1000 ease-in-out`}
+        >
+          <div className="rounded-xl grid grid-cols-2 bg-base-300 p-1">
+            <button className={` bg-base-100 font-semibold  py-3 text- rounded-xl text-center w-full`}>
+              Impact Vectors
+            </button>
+            <button className={`py-3 text-customGray rounded-xl text-center w-full bg-[#f2f4f9]`}>Lists</button>
+          </div>
+          <SearchBar />
+          <ImpactVectorDisplay />
+        </div>
       </div>
     </main>
   );
