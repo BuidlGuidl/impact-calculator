@@ -124,7 +124,7 @@ export default function ImpactVectorGraph({ data }: { data: DataSet[] }) {
             tickFormatter={abbreviateNumber}
             allowDataOverflow
             label={
-              <Text x={0} y={0} dx={15} dy={150} offset={0} angle={-90}>
+              <Text x={0} y={0} dx={20} dy={150} offset={0} angle={-90} className="text-sm">
                 OP Allocation
               </Text>
             }
