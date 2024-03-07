@@ -1,4 +1,10 @@
-export const impactVectors = [
+import { ImpactVectors } from "~~/app/types/data";
+
+export const impactVectors: {
+  name: keyof ImpactVectors;
+  description: string;
+  sourceName: string;
+}[] = [
   {
     name: "OSO: Total Stars",
     description:

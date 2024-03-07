@@ -71,3 +71,8 @@ export interface DataSet {
   data: { [key in keyof ImpactVectors]: { normalized: number; actual: string | number | undefined } };
   metadata: Metadata;
 }
+
+export interface Vector {
+  name: keyof ImpactVectors;
+  weight: number;
+}
