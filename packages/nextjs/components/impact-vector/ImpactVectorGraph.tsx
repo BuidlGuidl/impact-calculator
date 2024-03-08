@@ -173,9 +173,14 @@ export default function ImpactVectorGraph({
                       .filter(key => key.endsWith("_actual"))
                       .map(key => {
                         const value = data[key];
-                        const formattedValue = !isNaN(value || "string")
-                          ? Math.floor(parseFloat(value)) || "none"
-                          : value || "none";
+                        let formattedValue;
+                        if (key.includes("(ETH)")) {
+                          formattedValue = value !== "none" ? `${value} ETH` : "none";
+                        } else {
+                          formattedValue = !isNaN(value || "string")
+                            ? Math.floor(parseFloat(value)) || "none"
+                            : value || "none";
+                        }
                         const label = key.replace(/^OSO:/, "").replace("_actual", "");
                         return (
                           <p key={key}>
