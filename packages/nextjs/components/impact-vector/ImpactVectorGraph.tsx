@@ -184,9 +184,9 @@ export default function ImpactVectorGraph({
                             } else {
                               decimalPlace = value.indexOf(value.match(/[1-9]/));
                             }
-                            formattedValue = `${numberValue.toFixed(decimalPlace)} ETH`;
+                            formattedValue = `Ξ ${numberValue.toFixed(decimalPlace)}`;
                           } else {
-                            formattedValue = value && value !== "none" ? `${value} ETH` : "none";
+                            formattedValue = value && value !== "none" ? `Ξ ${parseFloat(value).toFixed(9)}` : "none";
                           }
                         } else {
                           formattedValue = !isNaN(value || "string")
