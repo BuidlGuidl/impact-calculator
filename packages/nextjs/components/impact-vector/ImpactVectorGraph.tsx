@@ -175,7 +175,19 @@ export default function ImpactVectorGraph({
                         const value = data[key];
                         let formattedValue;
                         if (key.includes("(ETH)")) {
-                          formattedValue = value && value !== "none" ? `${value} ETH` : "none";
+                          if (value && value !== "none" && !value.includes("e")) {
+                            const numberValue = parseFloat(value);
+
+                            let decimalPlace;
+                            if (numberValue > 1) {
+                              decimalPlace = value.indexOf(".") + 1;
+                            } else {
+                              decimalPlace = value.indexOf(value.match(/[1-9]/));
+                            }
+                            formattedValue = `${numberValue.toFixed(decimalPlace)} ETH`;
+                          } else {
+                            formattedValue = value && value !== "none" ? `${value} ETH` : "none";
+                          }
                         } else {
                           formattedValue = !isNaN(value || "string")
                             ? Math.floor(parseFloat(value)) || "none"
