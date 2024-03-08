@@ -2,11 +2,12 @@
 
 import React, { Dispatch, SetStateAction, useState } from "react";
 import CustomXAxis from "./CustomXAxis";
-import { scaleSymlog } from "d3-scale";
-import { Area, Bar, CartesianGrid, ComposedChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { scaleLog } from "d3-scale";
+import { Area, Bar, CartesianGrid, ComposedChart, ResponsiveContainer, Text, Tooltip, XAxis, YAxis } from "recharts";
 import { DataSet, ImpactVectors } from "~~/app/types/data";
+import { abbreviateNumber } from "~~/utils/impactCalculator/common";
 
-const logScale = scaleSymlog();
+const logScale = scaleLog();
 
 const NON_VECTOR_KEYS = ["image", "name", "profile", "opAllocation"];
 
@@ -141,8 +142,14 @@ export default function ImpactVectorGraph({
             className="text-xs opacity-50"
             tickMargin={10}
             scale={isLogarithmic ? logScale : "linear"}
-            domain={["auto", "auto"]}
+            domain={[1, "auto"]}
+            tickFormatter={abbreviateNumber}
             allowDataOverflow
+            label={
+              <Text x={0} y={0} dx={20} dy={150} offset={0} angle={-90} className="text-sm">
+                OP Allocation
+              </Text>
+            }
           />
           <XAxis
             dataKey="profile"
