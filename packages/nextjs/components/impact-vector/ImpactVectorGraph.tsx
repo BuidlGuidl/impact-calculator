@@ -175,7 +175,7 @@ export default function ImpactVectorGraph({
                         const value = data[key];
                         let formattedValue;
                         if (key.includes("(ETH)")) {
-                          formattedValue = value !== "none" ? `${value} ETH` : "none";
+                          formattedValue = value && value !== "none" ? `${value} ETH` : "none";
                         } else {
                           formattedValue = !isNaN(value || "string")
                             ? Math.floor(parseFloat(value)) || "none"
