@@ -967,6 +967,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mongodb-js/saslprep@npm:^1.1.5":
+  version: 1.1.5
+  resolution: "@mongodb-js/saslprep@npm:1.1.5"
+  dependencies:
+    sparse-bitfield: ^3.0.3
+  checksum: 8e38bc604707933959f34576ea3db667b14ef6ca604e42ae4a825d3dab00149fc1b78cb83a542c01016f3c9072872210e78610005565e1fd25d8df78415a159b
+  languageName: node
+  linkType: hard
+
 "@motionone/animation@npm:^10.15.1, @motionone/animation@npm:^10.16.3":
   version: 10.16.3
   resolution: "@motionone/animation@npm:10.16.3"
@@ -1547,6 +1556,48 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@oven/bun-darwin-aarch64@npm:1.0.30":
+  version: 1.0.30
+  resolution: "@oven/bun-darwin-aarch64@npm:1.0.30"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@oven/bun-darwin-x64-baseline@npm:1.0.30":
+  version: 1.0.30
+  resolution: "@oven/bun-darwin-x64-baseline@npm:1.0.30"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@oven/bun-darwin-x64@npm:1.0.30":
+  version: 1.0.30
+  resolution: "@oven/bun-darwin-x64@npm:1.0.30"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@oven/bun-linux-aarch64@npm:1.0.30":
+  version: 1.0.30
+  resolution: "@oven/bun-linux-aarch64@npm:1.0.30"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@oven/bun-linux-x64-baseline@npm:1.0.30":
+  version: 1.0.30
+  resolution: "@oven/bun-linux-x64-baseline@npm:1.0.30"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@oven/bun-linux-x64@npm:1.0.30":
+  version: 1.0.30
+  resolution: "@oven/bun-linux-x64@npm:1.0.30"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
 "@parcel/watcher-android-arm64@npm:2.3.0":
   version: 2.3.0
   resolution: "@parcel/watcher-android-arm64@npm:2.3.0"
@@ -1873,6 +1924,7 @@ __metadata:
     "@rainbow-me/rainbowkit": 1.3.0
     "@tanstack/react-table": ^8.11.8
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
+    "@types/bun": ^1
     "@types/d3-scale": ^4
     "@types/lodash": ^4
     "@types/node": ^17.0.35
@@ -1884,6 +1936,7 @@ __metadata:
     "@uniswap/v2-sdk": ^3.0.1
     autoprefixer: ^10.4.12
     blo: ^1.0.1
+    bun: ^1.0.30
     csv-parser: ^3.0.0
     d3-scale: ^4.0.2
     daisyui: ^4.4.19
@@ -1893,6 +1946,7 @@ __metadata:
     eslint-plugin-prettier: ^4.2.1
     fs: ^0.0.1-security
     lodash: ^4.17.21
+    mongodb: ^6.5.0
     next: ^14.0.4
     nprogress: ^0.2.0
     postcss: ^8.4.16
@@ -2438,6 +2492,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/bun@npm:^1":
+  version: 1.0.8
+  resolution: "@types/bun@npm:1.0.8"
+  dependencies:
+    bun-types: 1.0.29
+  checksum: 0f6105b2938cb7cf340c075fb9196d5650e4a16af33128f8b10d9007e5699ec17331f70bd397fa906ac1e87507802e0a760622370850d755e7b7bd7345011c02
+  languageName: node
+  linkType: hard
+
 "@types/chai-as-promised@npm:^7.1.3":
   version: 7.1.6
   resolution: "@types/chai-as-promised@npm:7.1.6"
@@ -2684,6 +2747,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:~20.11.3":
+  version: 20.11.26
+  resolution: "@types/node@npm:20.11.26"
+  dependencies:
+    undici-types: ~5.26.4
+  checksum: 2cd5a373d2880b7f07ae65d4d23660cdcabddb12772ce631b6caad2f9283350b8a17c802590f67f0ccec5a9c7d43ae0ecd9637c5ad870b8f793328af8c61eae5
+  languageName: node
+  linkType: hard
+
 "@types/nprogress@npm:^0":
   version: 0.2.1
   resolution: "@types/nprogress@npm:0.2.1"
@@ -2790,6 +2862,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/webidl-conversions@npm:*":
+  version: 7.0.3
+  resolution: "@types/webidl-conversions@npm:7.0.3"
+  checksum: 535ead9de4d3d6c8e4f4fa14e9db780d2a31e8020debc062f337e1420a41c3265e223e4f4b628f97a11ecf3b96390962cd88a9ffe34f44e159dec583ff49aa34
+  languageName: node
+  linkType: hard
+
+"@types/whatwg-url@npm:^11.0.2":
+  version: 11.0.4
+  resolution: "@types/whatwg-url@npm:11.0.4"
+  dependencies:
+    "@types/webidl-conversions": "*"
+  checksum: 5acd60dbd49df34b9131ea75dc5e24b03e084cc4ed5a273ddd801fdaf21c896abbbb846bb3ba71ffd5c715120bac0454debe569f39b9177887fb7636d65cdae4
+  languageName: node
+  linkType: hard
+
 "@types/ws@npm:^7.4.4":
   version: 7.4.7
   resolution: "@types/ws@npm:7.4.7"
@@ -2805,6 +2893,15 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 7addb0c5fa4e7713d5209afb8a90f1852b12c02cb537395adf7a05fbaf21205dc5f7c110fd5ad6f3dbf147112cbff33fb11d8633059cb344f0c14f595b1ea1fb
+  languageName: node
+  linkType: hard
+
+"@types/ws@npm:~8.5.10":
+  version: 8.5.10
+  resolution: "@types/ws@npm:8.5.10"
+  dependencies:
+    "@types/node": "*"
+  checksum: 3ec416ea2be24042ebd677932a462cf16d2080393d8d7d0b1b3f5d6eaa4a7387aaf0eefb99193c0bfd29444857cf2e0c3ac89899e130550dc6c14ada8a46d25e
   languageName: node
   linkType: hard
 
@@ -4800,6 +4897,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bson@npm:^6.4.0":
+  version: 6.4.0
+  resolution: "bson@npm:6.4.0"
+  checksum: 2f82d0d8ef2b33a6e7b5147e3110724dc92f286a00130be08908ed39ea8afe7313724850145b29427fa368ffc4238fc9e924e50345cc9537c55c578f7a5604d6
+  languageName: node
+  linkType: hard
+
 "buffer-crc32@npm:~0.2.3":
   version: 0.2.13
   resolution: "buffer-crc32@npm:0.2.13"
@@ -4838,6 +4942,47 @@ __metadata:
     node-gyp: latest
     node-gyp-build: ^4.3.0
   checksum: f75aa87e3d1b99b87a95f60a855e63f70af07b57fb8443e75a2ddfef2e47788d130fdd46e3a78fd7e0c10176082b26dfbed970c5b8632e1cc299cafa0e93ce45
+  languageName: node
+  linkType: hard
+
+"bun-types@npm:1.0.29":
+  version: 1.0.29
+  resolution: "bun-types@npm:1.0.29"
+  dependencies:
+    "@types/node": ~20.11.3
+    "@types/ws": ~8.5.10
+  checksum: ecc10e7db9d597558e1f4f972c4ff3ecb19e566f5494ba3f2f93d9efb471916da38ccde85591ed96ecfa8dde66632be486959c578fa509ad0a359a60f6b4f279
+  languageName: node
+  linkType: hard
+
+"bun@npm:^1.0.30":
+  version: 1.0.30
+  resolution: "bun@npm:1.0.30"
+  dependencies:
+    "@oven/bun-darwin-aarch64": 1.0.30
+    "@oven/bun-darwin-x64": 1.0.30
+    "@oven/bun-darwin-x64-baseline": 1.0.30
+    "@oven/bun-linux-aarch64": 1.0.30
+    "@oven/bun-linux-x64": 1.0.30
+    "@oven/bun-linux-x64-baseline": 1.0.30
+  dependenciesMeta:
+    "@oven/bun-darwin-aarch64":
+      optional: true
+    "@oven/bun-darwin-x64":
+      optional: true
+    "@oven/bun-darwin-x64-baseline":
+      optional: true
+    "@oven/bun-linux-aarch64":
+      optional: true
+    "@oven/bun-linux-x64":
+      optional: true
+    "@oven/bun-linux-x64-baseline":
+      optional: true
+  bin:
+    bun: bin/bun
+    bunx: bin/bun
+  checksum: f0fcb24ad5700d24526b17676d98da6444c030394b9d884d5de8027fa4a120dc4108f9dc529b78bcdf6293806ce897530ba1f137894ae4af41fec275cf142e4e
+  conditions: (os=darwin | os=linux) & (cpu=arm64 | cpu=x64)
   languageName: node
   linkType: hard
 
@@ -10082,6 +10227,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"memory-pager@npm:^1.0.2":
+  version: 1.5.0
+  resolution: "memory-pager@npm:1.5.0"
+  checksum: d1a2e684583ef55c61cd3a49101da645b11ad57014dfc565e0b43baa9004b743f7e4ab81493d8fff2ab24e9950987cc3209c94bcc4fc8d7e30a475489a1f15e9
+  languageName: node
+  linkType: hard
+
 "memorystream@npm:^0.3.1":
   version: 0.3.1
   resolution: "memorystream@npm:0.3.1"
@@ -10455,6 +10607,50 @@ __metadata:
   version: 1.0.2
   resolution: "module-error@npm:1.0.2"
   checksum: 5d653e35bd55b3e95f8aee2cdac108082ea892e71b8f651be92cde43e4ee86abee4fa8bd7fc3fe5e68b63926d42f63c54cd17b87a560c31f18739295575a3962
+  languageName: node
+  linkType: hard
+
+"mongodb-connection-string-url@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "mongodb-connection-string-url@npm:3.0.0"
+  dependencies:
+    "@types/whatwg-url": ^11.0.2
+    whatwg-url: ^13.0.0
+  checksum: 9d4885377345b14e2ba2ee63cb3085364a01aeae3aca622bbd568e7761caa58fdc664528f19f125c762cff230c9349f99e98396dd2271a4260286cf241a8c477
+  languageName: node
+  linkType: hard
+
+"mongodb@npm:^6.5.0":
+  version: 6.5.0
+  resolution: "mongodb@npm:6.5.0"
+  dependencies:
+    "@mongodb-js/saslprep": ^1.1.5
+    bson: ^6.4.0
+    mongodb-connection-string-url: ^3.0.0
+  peerDependencies:
+    "@aws-sdk/credential-providers": ^3.188.0
+    "@mongodb-js/zstd": ^1.1.0
+    gcp-metadata: ^5.2.0
+    kerberos: ^2.0.1
+    mongodb-client-encryption: ">=6.0.0 <7"
+    snappy: ^7.2.2
+    socks: ^2.7.1
+  peerDependenciesMeta:
+    "@aws-sdk/credential-providers":
+      optional: true
+    "@mongodb-js/zstd":
+      optional: true
+    gcp-metadata:
+      optional: true
+    kerberos:
+      optional: true
+    mongodb-client-encryption:
+      optional: true
+    snappy:
+      optional: true
+    socks:
+      optional: true
+  checksum: 5774dfdd02d8d8e6bb70bf870f19bfad332da612fa6685d182b2e09da4f1306995ddf54f13ae0f6c3936e74444741689c04e7c009e7a847473f08f522ad16542
   languageName: node
   linkType: hard
 
@@ -11733,6 +11929,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"punycode@npm:^2.3.0":
+  version: 2.3.1
+  resolution: "punycode@npm:2.3.1"
+  checksum: bb0a0ceedca4c3c57a9b981b90601579058903c62be23c5e8e843d2c2d4148a3ecf029d5133486fb0e1822b098ba8bba09e89d6b21742d02fa26bda6441a6fb2
+  languageName: node
+  linkType: hard
+
 "qrcode.react@npm:^3.1.0":
   version: 3.1.0
   resolution: "qrcode.react@npm:3.1.0"
@@ -12966,6 +13169,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"sparse-bitfield@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "sparse-bitfield@npm:3.0.3"
+  dependencies:
+    memory-pager: ^1.0.2
+  checksum: 174da88dbbcc783d5dbd26921931cc83830280b8055fb05333786ebe6fc015b9601b24972b3d55920dd2d9f5fb120576fbfa2469b08e5222c9cadf3f05210aab
+  languageName: node
+  linkType: hard
+
 "split-on-first@npm:^1.0.0":
   version: 1.1.0
   resolution: "split-on-first@npm:1.1.0"
@@ -13700,6 +13912,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tr46@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "tr46@npm:4.1.1"
+  dependencies:
+    punycode: ^2.3.0
+  checksum: aeeb821ac2cd792e63ec84888b4fd6598ac6ed75d861579e21a5cf9d4ee78b2c6b94e7d45036f2ca2088bc85b9b46560ad23c4482979421063b24137349dbd96
+  languageName: node
+  linkType: hard
+
 "tr46@npm:~0.0.3":
   version: 0.0.3
   resolution: "tr46@npm:0.0.3"
@@ -14145,6 +14366,13 @@ __metadata:
   version: 0.1.3
   resolution: "uncrypto@npm:0.1.3"
   checksum: 07160e08806dd6cea16bb96c3fd54cd70fc801e02fc3c6f86980144d15c9ebbd1c55587f7280a207b3af6cd34901c0d0b77ada5a02c2f7081a033a05acf409e2
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~5.26.4":
+  version: 5.26.5
+  resolution: "undici-types@npm:5.26.5"
+  checksum: 3192ef6f3fd5df652f2dc1cd782b49d6ff14dc98e5dced492aa8a8c65425227da5da6aafe22523c67f035a272c599bb89cfe803c1db6311e44bed3042fc25487
   languageName: node
   linkType: hard
 
@@ -14640,6 +14868,23 @@ __metadata:
   version: 3.0.1
   resolution: "webidl-conversions@npm:3.0.1"
   checksum: c92a0a6ab95314bde9c32e1d0a6dfac83b578f8fa5f21e675bc2706ed6981bc26b7eb7e6a1fab158e5ce4adf9caa4a0aee49a52505d4d13c7be545f15021b17c
+  languageName: node
+  linkType: hard
+
+"webidl-conversions@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "webidl-conversions@npm:7.0.0"
+  checksum: f05588567a2a76428515333eff87200fae6c83c3948a7482ebb109562971e77ef6dc49749afa58abb993391227c5697b3ecca52018793e0cb4620a48f10bd21b
+  languageName: node
+  linkType: hard
+
+"whatwg-url@npm:^13.0.0":
+  version: 13.0.0
+  resolution: "whatwg-url@npm:13.0.0"
+  dependencies:
+    tr46: ^4.1.1
+    webidl-conversions: ^7.0.0
+  checksum: 7f69272a1bfd5f0d994988b9e234e35d21071a9bffe0d6fd4477d295552665c566b176ff8e0251a0a79c61c5a67a7a392e248aae5887d7e22bdff0125209e26b
   languageName: node
   linkType: hard
 
