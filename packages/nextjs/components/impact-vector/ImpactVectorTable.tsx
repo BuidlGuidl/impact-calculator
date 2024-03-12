@@ -1,13 +1,13 @@
 import { useState } from "react";
 import ImpactTableHeader from "./table-components/ImpactTableHeader";
 import ImpactTableRow from "./table-components/ImpactTableRow";
-import { Vector } from "~~/app/types/data";
+import { SelectedVector } from "~~/app/types/data";
 import { useGlobalState } from "~~/services/store/store";
 
 const ImpactVectorTable = () => {
   const { selectedVectors, setSelectedVectors } = useGlobalState();
   const [sortDesc, setSortDesc] = useState(true);
-  const [sortBy, setSortBy] = useState<keyof Vector>();
+  const [sortBy, setSortBy] = useState<keyof SelectedVector>();
 
   const updateVectorWeight = (index: number) => (newWeight: number) => {
     const updatedSelectedVectors = selectedVectors.map((vector, i) =>

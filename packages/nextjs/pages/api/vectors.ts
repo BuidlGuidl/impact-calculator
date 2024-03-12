@@ -1,7 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { Vector } from "~~/app/types/data";
 import clientPromise from "~~/services/db/mongodb";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+type ResponseData = Vector[] | { message: string };
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
   if (req.method !== "GET") {
     return res.status(405).json({ message: "Method not allowed." });
   }
@@ -18,6 +21,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 const getVectors = async () => {
   const client = await clientPromise;
   const db = client.db("impact_calculator");
-  const vectors = await db.collection("impactVectors").find({}).toArray();
+  const vectors = await db.collection<Vector>("impactVectors").find({}).toArray();
   return vectors;
 };
