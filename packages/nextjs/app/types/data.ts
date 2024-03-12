@@ -72,12 +72,12 @@ export interface DataSet {
   metadata: Metadata;
 }
 
-type VectorSouceName = "OSO";
+type VectorSourceName = "OSO";
 
 export interface Vector {
   name: keyof ImpactVectors;
   description: string;
-  sourceName: VectorSouceName;
+  sourceName: VectorSourceName;
 }
 
 export interface SelectedVector {
