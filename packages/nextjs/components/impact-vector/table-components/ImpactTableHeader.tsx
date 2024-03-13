@@ -22,7 +22,7 @@ const ImpactTableHeader = ({ sortDesc, setSortDesc, sortBy, setSortBy }: Props) 
         <th scope="col" className=" pb-3  w-[20%]  text-start text-xs font-medium  ">
           <div className="flex items-center gap-1">
             <span className="cursor-pointer" onClick={getClickHandler("name")}>
-              Impact SelectedVector
+              Impact Vector
             </span>
             {sortBy === "name" && (sortDesc ? <IoArrowDownSharp /> : <IoArrowUpSharp />)}
           </div>

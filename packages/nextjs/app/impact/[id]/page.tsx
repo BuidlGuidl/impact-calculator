@@ -19,7 +19,7 @@ const ImpactDetailPage = () => {
       <div className="grid gap-4 ">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <h1 className="font-bold text-2xl leading-8 ">Impact SelectedVector</h1>
+            <h1 className="font-bold text-2xl leading-8 ">Impact Vector</h1>
             <div className="flex items-center gap-2 mt-3">
               <div className="w-6 h-6">
                 <Image src="/assets/image/Img.png" className="w-full" alt="impact vector" width={24} height={24} />
@@ -113,7 +113,7 @@ const ImpactDetailPage = () => {
           <div className="flex items-center justify-between">
             <div className=" flex-1 grid place-content-center ">
               <div>
-                <p className="font-bold m-0 ">Impact SelectedVector</p>
+                <p className="font-bold m-0 ">Impact Vector</p>
                 <p className="text-sm m-0">@lattice</p>
               </div>
             </div>
