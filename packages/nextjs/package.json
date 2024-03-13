@@ -57,6 +57,7 @@
     "eslint-config-next": "^14.0.4",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "npx": "^10.2.2",
     "postcss": "^8.4.16",
     "prettier": "^2.8.4",
     "tailwind-scrollbar": "^3.0.4",
