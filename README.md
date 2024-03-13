@@ -5,11 +5,13 @@ The problem this project seeks to solve: in RPGF Round 3 there was over 500 proj
 Goal: The Impact Calculator is designed to streamline the evaluation of projects in the Optimism RetroPGF voting process by quantifying their impact through various metrics. This tool is expected to transition the grantmaking process from individual project evaluation to a more strategic overview, helping to maintain and improve the ROI of grant allocations. The idea for this project is to build a simple prototype to test out the idea.
 https://github.com/ethereum-optimism/ecosystem-contributions/issues/120 (https://github.com/ethereum-optimism/ecosystem-contributions/issues/120)
 
-
 Design: https://www.figma.com/file/OS8DSbKyuiYPqcRTmmhTIM/Impact-Calculator-%F0%9F%8C%B1?type=design&node-id=0-1&mode=design
 
 Static data set: https://github.com/opensource-observer/insights/blob/main/community/datasets/retropgf3_results/csv/RetroPGF3%20Results%20-%20ConsolidatedData.csv
 
+### Database setup
+
+This project uses [MongoDB](https://www.mongodb.com/) for a database. To run the project locally, a value is needed for the `MONGODB_URI` env variable that points to a development database running locally or hosted with [MongoDB Atlas](https://www.mongodb.com/docs/atlas/getting-started/).
 
 # Built with 🏗 Scaffold-ETH 2
 
