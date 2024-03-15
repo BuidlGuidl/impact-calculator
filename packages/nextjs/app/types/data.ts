@@ -72,7 +72,15 @@ export interface DataSet {
   metadata: Metadata;
 }
 
+type VectorSourceName = "OSO";
+
 export interface Vector {
+  name: keyof ImpactVectors;
+  description: string;
+  sourceName: VectorSourceName;
+}
+
+export interface SelectedVector {
   name: keyof ImpactVectors;
   weight: number;
 }

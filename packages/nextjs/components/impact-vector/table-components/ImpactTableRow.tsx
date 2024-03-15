@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { FiTrash2 } from "react-icons/fi";
-import { Vector } from "~~/app/types/data";
+import { SelectedVector } from "~~/app/types/data";
 import { useGlobalState } from "~~/services/store/store";
 
 interface Props {
-  vector: Vector;
+  vector: SelectedVector;
   updateWeight: (newWeight: number) => void;
 }
 

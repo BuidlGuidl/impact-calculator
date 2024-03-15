@@ -5,15 +5,10 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { trim } from "lodash";
 import { HiMiniCheckBadge } from "react-icons/hi2";
-import { ImpactVectors } from "~~/app/types/data";
+import { ImpactVectors, Vector } from "~~/app/types/data";
 import { useGlobalState } from "~~/services/store/store";
 
-interface ImpactVectorCardProps {
-  name: keyof ImpactVectors;
-  description: string;
-  sourceName: string;
-}
-const ImpactVectorCard = ({ name, description, sourceName }: ImpactVectorCardProps) => {
+const ImpactVectorCard = ({ name, description, sourceName }: Vector) => {
   //the route is hard coded for now
   const [isSelected, setIsSelected] = useState(false);
   const router = useRouter();
