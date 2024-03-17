@@ -67,7 +67,6 @@ const Home: NextPage = () => {
           fullGraph ? "w-full" : "lg:w-[50%] xl:w-[58%] 2xl:w-[64%] 3xl:w-[70%]"
         } duration-500 ease-in-out h-[60vh] transition-all`}
       >
-        <h2 className="text-center">Impact Calculator 🌱</h2>
         <div className="flex w-full h-[60vh]">
           {impactData.length > 0 && (
             <ImpactVectorGraph data={impactData} fullGraph={fullGraph} setFullGraph={setFullGraph} />

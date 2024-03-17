@@ -1,3 +1,4 @@
+import "@rainbow-me/rainbowkit/styles.css";
 import { Metadata } from "next";
 import { ScaffoldEthProviders } from "~~/components/ScaffoldEthProviders";
 import "~~/styles/globals.css";
