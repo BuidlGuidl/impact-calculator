@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
 }
 
-const getVectors = async () => {
+export const getVectors = async () => {
   const client = await clientPromise;
   const db = client.db("impact_calculator");
   const vectors = await db.collection<Vector>("impactVectors").find({}).toArray();

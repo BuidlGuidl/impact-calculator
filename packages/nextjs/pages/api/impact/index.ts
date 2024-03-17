@@ -1,13 +1,7 @@
-import csv from "csv-parser";
-import fs from "fs";
+import { getVectors } from "../vectors";
 import type { NextApiRequest, NextApiResponse } from "next";
-import path from "path";
-import { DataSet, ImpactVectors, RetroPGF3Results } from "~~/app/types/data";
-
-const dataFilePath = path.join(process.cwd(), "public", "data/RPGF3Results.csv");
-
-// Protocol Guild contains metrics for many different projects that are included individually
-const excludedProjects = ["Protocol Guild"];
+import { CodeMetricsByProject, OSOResponse, OSOResponseProps, OnchainMetricsByProject } from "~~/app/types/OSO";
+import { DataSet, ImpactVectors } from "~~/app/types/data";
 
 interface VectorWeight {
   vector: keyof ImpactVectors;
@@ -53,57 +47,130 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 }
 
 async function getImpact(vectorWeights: VectorWeight[]) {
-  const projectData = (await new Promise((resolve, reject) => {
-    const data: RetroPGF3Results[] = [];
-    fs.createReadStream(dataFilePath)
-      .pipe(csv())
-      .on("data", row => {
-        if (!excludedProjects.includes(row["Meta: Project Name"])) {
-          data.push(row);
-        }
-      })
-      .on("end", () => {
-        resolve(data);
-      })
-      .on("error", error => {
-        reject(error);
-      });
-  })) as unknown as RetroPGF3Results[];
+  const allVectors = await getVectors();
+
+  const query = `{
+    onchain_metrics_by_project(distinct_on: project_id, where: {network: {_eq: "OPTIMISM"}}) {
+      active_users
+      first_txn_date
+      high_frequency_users
+      l2_gas_6_months
+      less_active_users
+      more_active_users
+      multi_project_users
+      network
+      new_user_count
+      num_contracts
+      project_id
+      project_name
+      total_l2_gas
+      total_txns
+      total_users
+      txns_6_months
+      users_6_months
+    }
+    code_metrics_by_project(distinct_on: project_id) {
+      avg_active_devs_6_months
+      avg_fulltime_devs_6_months
+      commits_6_months
+      contributors
+      contributors_6_months
+      first_commit_date
+      forks
+      issues_closed_6_months
+      issues_opened_6_months
+      last_commit_date
+      new_contributors_6_months
+      project_id
+      project_name
+      pull_requests_merged_6_months
+      pull_requests_opened_6_months
+      repositories
+      source
+      stars
+    }
+  }`;
+
+  const OSOGraphQLEndpoint = process.env.OSO_GRAPHQL_ENDPOINT as string;
+
+  if (!OSOGraphQLEndpoint) {
+    throw new Error("OSO_GRAPHQL_ENDPOINT is not defined");
+  }
+
+  const response = await fetch(OSOGraphQLEndpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ query }),
+  });
+
+  const { data: projectData }: { data: OSOResponse } = await response.json();
+
+  // For each property in projectData, create a object mapping project_id to the object of data for that project
+  const projectDataMap = {} as { [key in keyof OSOResponse]: { [key: string]: OSOResponseProps } };
+  for (const key in projectData) {
+    const data = projectData[key as keyof OSOResponse];
+    for (const project of data) {
+      if (!projectDataMap[key as keyof OSOResponse]) {
+        projectDataMap[key as keyof OSOResponse] = {};
+      }
+      projectDataMap[key as keyof OSOResponse][project.project_id] = project;
+    }
+  }
+
+  // Combine the data from the two sources by project_id
+  const combinedData = [] as (CodeMetricsByProject & OnchainMetricsByProject)[];
+  const projectIds = new Array(
+    ...new Set(Object.keys(projectDataMap).flatMap(key => Object.keys(projectDataMap[key as keyof OSOResponse]))),
+  );
+  for (const projectId of projectIds) {
+    let combined = {} as CodeMetricsByProject & OnchainMetricsByProject;
+    for (const key in projectDataMap) {
+      const data = projectDataMap[key as keyof OSOResponse][projectId];
+      if (data) {
+        combined = Object.assign(combined, data);
+      }
+    }
+    combinedData.push(combined);
+  }
 
   // Find the largest value for each vector and find multiple to make it 100
-  const multipliers: { [key in keyof ImpactVectors]: number } = {} as { [key in keyof ImpactVectors]: number };
+  const normalizers: { [key in keyof ImpactVectors]: number } = {} as { [key in keyof ImpactVectors]: number };
   for (const { vector } of vectorWeights) {
-    const max = Math.max(...projectData.map(data => transformField(data[vector] as keyof ImpactVectors))); // TODO: Deal with date strings here
-    multipliers[vector] = max !== 0 ? 100 / max : 0;
+    const fullVectorData = allVectors.find(v => v.name === vector);
+    if (!fullVectorData) {
+      throw new Error(`Vector ${vector} not found`);
+    }
+    const max = Math.max(
+      ...combinedData.map(data => transformField(data[fullVectorData.fieldName as keyof OSOResponseProps])),
+    ); // TODO: Deal with date strings here
+    normalizers[vector] = max !== 0 ? 100 / max : 0;
   }
 
   const relevantData = [] as DataSet[];
   // Apply that multiple to each value in the vector and apply the weight
-  for (const data of projectData) {
+  for (const data of combinedData) {
     const relevant: DataSet = {
       data: {} as { [key in keyof ImpactVectors]: { normalized: number; actual: string | number | undefined } },
       score: 0,
       opAllocation: 0,
       metadata: {
-        "Meta: Project Name": data["Meta: Project Name"],
-        "Meta: Project Image": data["Meta: Project Image"],
-        "Meta: Applicant Type": data["Meta: Applicant Type"],
-        "Meta: Website": data["Meta: Website"],
-        "Meta: Bio": data["Meta: Bio"],
-        "Meta: Payout Address": data["Meta: Payout Address"],
-        "Category: Collective Governance": data["Category: Collective Governance"],
-        "Category: Developer Ecosystem": data["Category: Developer Ecosystem"],
-        "Category: End User Experience and Adoption": data["Category: End User Experience and Adoption"],
-        "Category: OP Stack": data["Category: OP Stack"],
+        project_name: data["project_name"],
+        project_image: "",
       },
     };
     for (const { vector, weight } of vectorWeights) {
-      const actualValue = data[vector];
-      const currentValue = transformField(data[vector]);
-      const multiplier = multipliers[vector];
+      const fullVectorData = allVectors.find(v => v.name === vector);
+      if (!fullVectorData) {
+        throw new Error(`Vector ${vector} not found`);
+      }
+      const actualValue = transformField(data[fullVectorData.fieldName as keyof OSOResponseProps]);
+      const currentValue = transformField(data[fullVectorData.fieldName as keyof OSOResponseProps]);
+      const normalizer = normalizers[vector];
 
-      // Apply the multiplier to equalize the vectors
-      const scaledValue = currentValue && multiplier ? currentValue * multiplier : 0;
+      // Apply the normalizer to equalize the vectors
+      const scaledValue = currentValue && normalizer ? currentValue * normalizer : 0;
       // Apply the weight
       relevant.data[vector] = {
         normalized: scaledValue && weight ? scaledValue * weight : 0,
