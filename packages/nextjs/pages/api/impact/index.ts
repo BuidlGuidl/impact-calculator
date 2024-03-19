@@ -1,7 +1,7 @@
-import { getVectors } from "../vectors";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { CodeMetricsByProject, OSOResponse, OSOResponseProps, OnchainMetricsByProject } from "~~/app/types/OSO";
 import { DataSet, ImpactVectors } from "~~/app/types/data";
+import { getVectors } from "~~/utils/impactCalculator/data";
 
 interface VectorWeight {
   vector: keyof ImpactVectors;
@@ -47,8 +47,54 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 }
 
 async function getImpact(vectorWeights: VectorWeight[]) {
-  const allVectors = await getVectors();
+  const allProjects = await getProjects();
+  const scoredProjects = await scoreProjectsByVectorWeight({ allProjects, vectorWeights });
 
+  const nonZeroProjects = scoredProjects.filter(project => project.score > 0);
+
+  // Calculate total OP allocated to each project
+  const totalScore = nonZeroProjects.reduce((total, curr) => total + curr.score, 0);
+  const projectsWithOPAllocated = nonZeroProjects.map(project => ({
+    ...project,
+    opAllocation: (project.score / totalScore) * 10000000,
+  }));
+  return projectsWithOPAllocated;
+}
+
+const getProjects = async () => {
+  const projectsByMetricType = await fetchOSOProjectData();
+
+  // For each property in projectsByMetricType, create a object mapping project_id to the object of data for that project
+  const projectDataMap = {} as { [metricType in keyof OSOResponse]: { [metricType: string]: OSOResponseProps } };
+  for (const metricType in projectsByMetricType) {
+    const projects = projectsByMetricType[metricType as keyof OSOResponse];
+    for (const project of projects) {
+      if (!projectDataMap[metricType as keyof OSOResponse]) {
+        projectDataMap[metricType as keyof OSOResponse] = {};
+      }
+      projectDataMap[metricType as keyof OSOResponse][project.project_id] = project;
+    }
+  }
+
+  // Combine the data from the two sources by project_id
+  const combinedData = [] as (CodeMetricsByProject & OnchainMetricsByProject)[];
+  const projectIds = new Array(
+    ...new Set(Object.keys(projectDataMap).flatMap(key => Object.keys(projectDataMap[key as keyof OSOResponse]))),
+  );
+  for (const projectId of projectIds) {
+    let combined = {} as CodeMetricsByProject & OnchainMetricsByProject;
+    for (const key in projectDataMap) {
+      const data = projectDataMap[key as keyof OSOResponse][projectId];
+      if (data) {
+        combined = Object.assign(combined, data);
+      }
+    }
+    combinedData.push(combined);
+  }
+  return combinedData;
+};
+
+const fetchOSOProjectData = async () => {
   const query = `{
     onchain_metrics_by_project(distinct_on: project_id, where: {network: {_eq: "OPTIMISM"}}) {
       active_users
@@ -105,35 +151,18 @@ async function getImpact(vectorWeights: VectorWeight[]) {
     body: JSON.stringify({ query }),
   });
 
-  const { data: projectData }: { data: OSOResponse } = await response.json();
+  const { data: projectsByMetricType }: { data: OSOResponse } = await response.json();
+  return projectsByMetricType;
+};
 
-  // For each property in projectData, create a object mapping project_id to the object of data for that project
-  const projectDataMap = {} as { [key in keyof OSOResponse]: { [key: string]: OSOResponseProps } };
-  for (const key in projectData) {
-    const data = projectData[key as keyof OSOResponse];
-    for (const project of data) {
-      if (!projectDataMap[key as keyof OSOResponse]) {
-        projectDataMap[key as keyof OSOResponse] = {};
-      }
-      projectDataMap[key as keyof OSOResponse][project.project_id] = project;
-    }
-  }
-
-  // Combine the data from the two sources by project_id
-  const combinedData = [] as (CodeMetricsByProject & OnchainMetricsByProject)[];
-  const projectIds = new Array(
-    ...new Set(Object.keys(projectDataMap).flatMap(key => Object.keys(projectDataMap[key as keyof OSOResponse]))),
-  );
-  for (const projectId of projectIds) {
-    let combined = {} as CodeMetricsByProject & OnchainMetricsByProject;
-    for (const key in projectDataMap) {
-      const data = projectDataMap[key as keyof OSOResponse][projectId];
-      if (data) {
-        combined = Object.assign(combined, data);
-      }
-    }
-    combinedData.push(combined);
-  }
+const scoreProjectsByVectorWeight = async ({
+  allProjects,
+  vectorWeights,
+}: {
+  allProjects: (CodeMetricsByProject & OnchainMetricsByProject)[];
+  vectorWeights: VectorWeight[];
+}) => {
+  const allVectors = await getVectors();
 
   // Find the largest value for each vector and find multiple to make it 100
   const normalizers: { [key in keyof ImpactVectors]: number } = {} as { [key in keyof ImpactVectors]: number };
@@ -143,14 +172,14 @@ async function getImpact(vectorWeights: VectorWeight[]) {
       throw new Error(`Vector ${vector} not found`);
     }
     const max = Math.max(
-      ...combinedData.map(data => transformField(data[fullVectorData.fieldName as keyof OSOResponseProps])),
-    ); // TODO: Deal with date strings here
+      ...allProjects.map(data => transformField(data[fullVectorData.fieldName as keyof OSOResponseProps])),
+    );
     normalizers[vector] = max !== 0 ? 100 / max : 0;
   }
 
   const relevantData = [] as DataSet[];
   // Apply that multiple to each value in the vector and apply the weight
-  for (const data of combinedData) {
+  for (const data of allProjects) {
     const relevant: DataSet = {
       data: {} as { [key in keyof ImpactVectors]: { normalized: number; actual: string | number | undefined } },
       score: 0,
@@ -181,17 +210,8 @@ async function getImpact(vectorWeights: VectorWeight[]) {
     }
     relevantData.push(relevant);
   }
-
-  const nonZeroProjects = relevantData.filter(data => data.score > 0);
-  // Calculate total OP allocated to each project
-  const totalScore = nonZeroProjects.reduce((total, curr) => total + curr.score, 0);
-  const projectsWithOPAllocated = nonZeroProjects.map(project => ({
-    ...project,
-    opAllocation: (project.score / totalScore) * 10000000,
-  }));
-  // Remove projects with no impact
-  return projectsWithOPAllocated;
-}
+  return relevantData;
+};
 
 function transformField(field: string | number | boolean | undefined): number {
   if (field === undefined) {
