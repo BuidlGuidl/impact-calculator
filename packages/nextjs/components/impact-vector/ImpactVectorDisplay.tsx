@@ -23,6 +23,8 @@ const ImpactVectorDisplay = () => {
           name={vector.name}
           description={vector.description}
           sourceName={vector.sourceName}
+          parent={vector.parent}
+          fieldName={vector.fieldName}
         />
       ))}
     </div>

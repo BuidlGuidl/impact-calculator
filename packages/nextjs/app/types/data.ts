@@ -53,16 +53,8 @@ export interface ImpactVectors {
 }
 
 export interface Metadata {
-  "Meta: Project Name": string;
-  "Meta: Project Image": string;
-  "Meta: Applicant Type": string;
-  "Meta: Website": string;
-  "Meta: Bio": string;
-  "Meta: Payout Address": string;
-  "Category: Collective Governance": number;
-  "Category: Developer Ecosystem": number;
-  "Category: End User Experience and Adoption": number;
-  "Category: OP Stack": number;
+  project_name: string;
+  project_image: string;
 }
 
 export interface DataSet {
@@ -78,6 +70,8 @@ export interface Vector {
   name: keyof ImpactVectors;
   description: string;
   sourceName: VectorSourceName;
+  parent: string;
+  fieldName: string;
 }
 
 export interface SelectedVector {

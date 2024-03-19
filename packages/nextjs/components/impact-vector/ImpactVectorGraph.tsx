@@ -4,6 +4,7 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import CustomXAxis from "./CustomXAxis";
 import { scaleLog } from "d3-scale";
 import { Area, Bar, CartesianGrid, ComposedChart, ResponsiveContainer, Text, Tooltip, XAxis, YAxis } from "recharts";
+import { formatEther } from "viem";
 import { DataSet, ImpactVectors } from "~~/app/types/data";
 import { abbreviateNumber } from "~~/utils/impactCalculator/common";
 
@@ -38,9 +39,9 @@ const transformData = (impactData: DataSet[]): any[] => {
   return impactData.map(vectorDataSet => {
     const dataKeys = Object.keys(vectorDataSet.data) as (keyof ImpactVectors)[];
     const transformedItem: any = {
-      image: vectorDataSet.metadata["Meta: Project Image"],
-      name: vectorDataSet.metadata["Meta: Project Name"],
-      profile: `${vectorDataSet.metadata["Meta: Project Name"]}===${vectorDataSet.metadata["Meta: Project Image"]}`,
+      image: vectorDataSet.metadata["project_image"],
+      name: vectorDataSet.metadata["project_name"],
+      profile: `${vectorDataSet.metadata["project_name"]}===${vectorDataSet.metadata["project_image"]}`,
       opAllocation: Math.floor(vectorDataSet.opAllocation),
     };
 
@@ -175,19 +176,7 @@ export default function ImpactVectorGraph({
                         const value = data[key];
                         let formattedValue;
                         if (key.includes("(ETH)")) {
-                          if (value && value !== "none" && !value.includes("e")) {
-                            const numberValue = parseFloat(value);
-
-                            let decimalPlace;
-                            if (numberValue > 1) {
-                              decimalPlace = value.indexOf(".") + 1;
-                            } else {
-                              decimalPlace = value.indexOf(value.match(/[1-9]/));
-                            }
-                            formattedValue = `Ξ ${numberValue.toFixed(decimalPlace)}`;
-                          } else {
-                            formattedValue = value && value !== "none" ? `Ξ ${parseFloat(value).toFixed(9)}` : "none";
-                          }
+                          formattedValue = value && value !== "none" ? formatEther(value, "gwei") : "none";
                         } else {
                           formattedValue = !isNaN(value || "string")
                             ? Math.floor(parseFloat(value)) || "none"
