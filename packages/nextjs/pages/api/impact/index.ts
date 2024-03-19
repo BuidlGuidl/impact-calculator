@@ -140,7 +140,7 @@ const fetchOSOProjectData = async () => {
   const OSOGraphQLEndpoint = process.env.OSO_GRAPHQL_ENDPOINT as string;
 
   if (!OSOGraphQLEndpoint) {
-    throw new Error("OSO_GRAPHQL_ENDPOINT is not defined");
+    throw new Error("OSO_GRAPHQL_ENDPOINT env var is not defined");
   }
 
   const response = await fetch(OSOGraphQLEndpoint, {
