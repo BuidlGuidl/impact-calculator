@@ -73,6 +73,7 @@ export const impactVectors: Vector[] = [
     parent: "onchain_metrics_by_project",
     fieldName: "l2_gas_6_months",
   },
+  // Adding these are in the OSO teams current sprint, hopefully can add them back soon.
   // {
   //   name: "OSO: Date First Download",
   //   description:
