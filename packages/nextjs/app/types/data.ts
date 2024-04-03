@@ -1,3 +1,5 @@
+import { Address } from "viem";
+
 export interface RetroPGF3Results extends ImpactVectors, Metadata {
   Project_ID: string;
   "Result: # Ballots": number;
@@ -77,4 +79,11 @@ export interface Vector {
 export interface SelectedVector {
   name: keyof ImpactVectors;
   weight: number;
+}
+
+export interface VectorList {
+  creator: Address;
+  title: string;
+  description: string;
+  vectors: SelectedVector[];
 }
