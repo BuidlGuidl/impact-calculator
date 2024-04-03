@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { trim } from "lodash";
 import { HiMiniCheckBadge } from "react-icons/hi2";
 import { ImpactVectors, Vector } from "~~/app/types/data";
 import { useGlobalState } from "~~/services/store/store";
@@ -31,7 +30,7 @@ const ImpactVectorCard = ({ name, description, sourceName }: Vector) => {
       onClick={() => router.push("/impact/1")}
       className="mr-1 cursor-pointer rounded-xl text-sm border-[0.2px] border-secondary-text/50 p-4 bg-base-300 flex flex-col justify-between gap-4 my-2"
     >
-      <h2 className=" m-0 font-bold"> {trim(name.split(":")[1])}</h2>
+      <h2 className=" m-0 font-bold"> {name}</h2>
       <div className="flex items-center justify-between">
         <div className=" text-base-content-100 max-w-sm pr-4">
           <p className="m-0 p-0">{description.length > 100 ? description.slice(0, 100) + "..." : description}</p>

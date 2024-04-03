@@ -27,7 +27,7 @@ const ImpactTableRow = ({ vector, updateWeight }: Props) => {
     <tr key={vector.name}>
       <td className="py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm ">
         <div className="flex flex-col ">
-          <span className="font-semibold">{vector.name.split(":")[1].substring(1)}</span>
+          <span className="font-semibold">{vector.name}</span>
           <span className="text-gray-500">{vector.name}</span>
         </div>
       </td>
