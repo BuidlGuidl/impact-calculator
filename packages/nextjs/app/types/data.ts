@@ -34,24 +34,24 @@ export interface RetroPGF3Results extends ImpactVectors, Metadata {
 }
 
 export interface ImpactVectors {
-  "OSO: # GitHub Repos"?: number;
-  "OSO: Date First Commit": string;
-  "OSO: Total Stars"?: number;
-  "OSO: Total Forks"?: number;
-  "OSO: Total Contributors"?: number;
-  "OSO: Contributors Last 6 Months"?: number;
-  "OSO: Avg Monthly Active Devs Last 6 Months": number;
-  "OSO: # OP Contracts"?: number;
-  "OSO: Date First Txn": string;
-  "OSO: Total Onchain Users"?: number;
-  "OSO: Onchain Users Last 6 Months"?: number;
-  "OSO: Total Txns"?: number;
-  "OSO: Total Txn Fees (ETH)": number;
-  "OSO: Txn Fees Last 6 Months (ETH)": number;
-  "OSO: # NPM Packages"?: number;
-  "OSO: Date First Download": string;
-  "OSO: Total Downloads"?: number;
-  "OSO: Downloads Last 6 Months"?: number;
+  "# GitHub Repos"?: number;
+  "Date First Commit": string;
+  "Total Stars"?: number;
+  "Total Forks"?: number;
+  "Total Contributors"?: number;
+  "Contributors Last 6 Months"?: number;
+  "Avg Monthly Active Devs Last 6 Months": number;
+  "# OP Contracts"?: number;
+  "Date First Txn": string;
+  "Total Onchain Users"?: number;
+  "Onchain Users Last 6 Months"?: number;
+  "Total Txns"?: number;
+  "Total Txn Fees (ETH)": number;
+  "Txn Fees Last 6 Months (ETH)": number;
+  "# NPM Packages"?: number;
+  "Date First Download": string;
+  "Total Downloads"?: number;
+  "Downloads Last 6 Months"?: number;
 }
 
 export interface Metadata {

@@ -13,24 +13,24 @@ const logScale = scaleLog();
 const NON_VECTOR_KEYS = ["image", "name", "profile", "opAllocation"];
 
 const COLOR_CLASS_BY_VECTOR: { [key in keyof ImpactVectors]: string } = {
-  "OSO: # GitHub Repos": "text-[#ff0000]",
-  "OSO: Date First Commit": "text-[#00ff00]",
-  "OSO: Total Stars": "text-[#0000ff]",
-  "OSO: Total Forks": "text-[#ffff00]",
-  "OSO: Total Contributors": "text-[#ff00ff]",
-  "OSO: Contributors Last 6 Months": "text-[#00ffff]",
-  "OSO: Avg Monthly Active Devs Last 6 Months": "text-[#ff8000]",
-  "OSO: # OP Contracts": "text-[#8000ff]",
-  "OSO: Date First Txn": "text-[#00ff80]",
-  "OSO: Total Onchain Users": "text-[#ff0080]",
-  "OSO: Onchain Users Last 6 Months": "text-[#80ff00]",
-  "OSO: Total Txns": "text-[#0080ff]",
-  "OSO: Total Txn Fees (ETH)": "text-[#ff0080]",
-  "OSO: Txn Fees Last 6 Months (ETH)": "text-[#ff80ff]",
-  "OSO: # NPM Packages": "text-[#80ff80]",
-  "OSO: Date First Download": "text-[#8080ff]",
-  "OSO: Total Downloads": "text-[#ffff80]",
-  "OSO: Downloads Last 6 Months": "text-[#80ffff]",
+  "# GitHub Repos": "text-[#ff0000]",
+  "Date First Commit": "text-[#00ff00]",
+  "Total Stars": "text-[#0000ff]",
+  "Total Forks": "text-[#ffff00]",
+  "Total Contributors": "text-[#ff00ff]",
+  "Contributors Last 6 Months": "text-[#00ffff]",
+  "Avg Monthly Active Devs Last 6 Months": "text-[#ff8000]",
+  "# OP Contracts": "text-[#8000ff]",
+  "Date First Txn": "text-[#00ff80]",
+  "Total Onchain Users": "text-[#ff0080]",
+  "Onchain Users Last 6 Months": "text-[#80ff00]",
+  "Total Txns": "text-[#0080ff]",
+  "Total Txn Fees (ETH)": "text-[#ff0080]",
+  "Txn Fees Last 6 Months (ETH)": "text-[#ff80ff]",
+  "# NPM Packages": "text-[#80ff80]",
+  "Date First Download": "text-[#8080ff]",
+  "Total Downloads": "text-[#ffff80]",
+  "Downloads Last 6 Months": "text-[#80ffff]",
 };
 const shouldRenderAsVector = (key: string) =>
   !key.includes("_actual") && !key.includes("_normalized") && !NON_VECTOR_KEYS.includes(key);
@@ -182,7 +182,7 @@ export default function ImpactVectorGraph({
                             ? Math.floor(parseFloat(value)) || "none"
                             : value || "none";
                         }
-                        const label = key.replace(/^OSO:/, "").replace("_actual", "");
+                        const label = key.replace("_actual", "");
                         return (
                           <p key={key}>
                             <span className={COLOR_CLASS_BY_VECTOR[key.replace("_actual", "") as keyof ImpactVectors]}>
