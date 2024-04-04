@@ -1,17 +1,34 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { HiMiniCheckBadge } from "react-icons/hi2";
 import { ImpactVectors, Vector } from "~~/app/types/data";
 import { useGlobalState } from "~~/services/store/store";
 
 const ImpactVectorCard = ({ name, description, sourceName }: Vector) => {
-  //the route is hard coded for now
+  const modalRef = useRef<HTMLDialogElement>(null);
   const [isSelected, setIsSelected] = useState(false);
-  const router = useRouter();
   const { selectedVectors, setSelectedVectors } = useGlobalState();
+
+  // modal for vector info
+  const openModal = () => {
+    modalRef.current?.showModal();
+  };
+  const closeModal = () => {
+    modalRef.current?.close();
+  };
+
+  const handleClose = () => {
+    closeModal();
+  };
+
+  // Use the enter or escape key to close modal
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDialogElement>) => {
+    if (e.key === "Escape" || e.key === "Enter") {
+      closeModal();
+    }
+  };
 
   const handleAddVector = (vectorName: keyof ImpactVectors) => {
     // Check if the vector is not already selected
@@ -27,7 +44,7 @@ const ImpactVectorCard = ({ name, description, sourceName }: Vector) => {
 
   return (
     <div
-      onClick={() => router.push("/impact/1")}
+      onClick={openModal}
       className="mr-1 cursor-pointer rounded-xl text-sm border-[0.2px] border-secondary-text/50 p-4 bg-base-300 flex flex-col justify-between gap-4 my-2"
     >
       <h2 className=" m-0 font-bold"> {name}</h2>
@@ -61,6 +78,28 @@ const ImpactVectorCard = ({ name, description, sourceName }: Vector) => {
         )}
       </div>
       <p className=" text-base-content-100  m-0">@{sourceName}</p>
+
+      <>
+        <dialog ref={modalRef} onKeyDown={handleKeyDown} className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">{name}</h3>
+            <p className="py-2 text-base">{description}</p>
+            <div className="modal-action">
+              <form method="dialog" className="w-full">
+                <button
+                  onClick={handleClose}
+                  className="btn btn-sm btn-circle outline-none btn-ghost absolute right-2 top-2"
+                >
+                  ✕
+                </button>
+                <button onClick={closeModal} className="btn btn-primary flex justify-center mx-auto font-light text-lg">
+                  Close
+                </button>
+              </form>
+            </div>
+          </div>
+        </dialog>
+      </>
     </div>
   );
 };
