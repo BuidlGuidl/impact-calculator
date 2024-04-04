@@ -88,7 +88,7 @@ const ImpactVectorCard = ({ name, description, sourceName }: Vector) => {
               <form method="dialog" className="w-full">
                 <button
                   onClick={handleClose}
-                  className="btn btn-sm btn-circle focus:border-none btn-ghost absolute right-2 top-2"
+                  className="btn btn-sm btn-circle outline-none btn-ghost absolute right-2 top-2"
                 >
                   ✕
                 </button>
