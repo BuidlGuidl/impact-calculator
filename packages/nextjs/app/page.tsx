@@ -7,12 +7,14 @@ import type { NextPage } from "next";
 import ImpactVectorDisplay from "~~/components/impact-vector/ImpactVectorDisplay";
 import ImpactVectorGraph from "~~/components/impact-vector/ImpactVectorGraph";
 import ImpactVectorTable from "~~/components/impact-vector/ImpactVectorTable";
+import ImpactvectorLists from "~~/components/impact-vector/ImpactvectorLists";
 import { SearchBar } from "~~/components/impact-vector/SearchBar";
 import { useGlobalState } from "~~/services/store/store";
 
 const Home: NextPage = () => {
   const { selectedVectors, setSelectedVectors } = useGlobalState();
   const [impactData, setImpactData] = useState<DataSet[]>([]);
+  const [isVectors, setIsVectors] = useState<boolean>(true);
   const [fullGraph, setFullGraph] = useState<boolean>(false);
 
   useEffect(() => {
@@ -88,13 +90,25 @@ const Home: NextPage = () => {
           } transition-all overflow-hidden h-auto b-md:max-w-[34rem] rounded-3xl p-6 border grid gap-6 mx-auto duration-1000 ease-in-out`}
         >
           <div className="rounded-xl grid grid-cols-2 bg-base-300 p-1">
-            <button className={` bg-base-100 font-semibold  py-3 text- rounded-xl text-center w-full`}>
+            <button
+              onClick={() => setIsVectors(true)}
+              className={` ${
+                isVectors ? "bg-base-100" : "bg-[#f2f4f9]"
+              } font-semibold  py-3 text- rounded-xl text-center w-full`}
+            >
               Impact Vectors
             </button>
-            <button className={`py-3 text-customGray rounded-xl text-center w-full bg-[#f2f4f9]`}>Lists</button>
+            <button
+              onClick={() => setIsVectors(false)}
+              className={`${
+                !isVectors ? "bg-base-100" : "bg-[#f2f4f9]"
+              } py-3 text-customGray rounded-xl text-center w-full `}
+            >
+              Lists
+            </button>
           </div>
           <SearchBar />
-          <ImpactVectorDisplay />
+          {isVectors ? <ImpactVectorDisplay /> : <ImpactvectorLists />}
         </div>
       </div>
     </main>
