@@ -1,12 +1,9 @@
 import ImpactVectorListCard from "./ImpactVectorListCard";
-import { useQuery } from "@tanstack/react-query";
+import { useFetch } from "usehooks-ts";
 import { VectorList } from "~~/app/types/data";
 
 const ImpactvectorLists = () => {
-  const { data: vectorLists } = useQuery<VectorList[]>({
-    queryKey: ["vectorLists"],
-    queryFn: async () => fetch("/api/lists").then(res => res.json()),
-  });
+  const { data: vectorLists } = useFetch<VectorList[]>("/api/lists");
 
   return (
     <div
@@ -20,6 +17,7 @@ const ImpactvectorLists = () => {
             title={vectorList.title}
             description={vectorList.description}
             vectors={vectorList.vectors}
+            creator={vectorList.creator}
           />
         ))}
     </div>

@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { RainbowKitProvider, lightTheme } from "@rainbow-me/rainbowkit";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { WagmiConfig } from "wagmi";
 import { Footer } from "~~/components/Footer";
@@ -37,15 +36,12 @@ const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const ScaffoldEthProviders = ({ children }: { children: React.ReactNode }) => {
-  const queryClient = new QueryClient();
   return (
-    <QueryClientProvider client={queryClient}>
-      <WagmiConfig config={wagmiConfig}>
-        <ProgressBar />
-        <RainbowKitProvider chains={appChains.chains} avatar={BlockieAvatar} theme={lightTheme()}>
-          <ScaffoldEthApp>{children}</ScaffoldEthApp>
-        </RainbowKitProvider>
-      </WagmiConfig>
-    </QueryClientProvider>
+    <WagmiConfig config={wagmiConfig}>
+      <ProgressBar />
+      <RainbowKitProvider chains={appChains.chains} avatar={BlockieAvatar} theme={lightTheme()}>
+        <ScaffoldEthApp>{children}</ScaffoldEthApp>
+      </RainbowKitProvider>
+    </WagmiConfig>
   );
 };
