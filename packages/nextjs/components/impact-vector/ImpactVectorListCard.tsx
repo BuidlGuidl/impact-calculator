@@ -1,4 +1,5 @@
 import React from "react";
+import { Address } from "../scaffold-eth";
 import { SelectedVector } from "~~/app/types/data";
 import { useGlobalState } from "~~/services/store/store";
 
@@ -25,7 +26,10 @@ const ImpactVectorListCard = ({
       <div className=" text-base-content-100 max-w-sm pr-4">
         <p className="m-0 p-0">{description.length > 100 ? description.slice(0, 100) + "..." : description}</p>
       </div>
-      <p className="m-0 p-0">@{creator.slice(0, 7)}...</p>
+      <div className="flex items-center gap-3 ">
+        <p className="m-0 p-0 font-bold">Creator: </p>
+        <Address size="sm" address={creator} />
+      </div>
     </div>
   );
 };
