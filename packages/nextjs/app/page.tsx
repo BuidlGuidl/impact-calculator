@@ -93,7 +93,7 @@ const Home: NextPage = () => {
             </button>
             <button className={`py-3 text-customGray rounded-xl text-center w-full bg-[#f2f4f9]`}>Lists</button>
           </div>
-          <SearchBar />
+          <SearchBar placeholder="Search Impact Vectors" />
           <ImpactVectorDisplay />
         </div>
       </div>

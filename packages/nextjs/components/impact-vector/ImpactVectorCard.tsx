@@ -80,7 +80,7 @@ const ImpactVectorCard = ({ name, description, sourceName }: Vector) => {
       <p className=" text-base-content-100  m-0">@{sourceName}</p>
 
       <>
-        <dialog ref={modalRef} onKeyDown={handleKeyDown} className="modal">
+        <dialog role="dialog" ref={modalRef} onKeyDown={handleKeyDown} className="modal">
           <div className="modal-box">
             <h3 className="font-bold text-lg">{name}</h3>
             <p className="py-2 text-base">{description}</p>

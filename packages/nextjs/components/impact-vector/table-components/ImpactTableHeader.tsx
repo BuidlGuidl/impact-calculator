@@ -1,4 +1,5 @@
 import React from "react";
+import FilterModal from "../FilterModal";
 import { IoArrowDownSharp } from "react-icons/io5";
 import { IoArrowUpSharp } from "react-icons/io5";
 import { SelectedVector } from "~~/app/types/data";
@@ -19,7 +20,7 @@ const ImpactTableHeader = ({ sortDesc, setSortDesc, sortBy, setSortBy }: Props) 
   return (
     <>
       <tr>
-        <th scope="col" className=" pb-3  w-[20%]  text-start text-xs font-medium  ">
+        <th scope="col" className="pb-1 w-[20%] text-start text-xs font-medium">
           <div className="flex items-center gap-1">
             <span className="cursor-pointer" onClick={getClickHandler("name")}>
               Impact Vector
@@ -28,7 +29,7 @@ const ImpactTableHeader = ({ sortDesc, setSortDesc, sortBy, setSortBy }: Props) 
           </div>
         </th>
 
-        <th scope="col" className=" px-3 lg:px-6  pb-3 w-[75%]  text-start text-xs font-medium  ">
+        <th scope="col" className="px-3 lg:px-6 pb-1 w-[75%] text-start text-xs font-medium">
           <div className="flex items-center gap-1">
             <span className="cursor-pointer" onClick={getClickHandler("weight")}>
               Weight
@@ -36,7 +37,9 @@ const ImpactTableHeader = ({ sortDesc, setSortDesc, sortBy, setSortBy }: Props) 
             {sortBy === "weight" && (sortDesc ? <IoArrowDownSharp /> : <IoArrowUpSharp />)}
           </div>
         </th>
-        <th scope="col" className="pl-6 py-3 w-[10%]  text-start  text-xs font-medium  "></th>
+        <th className="pb-1">
+          <FilterModal />
+        </th>
       </tr>
     </>
   );
