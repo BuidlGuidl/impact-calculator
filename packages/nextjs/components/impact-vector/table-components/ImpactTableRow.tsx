@@ -32,7 +32,7 @@ const ImpactTableRow = ({ vector, updateWeight }: Props) => {
         </div>
       </td>
       <td className="px-3 lg:px-6 py-2 sm:py-4 whitespace-nowrap text-sm ">
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center -mr-20 justify-center gap-2">
           <input
             type="range"
             min={0}

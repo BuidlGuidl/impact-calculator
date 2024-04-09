@@ -107,7 +107,7 @@ const Home: NextPage = () => {
               Lists
             </button>
           </div>
-          <SearchBar />
+          <SearchBar placeholder="Search Impact Vectors" />
           {isVectors ? <ImpactVectorDisplay /> : <ImpactvectorLists />}
         </div>
       </div>
