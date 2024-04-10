@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { CodeMetricsByProject, OSOResponse, OSOResponseProps, OnchainMetricsByProject } from "~~/app/types/OSO";
 import { DataSet, ImpactVectors } from "~~/app/types/data";
-import { getVectors } from "~~/utils/impactCalculator/data";
+import dbConnect from "~~/services/db/dbConnect";
+import ImpactVector from "~~/services/db/models/ImpactVector";
 
 interface VectorWeight {
   vector: keyof ImpactVectors;
@@ -9,6 +10,8 @@ interface VectorWeight {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  dbConnect();
+
   if (req.method !== "GET") {
     return res.status(405).json({ message: "Method not allowed." });
   }
@@ -162,7 +165,7 @@ const scoreProjectsByVectorWeight = async ({
   allProjects: (CodeMetricsByProject & OnchainMetricsByProject)[];
   vectorWeights: VectorWeight[];
 }) => {
-  const allVectors = await getVectors();
+  const allVectors = await ImpactVector.find();
 
   // Find the largest value for each vector and find multiple to make it 100
   const normalizers: { [key in keyof ImpactVectors]: number } = {} as { [key in keyof ImpactVectors]: number };
