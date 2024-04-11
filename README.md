@@ -11,7 +11,7 @@ Static data set: https://github.com/opensource-observer/insights/blob/main/commu
 
 ### Database setup
 
-This project uses [MongoDB](https://www.mongodb.com/) for a database. To run the project locally, a value is needed for the `MONGODB_URI` env variable, running locally or hosted with [MongoDB Atlas](https://www.mongodb.com/docs/atlas/getting-started/). Your `MONGO_URI` should be in this format:
+This project uses [MongoDB](https://www.mongodb.com/) for a database. To run the project locally, a value is needed for the `MONGODB_URI` env variable, running locally or hosted with [MongoDB Atlas](https://www.mongodb.com/docs/atlas/getting-started/). Your `MONGODB_URI` should be in this format:
 ```
 mongodb+srv://USERNAME:PASSWORD@SERVER/DATABASE_NAME
 ```
