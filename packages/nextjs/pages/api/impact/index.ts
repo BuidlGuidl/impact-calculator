@@ -53,14 +53,14 @@ async function getImpact(vectorWeights: VectorWeight[]) {
   const allProjects = await getProjects();
   const scoredProjects = await scoreProjectsByVectorWeight({ allProjects, vectorWeights });
 
-  const nonZeroProjects = scoredProjects.filter(project => project.score > 0);
-
   // Calculate total OP allocated to each project
-  const totalScore = nonZeroProjects.reduce((total, curr) => total + curr.score, 0);
-  const projectsWithOPAllocated = nonZeroProjects.map(project => ({
-    ...project,
-    opAllocation: (project.score / totalScore) * 10000000,
-  }));
+  const totalScore = scoredProjects.reduce((total, curr) => total + curr.score, 0);
+  const projectsWithOPAllocated = scoredProjects
+    .map(project => ({
+      ...project,
+      opAllocation: (project.score / totalScore) * 10000000,
+    }))
+    .filter(project => project.opAllocation >= 1);
   return projectsWithOPAllocated;
 }
 
