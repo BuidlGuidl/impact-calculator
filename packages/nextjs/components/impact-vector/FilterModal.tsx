@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import { SearchBar } from "./SearchBar";
 import { FunnelIcon } from "@heroicons/react/24/outline";
 
 const FilterModal = () => {
@@ -43,8 +42,6 @@ const FilterModal = () => {
 
       <dialog role="dialog" ref={modalRef} className="modal" onClick={handleOutsideClick}>
         <div className="modal-box min-h-[300px] relative">
-          <SearchBar placeholder="Search filters or presets" />
-
           <div className="modal-action"></div>
         </div>
       </dialog>

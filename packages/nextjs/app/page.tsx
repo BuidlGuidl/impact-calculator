@@ -8,7 +8,6 @@ import ImpactVectorDisplay from "~~/components/impact-vector/ImpactVectorDisplay
 import ImpactVectorGraph from "~~/components/impact-vector/ImpactVectorGraph";
 import ImpactVectorTable from "~~/components/impact-vector/ImpactVectorTable";
 import ImpactvectorLists from "~~/components/impact-vector/ImpactvectorLists";
-import { SearchBar } from "~~/components/impact-vector/SearchBar";
 import { useGlobalState } from "~~/services/store/store";
 
 const Home: NextPage = () => {
@@ -107,7 +106,6 @@ const Home: NextPage = () => {
               Lists
             </button>
           </div>
-          <SearchBar placeholder="Search Impact Vectors" />
           {isVectors ? <ImpactVectorDisplay /> : <ImpactvectorLists />}
         </div>
       </div>
