@@ -76,3 +76,8 @@ input[type="number"] {
 .shadow-none {
   --tw-shadow: 0 0 #0000;
 }
+
+
+::-webkit-scrollbar {
+  width: 0;
+}

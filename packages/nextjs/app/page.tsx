@@ -63,13 +63,13 @@ const Home: NextPage = () => {
   }, [selectedVectors]);
 
   return (
-    <main className={`w-full flex flex-col gap-6 sm:gap-10 p-3 ${!fullGraph && "lg:mb-[22rem]"} relative`}>
+    <main className={`w-full flex flex-col relative`}>
       <div
         className={`${
           fullGraph ? "w-full" : "lg:w-[50%] xl:w-[58%] 2xl:w-[64%] 3xl:w-[70%]"
-        } duration-500 ease-in-out h-[60vh] transition-all`}
+        } duration-500 ease-in-out transition-all`}
       >
-        <div className="flex w-full h-[60vh]">
+        <div className="flex w-full h-[50vh]">
           {impactData.length > 0 && (
             <ImpactVectorGraph data={impactData} fullGraph={fullGraph} setFullGraph={setFullGraph} />
           )}
@@ -87,7 +87,7 @@ const Home: NextPage = () => {
         <div
           className={`b-md:w-[34rem] w-full ${
             fullGraph ? "lg:relative mt-0" : "lg:absolute lg:top-0 lg:right-0"
-          } transition-all overflow-hidden h-auto b-md:max-w-[34rem] rounded-3xl p-6 border grid gap-6 mx-auto duration-1000 ease-in-out`}
+          } transition-all overflow-hidden b-md:max-w-[34rem] rounded-3xl p-6 border grid gap-6 mx-auto duration-1000 ease-in-out h-[90vh]`}
         >
           <div className="rounded-xl grid grid-cols-2 bg-base-300 p-1">
             <button

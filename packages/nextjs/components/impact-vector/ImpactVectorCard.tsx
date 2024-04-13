@@ -45,7 +45,7 @@ const ImpactVectorCard = ({ name, description, sourceName }: Vector) => {
   return (
     <div
       onClick={openModal}
-      className="mr-1 cursor-pointer rounded-xl text-sm border-[0.2px] border-secondary-text/50 p-4 bg-base-300 flex flex-col justify-between gap-4 my-2"
+      className="mr-1 cursor-pointer rounded-xl text-sm border-[0.2px] border-secondary-text/50 p-4 bg-base-300 flex flex-col justify-between gap-2 my-2"
     >
       <h2 className=" m-0 font-bold"> {name}</h2>
       <div className="flex items-center justify-between">
