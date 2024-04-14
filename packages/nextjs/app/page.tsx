@@ -15,7 +15,7 @@ const Home: NextPage = () => {
   const [impactData, setImpactData] = useState<DataSet[]>([]);
   const [isVectors, setIsVectors] = useState<boolean>(true);
   const [fullGraph, setFullGraph] = useState<boolean>(false);
-
+  const [projectsShown, setProjectsShown] = useState(20);
   useEffect(() => {
     // Initialize selected vector
     setSelectedVectors([{ name: "Total Onchain Users", weight: 100, dataType: "number", filters: [] }]);
@@ -68,9 +68,23 @@ const Home: NextPage = () => {
           fullGraph ? "w-full" : "lg:w-[50%] xl:w-[58%] 2xl:w-[64%] 3xl:w-[70%]"
         } duration-500 ease-in-out transition-all`}
       >
-        <div className="flex w-full h-[50vh]">
+        <div
+          className="flex w-full h-[50vh] overflow"
+          onWheel={e => {
+            const isDown = e.deltaY < 0;
+            if ((isDown && projectsShown <= 10) || (!isDown && projectsShown >= impactData.length)) {
+              return;
+            }
+            setProjectsShown(current => current + (isDown ? -10 : 10));
+          }}
+        >
           {impactData.length > 0 && (
-            <ImpactVectorGraph data={impactData} fullGraph={fullGraph} setFullGraph={setFullGraph} />
+            <ImpactVectorGraph
+              data={impactData}
+              projectsShown={projectsShown}
+              fullGraph={fullGraph}
+              setFullGraph={setFullGraph}
+            />
           )}
         </div>
       </div>

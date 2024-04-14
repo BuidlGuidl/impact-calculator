@@ -70,10 +70,12 @@ const sortByTotalDescending = (dataSetArray: any[]) => {
 export default function ImpactVectorGraph({
   data,
   fullGraph,
+  projectsShown,
   setFullGraph,
 }: {
   data: DataSet[];
   fullGraph: boolean;
+  projectsShown: number;
   setFullGraph: Dispatch<SetStateAction<boolean>>;
 }) {
   const [showVectors, setShowVectors] = useState(false);
@@ -87,11 +89,14 @@ export default function ImpactVectorGraph({
       setHoveredProject(value);
     }
   };
-
+  const maxProjects = transformedData.length > projectsShown ? projectsShown : transformedData.length;
   return (
     <div className="flex flex-col w-full">
       {transformedData.length > 0 && (
         <div className="items-center text-xs justify-end flex">
+          <span className=" pl-8 flex-grow">
+            Total Projects:{maxProjects}/{transformedData.length}
+          </span>
           <button onClick={() => setShowVectors(!showVectors)}>{showVectors ? "Hide Vectors" : "Show Vectors"}</button>
           <button className="px-3" onClick={() => setIsLogarithmic(!isLogarithmic)}>
             {isLogarithmic ? "Linear" : "Logarithmic"}
@@ -118,7 +123,7 @@ export default function ImpactVectorGraph({
         <ComposedChart
           width={500}
           height={300}
-          data={transformedData}
+          data={[...transformedData].splice(0, projectsShown)}
           margin={{
             top: 5,
             right: 30,
