@@ -46,7 +46,7 @@ const ImpactVectorCard = ({ vector }: IProps) => {
   useEffect(() => {
     const selected = selectedVectors.find(item => item.name === vector.name);
     setIsSelected(selected ? true : false);
-  }, [selectedVectors, name]);
+  }, [selectedVectors, vector.name]);
 
   return (
     <div
