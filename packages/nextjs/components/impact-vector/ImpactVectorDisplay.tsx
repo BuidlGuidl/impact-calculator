@@ -16,14 +16,7 @@ const ImpactVectorDisplay = () => {
       scrollbar-w-2 scrollbar scrollbar-thumb-slate-300 scrollbar-thumb-rounded-full pb-6"
       >
         {filteredVectors.map((vector, index) => (
-          <ImpactVectorCard
-            key={index}
-            name={vector.name}
-            description={vector.description}
-            sourceName={vector.sourceName}
-            parent={vector.parent}
-            fieldName={vector.fieldName}
-          />
+          <ImpactVectorCard key={index} vector={vector} />
         ))}
         {filteredVectors?.length == 0 ? <h2 className="text-center">No results</h2> : <></>}
       </div>

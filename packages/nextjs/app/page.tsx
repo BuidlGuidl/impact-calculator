@@ -18,7 +18,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     // Initialize selected vector
-    setSelectedVectors([{ name: "Total Onchain Users", weight: 100 }]);
+    setSelectedVectors([{ name: "Total Onchain Users", weight: 100, dataType: "number", filters: [] }]);
   }, [setSelectedVectors]);
 
   useEffect(() => {

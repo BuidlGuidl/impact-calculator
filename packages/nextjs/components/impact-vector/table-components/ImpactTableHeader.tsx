@@ -1,5 +1,4 @@
 import React from "react";
-import FilterModal from "../FilterModal";
 import { IoArrowDownSharp } from "react-icons/io5";
 import { IoArrowUpSharp } from "react-icons/io5";
 import { SelectedVector } from "~~/app/types/data";
@@ -37,8 +36,8 @@ const ImpactTableHeader = ({ sortDesc, setSortDesc, sortBy, setSortBy }: Props) 
             {sortBy === "weight" && (sortDesc ? <IoArrowDownSharp /> : <IoArrowUpSharp />)}
           </div>
         </th>
-        <th className="pb-1">
-          <FilterModal />
+        <th className="pb-1 ">
+          <div className="w-[160px]"></div>
         </th>
       </tr>
     </>
