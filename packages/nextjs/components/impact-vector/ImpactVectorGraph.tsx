@@ -64,7 +64,7 @@ const transformData = (impactData: DataSet[]): any[] => {
 
 // Function to sort array in descending order based on opAllocation
 const sortByTotalDescending = (dataSetArray: any[]) => {
-  return dataSetArray.slice().sort((a, b) => b.opAllocation - a.opAllocation);
+  return dataSetArray.slice().sort((a, b) => a.opAllocation - b.opAllocation);
 };
 
 export default function ImpactVectorGraph({
