@@ -7,7 +7,10 @@ import { VectorList } from "~~/app/types/data";
 const ImpactvectorLists = () => {
   const { data: vectorLists } = useFetch<VectorList[]>("/api/lists");
   const [searchValue, setSearchValue] = useState("");
-  const filteredVectors = vectorLists?.filter(it => it.title.includes(searchValue)) ?? [];
+  const filteredVectors = vectorLists?.filter(it => it.title.toLowerCase().includes(searchValue.toLowerCase())) ?? [];
+  const filteredOnDescription =
+    vectorLists?.filter(it => it.description.toLowerCase().includes(searchValue.toLowerCase())) ?? [];
+  const filteredVectorsWithoutDuplicates = [...new Set([...filteredVectors, ...filteredOnDescription])];
   return (
     <>
       <SearchBar value={searchValue} placeholder="Search Impact Vectors" onChange={txt => setSearchValue(txt)} />
@@ -15,7 +18,7 @@ const ImpactvectorLists = () => {
         className="max-h-[700px] min-h-[70vh] overflow-y-auto
           scrollbar-w-2 scrollbar scrollbar-thumb-slate-300 scrollbar-thumb-rounded-full pb-6"
       >
-        {filteredVectors.map((vectorList, index) => (
+        {filteredVectorsWithoutDuplicates.map((vectorList, index) => (
           <ImpactVectorListCard
             key={index}
             title={vectorList.title}
@@ -24,7 +27,7 @@ const ImpactvectorLists = () => {
             creator={vectorList.creator}
           />
         ))}
-        {filteredVectors?.length == 0 ? <h2 className="text-center">No results</h2> : <></>}
+        {filteredVectorsWithoutDuplicates?.length == 0 ? <h2 className="text-center">No results</h2> : <></>}
       </div>
     </>
   );
