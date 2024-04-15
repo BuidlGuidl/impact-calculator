@@ -8,6 +8,7 @@ export const impactVectors: Vector[] = [
     sourceName: "OSO",
     parent: "code_metrics_by_project",
     fieldName: "stars",
+    dataType: "number",
   },
   {
     name: "Total Forks",
@@ -16,6 +17,7 @@ export const impactVectors: Vector[] = [
     sourceName: "OSO",
     parent: "code_metrics_by_project",
     fieldName: "forks",
+    dataType: "number",
   },
   {
     name: "Contributors Last 6 Months",
@@ -24,6 +26,7 @@ export const impactVectors: Vector[] = [
     sourceName: "OSO",
     parent: "code_metrics_by_project",
     fieldName: "contributors_6_months",
+    dataType: "number",
   },
   {
     name: "Avg Monthly Active Devs Last 6 Months",
@@ -32,6 +35,7 @@ export const impactVectors: Vector[] = [
     sourceName: "OSO",
     parent: "code_metrics_by_project",
     fieldName: "avg_active_devs_6_months",
+    dataType: "number",
   },
   {
     name: "Total Onchain Users",
@@ -40,6 +44,7 @@ export const impactVectors: Vector[] = [
     sourceName: "OSO",
     parent: "onchain_metrics_by_project",
     fieldName: "total_users",
+    dataType: "number",
   },
   {
     name: "Onchain Users Last 6 Months",
@@ -48,6 +53,7 @@ export const impactVectors: Vector[] = [
     sourceName: "OSO",
     parent: "onchain_metrics_by_project",
     fieldName: "users_6_months",
+    dataType: "number",
   },
   {
     name: "Total Txns",
@@ -56,6 +62,7 @@ export const impactVectors: Vector[] = [
     sourceName: "OSO",
     parent: "onchain_metrics_by_project",
     fieldName: "total_txns",
+    dataType: "number",
   },
   {
     name: "Total Txn Fees (ETH)",
@@ -64,6 +71,7 @@ export const impactVectors: Vector[] = [
     sourceName: "OSO",
     parent: "onchain_metrics_by_project",
     fieldName: "total_l2_gas",
+    dataType: "number",
   },
   {
     name: "Txn Fees Last 6 Months (ETH)",
@@ -72,6 +80,7 @@ export const impactVectors: Vector[] = [
     sourceName: "OSO",
     parent: "onchain_metrics_by_project",
     fieldName: "l2_gas_6_months",
+    dataType: "number",
   },
   // Adding these are in the OSO teams current sprint, hopefully can add them back soon.
   // {

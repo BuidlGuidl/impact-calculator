@@ -1,12 +1,22 @@
 import React from "react";
 
-export const SearchBar = ({ placeholder }: { placeholder: string }) => {
+export const SearchBar = ({
+  value,
+  placeholder,
+  onChange,
+}: {
+  value: string;
+  placeholder: string;
+  onChange: (text: string) => void;
+}) => {
   return (
     <div className="relative">
       <input
-        className="input input-info input-bordered bg-secondary focus:outline-none border pl-10 border-neutral hover:border-gray-400  rounded-xl w-full p-3 text-neutral-500 leading-tight  "
+        className="input input-info input-bordered bg-secondary focus:outline-none border pl-10 border-neutral hover:border-gray-400  rounded-xl w-full p-3 text-neutral-500 leading-tight"
         id="username"
         type="text"
+        value={value}
+        onChange={e => onChange(e.target.value)}
         placeholder={placeholder}
       />
 

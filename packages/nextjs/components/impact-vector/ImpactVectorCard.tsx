@@ -3,10 +3,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { HiMiniCheckBadge } from "react-icons/hi2";
-import { ImpactVectors, Vector } from "~~/app/types/data";
+import { SelectedVector, Vector } from "~~/app/types/data";
 import { useGlobalState } from "~~/services/store/store";
 
-const ImpactVectorCard = ({ name, description, sourceName }: Vector) => {
+interface IProps {
+  vector: Vector;
+}
+const ImpactVectorCard = ({ vector }: IProps) => {
   const modalRef = useRef<HTMLDialogElement>(null);
   const [isSelected, setIsSelected] = useState(false);
   const { selectedVectors, setSelectedVectors } = useGlobalState();
@@ -30,27 +33,32 @@ const ImpactVectorCard = ({ name, description, sourceName }: Vector) => {
     }
   };
 
-  const handleAddVector = (vectorName: keyof ImpactVectors) => {
+  const handleAddVector = () => {
     // Check if the vector is not already selected
-    if (!selectedVectors.find(vector => vector.name === vectorName)) {
-      const newSelectedVectors = [...selectedVectors, { name: vectorName, weight: 100 }];
+    if (!selectedVectors.find(item => item.name === vector.name)) {
+      const newSelectedVectors: SelectedVector[] = [
+        ...selectedVectors,
+        { name: vector.name, weight: 100, dataType: vector.dataType || "number", filters: [] },
+      ];
       setSelectedVectors(newSelectedVectors);
     }
   };
   useEffect(() => {
-    const selected = selectedVectors.find(vector => vector.name === name);
+    const selected = selectedVectors.find(item => item.name === vector.name);
     setIsSelected(selected ? true : false);
-  }, [selectedVectors, name]);
+  }, [selectedVectors, vector.name]);
 
   return (
     <div
       onClick={openModal}
-      className="mr-1 cursor-pointer rounded-xl text-sm border-[0.2px] border-secondary-text/50 p-4 bg-base-300 flex flex-col justify-between gap-4 my-2"
+      className="mr-1 cursor-pointer rounded-xl text-sm border-[0.2px] border-secondary-text/50 p-4 bg-base-300 flex flex-col justify-between gap-2 my-2"
     >
-      <h2 className=" m-0 font-bold"> {name}</h2>
+      <h2 className=" m-0 font-bold"> {vector.name}</h2>
       <div className="flex items-center justify-between">
         <div className=" text-base-content-100 max-w-sm pr-4">
-          <p className="m-0 p-0">{description.length > 100 ? description.slice(0, 100) + "..." : description}</p>
+          <p className="m-0 p-0">
+            {vector.description.length > 100 ? vector.description.slice(0, 100) + "..." : vector.description}
+          </p>
         </div>
         {isSelected ? (
           <button onClick={e => e.stopPropagation()} className=" p-4 border-2 border-gray-300 rounded-lg">
@@ -62,7 +70,7 @@ const ImpactVectorCard = ({ name, description, sourceName }: Vector) => {
               disabled={isSelected}
               onClick={e => {
                 e.stopPropagation();
-                handleAddVector(name);
+                handleAddVector();
               }}
               className="rounded-xl border-2 border-primary bg-primary hover:bg-red-600 p-4"
             >
@@ -77,13 +85,13 @@ const ImpactVectorCard = ({ name, description, sourceName }: Vector) => {
           </div>
         )}
       </div>
-      <p className=" text-base-content-100  m-0">@{sourceName}</p>
+      <p className=" text-base-content-100  m-0">@{vector.sourceName}</p>
 
       <>
         <dialog role="dialog" ref={modalRef} onKeyDown={handleKeyDown} className="modal">
           <div className="modal-box">
-            <h3 className="font-bold text-lg">{name}</h3>
-            <p className="py-2 text-base">{description}</p>
+            <h3 className="font-bold text-lg">{vector.name}</h3>
+            <p className="py-2 text-base">{vector.description}</p>
             <div className="modal-action">
               <form method="dialog" className="w-full">
                 <button

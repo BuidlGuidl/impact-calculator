@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ImpactTableHeader from "./table-components/ImpactTableHeader";
 import ImpactTableRow from "./table-components/ImpactTableRow";
-import { SelectedVector } from "~~/app/types/data";
+import { IFilter, SelectedVector } from "~~/app/types/data";
 import { useGlobalState } from "~~/services/store/store";
 
 const ImpactVectorTable = () => {
@@ -35,6 +35,17 @@ const ImpactVectorTable = () => {
     return 0;
   });
 
+  const onFilteredChange = (newFilters: IFilter[], index: number) => {
+    const updatedSelectedVectors = selectedVectors.map((vector, i) =>
+      i === index ? { ...vector, filters: newFilters } : vector,
+    );
+    setSelectedVectors(updatedSelectedVectors);
+
+    if (sortBy === "weight") {
+      setSortBy(undefined);
+      setSortDesc(true);
+    }
+  };
   return (
     <>
       <table className="min-w-full divide-y divide-gray-300 ">
@@ -42,9 +53,16 @@ const ImpactVectorTable = () => {
           <ImpactTableHeader sortDesc={sortDesc} setSortDesc={setSortDesc} sortBy={sortBy} setSortBy={setSortBy} />
         </thead>
         <tbody className="divide-y divide-gray-300 ">
-          {sortedVectors.map((vector, index) => (
-            <ImpactTableRow key={vector.name} vector={vector} updateWeight={updateVectorWeight(index)} />
-          ))}
+          {sortedVectors.map((vector, index) => {
+            return (
+              <ImpactTableRow
+                key={vector.name}
+                vector={vector}
+                updateWeight={updateVectorWeight(index)}
+                onFilteredChange={(newFilters: IFilter[]) => onFilteredChange(newFilters, index)}
+              />
+            );
+          })}
         </tbody>
       </table>
     </>
