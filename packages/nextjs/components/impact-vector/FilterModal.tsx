@@ -52,7 +52,14 @@ const FilterModal = ({ vector, onFiltered }: { vector: SelectedVector; onFiltere
 
   return (
     <>
-      <div onKeyDown={handleKeyDown} className="lg:mr-5 flex justify-end">
+      <div onKeyDown={handleKeyDown} className="lg:mr-5 flex justify-end relative">
+        {vector.filters.length > 0 ? (
+          <span className="bg-red-500 text-white flex absolute left-[10px] top-[-5px] justify-center items-center w-[16px] h-[16px] rounded-full text-xs">
+            {vector.filters.length}
+          </span>
+        ) : (
+          <></>
+        )}
         <button className="w-[10px]">
           <PiSlidersHorizontalBold size={20} onClick={() => openModal()} />
         </button>
