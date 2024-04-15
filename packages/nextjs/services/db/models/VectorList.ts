@@ -1,5 +1,20 @@
 import mongoose from "mongoose";
-import { SelectedVector, VectorList } from "~~/app/types/data";
+import { IFilter, SelectedVector, VectorList } from "~~/app/types/data";
+
+const FilterSchema = new mongoose.Schema<IFilter>({
+  action: {
+    type: String,
+    required: true,
+  },
+  condition: {
+    type: String,
+    required: true,
+  },
+  value: {
+    type: String,
+    required: true,
+  },
+});
 
 const SelectedVectorSchema = new mongoose.Schema<SelectedVector>({
   name: {
@@ -8,6 +23,14 @@ const SelectedVectorSchema = new mongoose.Schema<SelectedVector>({
   },
   weight: {
     type: Number,
+    required: true,
+  },
+  dataType: {
+    type: String,
+    required: true,
+  },
+  filters: {
+    type: [FilterSchema],
     required: true,
   },
 });

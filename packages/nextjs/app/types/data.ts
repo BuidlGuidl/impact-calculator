@@ -68,17 +68,26 @@ export interface DataSet {
 
 type VectorSourceName = "OSO";
 
+export type VectorDataType = "number" | "date" | "string";
 export interface Vector {
   name: keyof ImpactVectors;
   description: string;
   sourceName: VectorSourceName;
   parent: string;
   fieldName: string;
+  dataType?: VectorDataType;
 }
 
+export interface IFilter {
+  action: "include" | "exclude" | "multiply";
+  condition: string;
+  value: number | string;
+}
 export interface SelectedVector {
   name: keyof ImpactVectors;
   weight: number;
+  filters: IFilter[];
+  dataType: VectorDataType;
 }
 
 export interface VectorList {

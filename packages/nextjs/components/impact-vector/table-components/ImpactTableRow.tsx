@@ -1,16 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import FilterModal from "../FilterModal";
 import { FiTrash2 } from "react-icons/fi";
-import { SelectedVector } from "~~/app/types/data";
+import { IFilter, SelectedVector } from "~~/app/types/data";
 import { useGlobalState } from "~~/services/store/store";
 
 interface Props {
   vector: SelectedVector;
   updateWeight: (newWeight: number) => void;
+  onFilteredChange: (newFilters: IFilter[]) => void;
 }
 
-const ImpactTableRow = ({ vector, updateWeight }: Props) => {
+const ImpactTableRow = ({ vector, updateWeight, onFilteredChange }: Props) => {
   const { selectedVectors, setSelectedVectors } = useGlobalState();
   const [weight, setWeight] = useState<number>(vector.weight);
 
@@ -28,7 +30,6 @@ const ImpactTableRow = ({ vector, updateWeight }: Props) => {
       <td className="py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm ">
         <div className="flex flex-col ">
           <span className="font-semibold">{vector.name}</span>
-          <span className="text-gray-500">{vector.name}</span>
         </div>
       </td>
       <td className="px-3 lg:px-6 py-2 sm:py-4 whitespace-nowrap text-sm ">
@@ -48,6 +49,7 @@ const ImpactTableRow = ({ vector, updateWeight }: Props) => {
       <td className="pr-2 lg:pr-6 py-2 sm:py-4 whitespace-nowrap ">
         <div className="grid gap-2 items-center justify-end grid-flow-col">
           <div className="flex gap-1 sm:gap-3 ">
+            <FilterModal vector={vector} onFiltered={newFilters => onFilteredChange(newFilters)} />
             <button className="w-[20px]">
               <FiTrash2 size={20} onClick={handleRemoveVector} />
             </button>
