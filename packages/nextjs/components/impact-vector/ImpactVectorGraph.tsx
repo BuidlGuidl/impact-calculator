@@ -15,22 +15,22 @@ const NON_VECTOR_KEYS = ["image", "name", "profile", "opAllocation"];
 const COLOR_CLASS_BY_VECTOR: { [key in keyof ImpactVectors]: string } = {
   "# GitHub Repos": "text-[#ff0000]",
   "Date First Commit": "text-[#00ff00]",
-  "Total Stars": "text-[#0000ff]",
-  "Total Forks": "text-[#ffff00]",
-  "Total Contributors": "text-[#ff00ff]",
-  "Contributors Last 6 Months": "text-[#00ffff]",
+  "Total Stars": "text-[#FA5300]",
+  "Total Forks": "text-[#5A9E00]",
+  "Total Contributors": "text-[#FF0420]",
+  "Contributors Last 6 Months": "text-[#3374DB]",
   "Avg Monthly Active Devs Last 6 Months": "text-[#ff8000]",
   "# OP Contracts": "text-[#8000ff]",
   "Date First Txn": "text-[#00ff80]",
-  "Total Onchain Users": "text-[#ff0080]",
-  "Onchain Users Last 6 Months": "text-[#80ff00]",
+  "Total Onchain Users": "text-[#8D33DB]",
+  "Onchain Users Last 6 Months": "text-[#008F8F]",
   "Total Txns": "text-[#0080ff]",
   "Total Txn Fees (ETH)": "text-[#ff0080]",
   "Txn Fees Last 6 Months (ETH)": "text-[#ff80ff]",
-  "# NPM Packages": "text-[#80ff80]",
+  "# NPM Packages": "text-[#027A48]",
   "Date First Download": "text-[#8080ff]",
-  "Total Downloads": "text-[#ffff80]",
-  "Downloads Last 6 Months": "text-[#80ffff]",
+  "Total Downloads": "text-[#147C49]",
+  "Downloads Last 6 Months": "text-[#B42318]",
 };
 const shouldRenderAsVector = (key: string) =>
   !key.includes("_actual") && !key.includes("_normalized") && !NON_VECTOR_KEYS.includes(key);
@@ -171,8 +171,8 @@ export default function ImpactVectorGraph({
               if (active && payload && payload.length) {
                 const data = payload[0].payload;
                 return (
-                  <div className="w-fit h-fit space-y-2 p-4 pt-1 text-sm bg-base-100">
-                    <p>{`${data.name}`}</p>
+                  <div className="w-fit h-fit space-y-2 p-4 pt-1 text-sm bg-base-100 shadow shadow-xl p-6 mb-6 bg-white rounded-xl">
+                    <p className="font-semibold">{`${data.name}`}</p>
                     <p>
                       <span className=" text-red-500 font-semibold">OP Allocation:</span> {data.opAllocation}
                     </p>
