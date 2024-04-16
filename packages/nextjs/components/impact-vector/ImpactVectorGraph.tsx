@@ -162,6 +162,7 @@ export default function ImpactVectorGraph({
             dataKey="profile"
             onMouseMove={handleMouseMove}
             axisLine={false}
+            height={0}
             tickLine={false}
             tick={<CustomXAxis x={0} y={0} hovered={hoveredProject} />}
             interval={0}
