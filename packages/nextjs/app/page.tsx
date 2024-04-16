@@ -6,12 +6,13 @@ import { debounce } from "lodash";
 import type { NextPage } from "next";
 import ImpactVectorDisplay from "~~/components/impact-vector/ImpactVectorDisplay";
 import ImpactVectorGraph from "~~/components/impact-vector/ImpactVectorGraph";
+import ImpactVectorLists from "~~/components/impact-vector/ImpactVectorLists";
 import ImpactVectorTable from "~~/components/impact-vector/ImpactVectorTable";
-import ImpactvectorLists from "~~/components/impact-vector/ImpactvectorLists";
 import { useGlobalState } from "~~/services/store/store";
 
 const Home: NextPage = () => {
   const { selectedVectors, setSelectedVectors } = useGlobalState();
+  const { hardCapPct, setHardCapPct } = useGlobalState();
   const [impactData, setImpactData] = useState<DataSet[]>([]);
   const [isVectors, setIsVectors] = useState<boolean>(true);
   const [fullGraph, setFullGraph] = useState<boolean>(false);
@@ -38,9 +39,13 @@ const Home: NextPage = () => {
           return;
         }
 
-        const queryString = selectedVectors
+        let queryString = selectedVectors
           .map(vector => `vector=${encodeURIComponent(vector.name)}&weight=${vector.weight}`)
           .join("&");
+
+        if (hardCapPct) {
+          queryString += `&hardCapPct=${hardCapPct}`;
+        }
 
         const apiUrl = `/api/impact?${queryString}`;
 
@@ -59,7 +64,7 @@ const Home: NextPage = () => {
 
     const debouncedFetchData = debounce(fetchData, 300);
     debouncedFetchData();
-  }, [selectedVectors]);
+  }, [selectedVectors, hardCapPct]);
 
   return (
     <main className={`w-full flex flex-col relative`}>
@@ -88,7 +93,23 @@ const Home: NextPage = () => {
           )}
         </div>
       </div>
-
+      <div className="flex flex-col lg:flex-row">
+        <span>
+          Cap allocation at{" "}
+          <input
+            className="w-10 text-right"
+            type="number"
+            min="3"
+            max="15"
+            step="0.25"
+            value={hardCapPct}
+            onChange={event => {
+              setHardCapPct(Number(event.target.value));
+            }}
+          />
+          % of total
+        </span>
+      </div>
       <div className="flex flex-col lg:flex-row">
         <div
           className={`lg:mx-5 ${
@@ -120,7 +141,7 @@ const Home: NextPage = () => {
               Lists
             </button>
           </div>
-          {isVectors ? <ImpactVectorDisplay /> : <ImpactvectorLists />}
+          {isVectors ? <ImpactVectorDisplay /> : <ImpactVectorLists />}
         </div>
       </div>
     </main>

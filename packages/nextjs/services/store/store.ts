@@ -13,6 +13,8 @@ import { ChainWithAttributes } from "~~/utils/scaffold-eth";
  */
 
 type GlobalState = {
+  hardCapPct: number;
+  setHardCapPct: (newHardCap: number) => void;
   selectedVectors: SelectedVector[];
   setSelectedVectors: (newSelectedVectors: SelectedVector[]) => void;
   nativeCurrencyPrice: number;
@@ -22,6 +24,8 @@ type GlobalState = {
 };
 
 export const useGlobalState = create<GlobalState>(set => ({
+  hardCapPct: 0,
+  setHardCapPct: (newHardCapPct: number) => set(() => ({ hardCapPct: newHardCapPct })),
   selectedVectors: [],
   setSelectedVectors: (newSelectedVectors: SelectedVector[]) => set(() => ({ selectedVectors: newSelectedVectors })),
   nativeCurrencyPrice: 0,

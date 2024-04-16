@@ -4,6 +4,8 @@ import { DataSet, ImpactVectors } from "~~/app/types/data";
 import dbConnect from "~~/services/db/dbConnect";
 import ImpactVector from "~~/services/db/models/ImpactVector";
 
+const TOTAL_OP = 10_000_000;
+
 interface VectorWeight {
   vector: keyof ImpactVectors;
   weight: number;
@@ -16,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ message: "Method not allowed." });
   }
 
-  const { vector, weight } = req.query;
+  const { vector, weight, hardCapPct } = req.query;
   if (!vector || !weight) {
     return res.status(400).json({ message: "No vectors received" });
   }
@@ -35,8 +37,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     vectorWeights.push({ vector: vectors[i] as keyof ImpactVectors, weight: Number(weights[i]) });
   }
 
+  let hardCapAmount = 0;
+  if (hardCapPct) {
+    const capPct = Number(hardCapPct);
+    if (capPct <= 0 || capPct >= 100) {
+      return res.status(400).json({ message: "Cap percent must be between 0 and 100" });
+    }
+    hardCapAmount = (capPct / 100) * TOTAL_OP;
+  }
+
   try {
-    const impact = await getImpact(vectorWeights);
+    const impact = await getImpact(vectorWeights, hardCapAmount);
 
     if (impact) {
       res.status(200).json(impact);
@@ -49,19 +60,44 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 }
 
-async function getImpact(vectorWeights: VectorWeight[]) {
+async function getImpact(vectorWeights: VectorWeight[], hardCapAmount: number) {
   const allProjects = await getProjects();
   const scoredProjects = await scoreProjectsByVectorWeight({ allProjects, vectorWeights });
 
   // Calculate total OP allocated to each project
   const totalScore = scoredProjects.reduce((total, curr) => total + curr.score, 0);
   const projectsWithOPAllocated = scoredProjects
+    .filter(p => p.score > 0)
     .map(project => ({
       ...project,
-      opAllocation: (project.score / totalScore) * 10000000,
-    }))
-    .filter(project => project.opAllocation >= 1);
-  return projectsWithOPAllocated;
+      opAllocation: (project.score / totalScore) * TOTAL_OP,
+    }));
+
+  if (hardCapAmount) {
+    // Sort projects by OP allocated
+    const sortedProjects = projectsWithOPAllocated.sort((a, b) => b.opAllocation - a.opAllocation);
+
+    // Redistribute excess allocation among lower-scoring projects
+    let totalExcessAllocation = 0;
+    const redistributedProjects = [];
+    for (let i = 0; i < sortedProjects.length; i++) {
+      const project = sortedProjects[i];
+      // Get total remaining score by slicing array and summing scores
+      const totalRemainingScore = sortedProjects.slice(i).reduce((total, curr) => total + curr.score, 0);
+      const redistributionPortion = (project.score / totalRemainingScore) * totalExcessAllocation;
+      const excessAllocation = Math.max(0, project.opAllocation + redistributionPortion - hardCapAmount);
+      totalExcessAllocation += excessAllocation;
+      if (excessAllocation > 0) {
+        redistributedProjects.push({ ...project, opAllocation: hardCapAmount });
+      } else {
+        redistributedProjects.push({ ...project, opAllocation: project.opAllocation + redistributionPortion });
+        totalExcessAllocation -= redistributionPortion;
+      }
+    }
+    return redistributedProjects.filter(project => project.opAllocation >= 1);
+  }
+
+  return projectsWithOPAllocated.filter(project => project.opAllocation >= 1);
 }
 
 const getProjects = async () => {
@@ -168,7 +204,7 @@ const scoreProjectsByVectorWeight = async ({
   const allVectors = await ImpactVector.find();
 
   // Find the largest value for each vector and find multiple to make it 100
-  const normalizers: { [key in keyof ImpactVectors]: number } = {} as { [key in keyof ImpactVectors]: number };
+  const equalizers: { [key in keyof ImpactVectors]: number } = {} as { [key in keyof ImpactVectors]: number };
   for (const { vector } of vectorWeights) {
     const fullVectorData = allVectors.find(v => v.name === vector);
     if (!fullVectorData) {
@@ -177,7 +213,7 @@ const scoreProjectsByVectorWeight = async ({
     const max = Math.max(
       ...allProjects.map(data => transformField(data[fullVectorData.fieldName as keyof OSOResponseProps])),
     );
-    normalizers[vector] = max !== 0 ? 100 / max : 0;
+    equalizers[vector] = max !== 0 ? 100 / max : 0;
   }
 
   const relevantData = [] as DataSet[];
@@ -199,10 +235,10 @@ const scoreProjectsByVectorWeight = async ({
       }
       const actualValue = transformField(data[fullVectorData.fieldName as keyof OSOResponseProps]);
       const currentValue = transformField(data[fullVectorData.fieldName as keyof OSOResponseProps]);
-      const normalizer = normalizers[vector];
+      const equalizer = equalizers[vector];
 
-      // Apply the normalizer to equalize the vectors
-      const scaledValue = currentValue && normalizer ? currentValue * normalizer : 0;
+      // Apply the equalizer to the vectors
+      const scaledValue = currentValue && equalizer ? currentValue * equalizer : 0;
       // Apply the weight
       relevant.data[vector] = {
         normalized: scaledValue && weight ? scaledValue * weight : 0,

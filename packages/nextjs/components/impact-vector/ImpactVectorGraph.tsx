@@ -62,8 +62,8 @@ const transformData = (impactData: DataSet[]): any[] => {
   });
 };
 
-// Function to sort array in descending order based on opAllocation
-const sortByTotalDescending = (dataSetArray: any[]) => {
+// Function to sort array in ascending order based on opAllocation
+const sortByTotalAscending = (dataSetArray: any[]) => {
   return dataSetArray.slice().sort((a, b) => a.opAllocation - b.opAllocation);
 };
 
@@ -81,7 +81,7 @@ export default function ImpactVectorGraph({
   const [showVectors, setShowVectors] = useState(false);
   const [isLogarithmic, setIsLogarithmic] = useState(false);
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
-  const transformedData = transformData(sortByTotalDescending(data));
+  const transformedData = transformData(sortByTotalAscending(data));
 
   const handleMouseMove = (e: any) => {
     const { value } = e;
@@ -123,7 +123,7 @@ export default function ImpactVectorGraph({
         <ComposedChart
           width={500}
           height={300}
-          data={[...transformedData].splice(0, projectsShown)}
+          data={transformedData.slice(-projectsShown, -1)}
           margin={{
             top: 5,
             right: 30,
@@ -173,7 +173,8 @@ export default function ImpactVectorGraph({
                   <div className="w-fit h-fit space-y-2 p-4 pt-1 text-sm bg-base-100">
                     <p>{`${data.name}`}</p>
                     <p>
-                      <span className=" text-red-500 font-semibold">OP Allocation:</span> {data.opAllocation}
+                      <span className=" text-red-500 font-semibold">OP Allocation:</span>{" "}
+                      {data.opAllocation.toLocaleString()}
                     </p>
                     {Object.keys(data)
                       .filter(key => key.endsWith("_actual"))
