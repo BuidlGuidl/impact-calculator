@@ -147,6 +147,7 @@ export default function ImpactVectorGraph({
             tickLine={false}
             className="text-xs opacity-50"
             tickMargin={10}
+            width={55}
             scale={isLogarithmic ? logScale : "linear"}
             domain={[1, "auto"]}
             tickFormatter={abbreviateNumber}
