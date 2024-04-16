@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import "./page.css";
 import { DataSet, SelectedVector } from "./types/data";
 import { debounce } from "lodash";
 import type { NextPage } from "next";
@@ -63,11 +64,7 @@ const Home: NextPage = () => {
 
   return (
     <main className={`w-full flex flex-col relative`}>
-      <div
-        className={`${
-          fullGraph ? "w-full" : "lg:w-[50%] xl:w-[58%] 2xl:w-[64%] 3xl:w-[70%]"
-        } duration-500 ease-in-out transition-all`}
-      >
+      <div className={`${fullGraph ? "w-full" : "w-custom"} duration-500 ease-in-out transition-all`}>
         <div
           className="flex w-full h-[50vh] overflow"
           onWheel={e => {
@@ -93,7 +90,7 @@ const Home: NextPage = () => {
         <div
           className={`lg:mx-5 ${
             fullGraph ? "flex-1" : "lg:w-[50%] xl:w-[58%] 2xl:w-[64%] 3xl:w-[70%]"
-          } w-full lg:mt-0 mt-6`}
+          } w-full lg:mt-0 p-2`}
         >
           <ImpactVectorTable />
         </div>

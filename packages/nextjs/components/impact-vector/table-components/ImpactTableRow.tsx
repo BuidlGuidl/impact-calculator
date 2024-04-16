@@ -48,7 +48,7 @@ const ImpactTableRow = ({ vector, updateWeight, onFilteredChange }: Props) => {
       </td>
       <td className="pr-2 lg:pr-6 py-2 sm:py-4 whitespace-nowrap ">
         <div className="grid gap-2 items-center justify-end grid-flow-col">
-          <div className="flex gap-1 sm:gap-3 ">
+          <div className="flex gap-6">
             <FilterModal vector={vector} onFiltered={newFilters => onFilteredChange(newFilters)} />
             <button className="w-[20px]">
               <FiTrash2 size={20} onClick={handleRemoveVector} />

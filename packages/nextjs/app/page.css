@@ -1,0 +1,11 @@
+.w-custom{
+    width: 100%;
+  }
+
+
+  @media (min-width: 1000px) {
+    .w-custom{
+        width: calc(100% - 550px);
+      }
+    
+  }

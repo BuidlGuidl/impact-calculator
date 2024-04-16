@@ -65,24 +65,22 @@ const ImpactVectorCard = ({ vector }: IProps) => {
             <HiMiniCheckBadge size={24} className="text-OPred w-5 h-5" />
           </button>
         ) : (
-          <div className="">
-            <button
-              disabled={isSelected}
-              onClick={e => {
-                e.stopPropagation();
-                handleAddVector();
-              }}
-              className="rounded-xl border-2 border-primary bg-primary hover:bg-red-600 p-4"
-            >
-              <Image
-                className="w-5 h-5"
-                src="assets/svg/folderPlusIcon.svg"
-                alt="folder plus icon"
-                width={24}
-                height={24}
-              />
-            </button>
-          </div>
+          <button
+            disabled={isSelected}
+            onClick={e => {
+              e.stopPropagation();
+              handleAddVector();
+            }}
+            className="rounded-xl border-2 border-primary bg-primary hover:bg-red-600 min-w-[40px] min-h-[40px] flex justify-center items-center"
+          >
+            <Image
+              className="w-5 h-5"
+              src="assets/svg/folderPlusIcon.svg"
+              alt="folder plus icon"
+              width={24}
+              height={24}
+            />
+          </button>
         )}
       </div>
       <p className=" text-base-content-100  m-0">@{vector.sourceName}</p>
