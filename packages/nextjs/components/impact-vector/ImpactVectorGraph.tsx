@@ -123,7 +123,7 @@ export default function ImpactVectorGraph({
         <ComposedChart
           width={500}
           height={300}
-          data={transformedData.slice(-projectsShown, -1)}
+          data={transformedData.slice(-projectsShown)}
           margin={{
             top: 5,
             right: 30,
