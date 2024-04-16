@@ -52,7 +52,7 @@ const FilterModal = ({ vector, onFiltered }: { vector: SelectedVector; onFiltere
 
   return (
     <>
-      <div onKeyDown={handleKeyDown} className="lg:mr-5 flex justify-end relative">
+      <div onKeyDown={handleKeyDown} className="flex justify-end relative">
         {vector.filters.length > 0 ? (
           <span className="bg-red-500 text-white flex absolute left-[10px] top-[-5px] justify-center items-center w-[16px] h-[16px] rounded-full text-xs">
             {vector.filters.length}
@@ -183,31 +183,7 @@ const FilterItem = ({ item, onChange, onDelete }: IFilterItemProps) => {
       ) : (
         <></>
       )}
-      <input
-        type="number"
-        className=" max-w-[60px] pl-2 p-0 input input-info input-bordered bg-secondary focus:outline-none border border-neutral hover:border-gray-400 rounded-xl text-neutral-500"
-        placeholder="0"
-        onChange={e => {
-          onChange({ ...item, value: e.target.value });
-        }}
-        value={item.value}
-      />
-      {item.condition == "<>" ? (
-        <>
-          <p>and</p>
-          <input
-            type="number"
-            className=" max-w-[60px] pl-2 p-0  input input-info input-bordered bg-secondary focus:outline-none border border-neutral hover:border-gray-400 rounded-xl text-neutral-500"
-            placeholder="0"
-            onChange={e => {
-              onChange({ ...item, value: e.target.value });
-            }}
-            value={item.value}
-          />
-        </>
-      ) : (
-        <></>
-      )}
+      <ValueInputs item={item} onChange={val => onChange(val)} />
       <div className="flex-grow justify-end flex items-center">
         <button className="w-[20px]">
           <FiTrash2 size={20} onClick={() => onDelete()} />
@@ -218,3 +194,49 @@ const FilterItem = ({ item, onChange, onDelete }: IFilterItemProps) => {
 };
 
 export default FilterModal;
+
+interface IValueInputsProps {
+  item: IFilter;
+  onChange: (arg: IFilter) => void;
+}
+const ValueInputs = ({ item, onChange }: IValueInputsProps) => {
+  let value = item.value;
+  let value2 = "0";
+  const isBetweenOperator = item.condition == "<>";
+  if (isBetweenOperator) {
+    const val = JSON.parse(`${item.value || "[]"}`) as string[];
+    value = val[0];
+    value2 = val[1];
+  }
+  return (
+    <>
+      <input
+        type="number"
+        className=" max-w-[60px] pl-2 p-0 input input-info input-bordered bg-secondary focus:outline-none border border-neutral hover:border-gray-400 rounded-xl text-neutral-500"
+        placeholder="0"
+        onChange={e => {
+          const newVal = !isBetweenOperator ? e.target.value : `[${[e.target.value, value2]}]`;
+          onChange({ ...item, value: newVal });
+        }}
+        value={value}
+      />
+      {item.condition == "<>" ? (
+        <>
+          <p>and</p>
+          <input
+            type="number"
+            className=" max-w-[60px] pl-2 p-0  input input-info input-bordered bg-secondary focus:outline-none border border-neutral hover:border-gray-400 rounded-xl text-neutral-500"
+            placeholder="0"
+            onChange={e => {
+              const newVal = `[${[value, e.target.value]}]`;
+              onChange({ ...item, value: newVal });
+            }}
+            value={value2}
+          />
+        </>
+      ) : (
+        <></>
+      )}
+    </>
+  );
+};
