@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import CustomXAxis from "./CustomXAxis";
 import { scaleLog } from "d3-scale";
 import { Area, Bar, CartesianGrid, ComposedChart, ResponsiveContainer, Text, Tooltip, XAxis, YAxis } from "recharts";
@@ -67,17 +67,7 @@ const sortByTotalDescending = (dataSetArray: any[]) => {
   return dataSetArray.slice().sort((a, b) => a.opAllocation - b.opAllocation);
 };
 
-export default function ImpactVectorGraph({
-  data,
-  fullGraph,
-  projectsShown,
-  setFullGraph,
-}: {
-  data: DataSet[];
-  fullGraph: boolean;
-  projectsShown: number;
-  setFullGraph: Dispatch<SetStateAction<boolean>>;
-}) {
+export default function ImpactVectorGraph({ data, projectsShown }: { data: DataSet[]; projectsShown: number }) {
   const [showVectors, setShowVectors] = useState(false);
   const [isLogarithmic, setIsLogarithmic] = useState(false);
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
@@ -100,22 +90,6 @@ export default function ImpactVectorGraph({
           <button onClick={() => setShowVectors(!showVectors)}>{showVectors ? "Hide Vectors" : "Show Vectors"}</button>
           <button className="px-3" onClick={() => setIsLogarithmic(!isLogarithmic)}>
             {isLogarithmic ? "Linear" : "Logarithmic"}
-          </button>
-          <button onClick={() => setFullGraph(!fullGraph)} className="hidden lg:flex">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="5-4 h-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
-              />
-            </svg>
           </button>
         </div>
       )}
