@@ -5,7 +5,7 @@ import "./page.css";
 import { DataSet, SelectedVector } from "./types/data";
 import { debounce } from "lodash";
 import type { NextPage } from "next";
-import { ChevronDoubleDownIcon, ChevronDoubleUpIcon } from "@heroicons/react/24/outline";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import ImpactVectorDisplay from "~~/components/impact-vector/ImpactVectorDisplay";
 import ImpactVectorGraph from "~~/components/impact-vector/ImpactVectorGraph";
 import ImpactVectorTable from "~~/components/impact-vector/ImpactVectorTable";
@@ -93,8 +93,8 @@ const Home: NextPage = () => {
             fullGraph ? "lg:relative mt-0" : "lg:absolute lg:top-0 lg:right-0"
           } transition-all overflow-hidden b-md:max-w-[34rem] rounded-3xl p-6 border grid gap-6 mx-auto duration-1000 ease-in-out h-[90vh]`}
         >
-          <button onClick={() => setFullGraph(!fullGraph)} className="hidden lg:flex w-fit lg:-my-3">
-            {fullGraph ? <ChevronDoubleUpIcon className="w-5 h-5" /> : <ChevronDoubleDownIcon className="w-5 h-5" />}
+          <button onClick={() => setFullGraph(!fullGraph)} className="hidden opacity-60 lg:flex w-fit lg:-my-4">
+            {fullGraph ? <ChevronUpIcon className="w-5 h-5" /> : <ChevronDownIcon className="w-5 h-5" />}
           </button>
           <div className="rounded-xl grid grid-cols-2 bg-base-300 p-1">
             <button
