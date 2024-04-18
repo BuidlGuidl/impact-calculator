@@ -196,8 +196,8 @@ export default function ImpactVectorGraph({ data, projectsShown }: { data: DataS
               })}
           <defs>
             <linearGradient id="colorTotal" x1="0" y1="1" x2="0" y2="0">
-              <stop offset="5%" stopColor="rgba(20, 124, 73, 0.1)" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#FBDD5D" stopOpacity={0} />
+              <stop offset="5%" stopColor="rgba(240, 255, 160, 0.5)" stopOpacity={0.3} />
+              <stop offset="95%" stopColor="#FEDB75" stopOpacity={0} />
             </linearGradient>
           </defs>
           <CartesianGrid y={3000000} strokeDasharray="2" />
