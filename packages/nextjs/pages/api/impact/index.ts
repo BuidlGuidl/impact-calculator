@@ -75,7 +75,7 @@ const getProjects = async () => {
       if (!projectDataMap[metricType as keyof OSOResponse]) {
         projectDataMap[metricType as keyof OSOResponse] = {};
       }
-      projectDataMap[metricType as keyof OSOResponse][project.project_id] = project;
+      projectDataMap[metricType as keyof OSOResponse][project.projectId] = project;
     }
   }
 
@@ -99,44 +99,50 @@ const getProjects = async () => {
 
 const fetchOSOProjectData = async () => {
   const query = `{
-    onchain_metrics_by_project(distinct_on: project_id, where: {network: {_eq: "OPTIMISM"}}) {
-      active_users
-      first_txn_date
-      high_frequency_users
-      l2_gas_6_months
-      less_active_users
-      more_active_users
-      multi_project_users
-      network
-      new_user_count
-      num_contracts
-      project_id
-      project_name
-      total_l2_gas
-      total_txns
-      total_users
-      txns_6_months
-      users_6_months
+    oso_onchainMetricsByProjectV1 {
+      activeContractCount90Days
+      addressCount
+      addressCount90Days
+      daysSinceFirstTransaction
+      displayName
+      eventSource
+      gasFeesSum
+      gasFeesSum6Months
+      highActivityAddressCount90Days
+      lowActivityAddressCount90Days
+      mediumActivityAddressCount90Days
+      multiProjectAddressCount90Days
+      newAddressCount90Days
+      projectId
+      projectName
+      projectNamespace
+      projectSource
+      returningAddressCount90Days
+      transactionCount
+      transactionCount6Months
     }
-    code_metrics_by_project(distinct_on: project_id) {
-      avg_active_devs_6_months
-      avg_fulltime_devs_6_months
-      commits_6_months
-      contributors
-      contributors_6_months
-      first_commit_date
-      forks
-      issues_closed_6_months
-      issues_opened_6_months
-      last_commit_date
-      new_contributors_6_months
-      project_id
-      project_name
-      pull_requests_merged_6_months
-      pull_requests_opened_6_months
-      repositories
-      source
-      stars
+    oso_codeMetricsByProjectV1 {
+      activeDeveloperCount6Months
+      closedIssueCount6Months
+      commitCount6Months
+      contributorCount
+      contributorCount6Months
+      displayName
+      eventSource
+      firstCommitDate
+      forkCount
+      fulltimeDeveloperAverage6Months
+      lastCommitDate
+      mergedPullRequestCount6Months
+      newContributorCount6Months
+      openedIssueCount6Months
+      openedPullRequestCount6Months
+      projectId
+      projectName
+      projectNamespace
+      projectSource
+      repositoryCount
+      starCount
     }
   }`;
 
@@ -146,10 +152,17 @@ const fetchOSOProjectData = async () => {
     throw new Error("OSO_GRAPHQL_ENDPOINT env var is not defined");
   }
 
+  const OSOApiKey = process.env.OSO_API_KEY as string;
+
+  if (!OSOApiKey) {
+    throw new Error("OSO_API_KEY env var is not defined");
+  }
+
   const response = await fetch(OSOGraphQLEndpoint, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${OSOApiKey}`,
     },
     body: JSON.stringify({ query }),
   });
@@ -188,7 +201,7 @@ const scoreProjectsByVectorWeight = async ({
       score: 0,
       opAllocation: 0,
       metadata: {
-        project_name: data["project_name"],
+        project_name: data["displayName"],
         project_image: "",
       },
     };

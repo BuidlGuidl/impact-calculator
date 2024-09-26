@@ -83,6 +83,7 @@ export interface IFilter {
   condition: string;
   value: number | string;
 }
+
 export interface SelectedVector {
   name: keyof ImpactVectors;
   weight: number;
